@@ -13,6 +13,7 @@
 * Install [Node](http://nodejs.org) (v6.x.x or later)
 * `git clone https://github.com/qualityshepherd/protractor_example`
 * `npm install` to install the project dependencies
+* `npm install -g protractor` to install the protractor
 * `node_modules/.bin/webdriver_manager update` to update drivers
 
 ## Run tests:
