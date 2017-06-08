@@ -11,9 +11,9 @@
 
 ## Setup:
 * Install [Node](http://nodejs.org) (v6.x.x or later)
+* Install [Yarn](https://yarnpkg.com/lang/en/docs/install/) (latest)
 * `git clone https://github.com/qualityshepherd/protractor_example`
-* `npm install` to install the project dependencies
-* `npm install protractor` to install the protractor
+* `yarn` to install the project dependencies
 * `node_modules/.bin/webdriver_manager update` to update drivers
 
 ## Run tests:
