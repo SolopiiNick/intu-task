@@ -12,6 +12,7 @@ var LoginPage = function() {
         this.isVisible($('div#page'))
     );
 
+
     this.loginAs = function(userObj) {
         this.login(userObj.username, userObj.password);
     };
