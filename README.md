@@ -17,8 +17,7 @@
 * `node_modules/.bin/webdriver_manager update` to update drivers
 
 ## Run tests:
-* run `npm test`
-or directly with protractor:
+* run directly with protractor:
 * `protractor conf.js`
 or directly with protractor-flake:
 * `./flake conf.js`
