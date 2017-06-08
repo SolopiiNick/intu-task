@@ -1,43 +1,44 @@
-var loginPage = require('../pages/nonAngularLoginPage');
-var friendPage = require('../pages/friendPage');
-var userData = require('../data/userData');
-var EC = protractor.ExpectedConditions;
+import { login } from '../pages';
 
-var selectCustomer = element(by.linkText('Customers'));
+import { merchantUser } from '../dataMock';
 
-describe ('merchant login', function() {
-    beforeEach(function() {
-        loginPage.to();
+const EC = protractor.ExpectedConditions;
 
-        loginPage.at();
-    });
+const selectCustomer = element(by.linkText('Customers'));
 
-    // it('should display message for invalid credentials', function() {
-    //     loginPage.login('invalid_user', 'invalid_password');
-    //
-    //     expect(loginPage.errorMessage.isDisplayed()).toBe(true);
-    // });
-    //
-    // it('should display message for empty credentials', function() {
-    //     loginPage.login('', '');
-    //
-    //     expect(loginPage.errorMessage.isDisplayed()).toBe(true);
-    // });
+describe('merchant login', () => {
+  beforeEach(() => {
+    login.to();
 
-    it('should go to friend dashboard on successful login', function() {
-        loginPage.login('Hillotestm', '123456');
-        // browser.sleep(5222);
-        browser.wait(EC.presenceOf(selectCustomer), 1000);
-        loginPage.dashboard();
-        console.log(selectCustomer)
+    login.at();
+  });
 
-        // expect(friendPage.at()).toBeFalse();
+  it('should go to friend dashboard on successful login', () => {
+    const { username, password } = merchantUser;
+    login.login(username, password);
+    // browser.sleep(5222);
+    browser.wait(EC.presenceOf(selectCustomer), 1000);
+    login.dashboard();
 
-    });
-    // it('should go to Customer', function() {
-    //   CustomerPage.search(userData.testUser);
-    //
-    //   // expect(friendPage.at()).toBeTruthy();
-    //   browser.pause();
-    // });
+    // expect(friendPage.at()).toBeFalse();
+  });
+
+  // it('should display message for invalid credentials', function() {
+  //     loginPage.login('invalid_user', 'invalid_password');
+  //
+  //     expect(loginPage.errorMessage.isDisplayed()).toBe(true);
+  // });
+  //
+  // it('should display message for empty credentials', function() {
+  //     loginPage.login('', '');
+  //
+  //     expect(loginPage.errorMessage.isDisplayed()).toBe(true);
+  // });
+
+  // it('should go to Customer', function() {
+  //   CustomerPage.search(userData.testUser);
+  //
+  //   // expect(friendPage.at()).toBeTruthy();
+  //   browser.pause();
+  // });
 });

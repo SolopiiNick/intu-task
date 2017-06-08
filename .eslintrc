@@ -1,12 +1,13 @@
 {
+  "parser": "babel-eslint",
   "extends": "airbnb-base",
   "rules": {
     "no-param-reassign": 0,
-    "comma-dangle": 0,
     "no-new": 0,
     "no-underscore-dangle": 0,
     "import/no-dynamic-require": 0,
     "import/newline-after-import": 0,
+    "import/prefer-default-export": 0,
     "no-plusplus": 0,
     "radix": 0,
     "class-methods-use-this": 0,
@@ -16,13 +17,27 @@
       2,
       {
         "functions": false,
-        "classes": false
+        "classes": false,
       }
     ],
     "no-restricted-syntax": [
       2,
       "LabeledStatement",
-      "WithStatement"
+      "WithStatement",
     ]
-  }
+  },
+  "globals": {
+    "browser": true,
+    "jasmine": true,
+    "protractor": true,
+    "$": true, # protractor CSS locator
+    "$$": true, # protractor CSS locator
+    "element": true,
+    "by": true,
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "expect": true,
+  },
 }
