@@ -13,13 +13,12 @@
 * Install [Node](http://nodejs.org) (v6.x.x or later)
 * `git clone https://github.com/qualityshepherd/protractor_example`
 * `npm install` to install the project dependencies
-* `npm install -g protractor` to install the protractor
+* `npm install protractor` to install the protractor
 * `node_modules/.bin/webdriver_manager update` to update drivers
 
 ## Run tests:
-* run `npm test`
-or directly with protractor:
-* `node_modules/.bin/protractor conf.js`
+* run directly with protractor:
+* `protractor conf.js`
 or directly with protractor-flake:
 * `./flake conf.js`
 or on saucelabs (add your username/key)
