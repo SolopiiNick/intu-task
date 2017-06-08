@@ -8,6 +8,7 @@ var LoginPage = function() {
     this.loginButton = element(by.buttonText('Log in'));
     this.selectCustomer = element(by.linkText('Customers'));
     this.errorMessage = element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]'));
+    this.transactionButton = element(by.linkText('Process Transaction'))
     this.pageLoaded = this.and(
         this.isVisible($('div#page'))
     );
@@ -23,8 +24,8 @@ var LoginPage = function() {
         this.loginButton.click();
     };
 
-  this.dashboard = function() {
-    this.selectCustomer.click();
+  this.transactionTab = function() {
+    this.transactionButton.click();
   };
 };
 LoginPage.prototype = basePage; // extend basePage...

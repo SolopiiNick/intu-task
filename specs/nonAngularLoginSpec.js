@@ -1,5 +1,4 @@
 var loginPage = require('../pages/nonAngularLoginPage');
-var friendPage = require('../pages/friendPage');
 var userData = require('../data/userData');
 var EC = protractor.ExpectedConditions;
 
@@ -24,16 +23,16 @@ describe ('merchant login', function() {
     //     expect(loginPage.errorMessage.isDisplayed()).toBe(true);
     // });
 
-    it('should go to friend dashboard on successful login', function() {
+    it('should login', function() {
         loginPage.login('Hillotestm', '123456');
         // browser.sleep(5222);
-        browser.wait(EC.presenceOf(selectCustomer), 1000);
-        loginPage.dashboard();
-        console.log(selectCustomer)
+        browser.wait(EC.presenceOf(transactionButton), 10000);
+        loginPage.transactionTab();
 
         // expect(friendPage.at()).toBeFalse();
 
     });
+
     // it('should go to Customer', function() {
     //   CustomerPage.search(userData.testUser);
     //
