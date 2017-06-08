@@ -11,7 +11,7 @@ exports.config = {
   // webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
   directConnect: true,
 
-  specs: ['specs/nonAngularLoginSpec.js'],
+  specs: ['specs'],
   baseUrl: 'http://merchant.release.accept.blue/login',
   // framework: 'jasmine2',
 

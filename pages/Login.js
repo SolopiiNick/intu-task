@@ -42,6 +42,10 @@ class LoginPage extends BasePage {
   dashboard() {
     this.selectCustomer.click();
   }
+
+  transactionTab() {
+    this.transactionButton.click();
+  }
 }
 
 export default new LoginPage();
