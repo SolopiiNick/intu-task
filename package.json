@@ -1,32 +1,12 @@
 {
-  "name": "protractor_example",
-  "version": "1.1.0",
-  "description": "An example Protractor project that makes use of page objects...",
-  "engines": {
-    "node": "6.9.4"
-  },
+  "name": "ab_e2e_test",
+  "version": "1.0.0",
+  "description": "AB e2e test",
   "scripts": {
     "prepublish": "node_modules/.bin/webdriver-manager update",
     "update": "node_modules/.bin/webdriver-manager update",
     "test": "./flake conf.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/qualityshepherd/protractor_example.git"
-  },
-  "keywords": [
-    "protractor",
-    "page objects",
-    "tests",
-    "automation",
-    "webdriver"
-  ],
-  "author": "Brine",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/qualityshepherd/protractor_example/issues"
-  },
-  "homepage": "https://github.com/qualityshepherd/protractor_example",
   "dependencies": {
     "protractor": "5.1.1"
   },
