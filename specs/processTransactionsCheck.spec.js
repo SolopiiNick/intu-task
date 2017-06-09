@@ -1,22 +1,22 @@
-import { login } from '../pages';
+import { processTransactionsChecks } from '../pages';
 
-import { merchantUser } from '../dataMock';
+import { checkTranasction } from '../dataMock';
 
 const EC = protractor.ExpectedConditions;
 
-const selectCustomer = element(by.linkText('Customers'));
-
 describe('merchant login', () => {
   beforeEach(() => {
-    login.get();
+    console.log(checkTranasction);
+    console.log(EC);
+    processTransactionsChecks.get();
   });
 
-  it('should go to friend dashboard on successful login', () => {
-    const { username, password } = merchantUser;
-    login.login(username, password);
-    browser.wait(EC.presenceOf(selectCustomer), 10000, 'wait for customers');
-    login.dashboard();
-  });
+  // it('should go to friend dashboard on successful login', () => {
+  //   const { username, password } = merchantUser;
+  //   login.login(username, password);
+  //   browser.wait(EC.presenceOf(selectCustomer), 10000);
+  //   login.dashboard();
+  // });
 
   // it('should display message for invalid credentials', function() {
   //     loginPage.login('invalid_user', 'invalid_password');

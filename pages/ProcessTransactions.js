@@ -16,4 +16,4 @@ class ProcessTransactions extends Base {
   }
 }
 
-export default new ProcessTransactions();
+export default ProcessTransactions;

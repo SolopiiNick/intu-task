@@ -12,7 +12,6 @@ class LoginPage extends Base {
   get passInput() { return element(by.name('password')); }
   get loginButton() { return element(by.buttonText('Log in')); }
   get selectCustomer() { return element(by.linkText('Customers')); }
-  get errorMessage() { return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]')); }
 
   get() {
     browser.get(this.url);
