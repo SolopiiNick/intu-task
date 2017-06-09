@@ -34,8 +34,7 @@ class LoginPage extends BasePage {
   }
 
   login(username, password) {
-    const a = 5;
-    this.userInput.sendKeys(username, a);
+    this.userInput.sendKeys(username);
     this.passInput.sendKeys(password);
     this.loginButton.click();
   }
