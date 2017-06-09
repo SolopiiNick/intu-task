@@ -1,6 +1,11 @@
+import config from '../configs/app';
 const EC = protractor.ExpectedConditions;
 
 class BasePage {
+
+  get baseUrl() {
+    return config.baseUrl;
+  }
   /**
    * wait and verify that a page is loaded
    * @returns {promise}
@@ -66,62 +71,6 @@ class BasePage {
       xxl: 15000,
     };
   }
-
-  // /**
-  //  * test if an element has a class
-  //  *
-  //  * @param  {elementFinder} locator - eg. $('div#myId')
-  //  * @param  {string}  klass  - class name
-  //  * @return {Boolean} - does the element have the class?
-  //  */
-  // this.hasClass = function(locator, klass) {
-  //     return locator.getAttribute('class').then(function(classes) {
-  //         return classes.split(' ').indexOf(klass) !== -1;
-  //     });
-  // };
-  //
-  // /**
-  //  * Webdriver equivilant to hitting Enter/Return key.
-  //  */
-  // this.hitEnter = function() {
-  //     return browser.actions().sendKeys(protractor.Key.ENTER).perform();
-  // };
-  //
-  // /**
-  //  * switches focus to a new window
-  //  * @param  {int} windowHandleIndex - the nth window to switch to
-  //  * @param  {pageObject} targetPage - the page we'll be on after the switch
-  //  */
-  // this.switchToWindow = function(windowHandleIndex, targetPage) {
-  //     var that = this;
-  //     // wait for new page to open...
-  //     var handle = browser.wait(function() {
-  //         return browser.getAllWindowHandles().then(function(handles) {
-  //             // make sure window we're switching to exists...
-  //             if(handles.length > windowHandleIndex) {
-  //                 return handles[windowHandleIndex];
-  //             } else {
-  //                 throw new Error('window index ' + windowHandleIndex + ' does not exist');
-  //             }
-  //         });
-  //     }, this.timeout.xxl);
-  //     console.log('switching to window ' + windowHandleIndex);
-  //     browser.switchTo().window(handle);
-  //     // test that we're at the new page...
-  //     targetPage.at();
-  // };
-  //
-  // /**
-  //  * get an element's width
-  //  * extend's protractors ElementFinder
-  //  *
-  //  * @return {int} - the width of the element
-  //  */
-  // protractor.ElementFinder.prototype.getWidth = function () {
-  //     return this.getSize().then(function(size) {
-  //         return size.width;
-  //     });
-  // };
 }
 
 export default BasePage;
