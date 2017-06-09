@@ -11,7 +11,7 @@ exports.config = {
   // webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
   directConnect: true,
 
-  specs: ['specs/login.spec.js'],
+  specs: ['specs/*.spec.js'],
   baseUrl: 'http://merchant.release.accept.blue/login',
   // framework: 'jasmine2',
 
@@ -52,4 +52,3 @@ exports.config = {
     defaultTimeoutInterval: 50000,
   },
 };
-

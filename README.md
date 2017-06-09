@@ -3,7 +3,7 @@
 ## Setup:
 * Install [Node](http://nodejs.org) (v6.x.x or later)
 * Install [Yarn](https://yarnpkg.com/lang/en/docs/install/) (latest)
-* `git clone https://github.com/qualityshepherd/protractor_example`
+* `git clone` this project
 * `yarn` to install the project dependencies
 * `yarn run update` to update drivers
 
