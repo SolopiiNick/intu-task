@@ -21,7 +21,7 @@ class LoginPage extends BasePage {
     return element(by.linkText('Customers'));
   }
   get errorMessage() {
-    return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]'));
+    return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]')); // eslint-disable-line
   }
   get pageLoaded() {
     return this.and(
@@ -34,7 +34,8 @@ class LoginPage extends BasePage {
   }
 
   login(username, password) {
-    this.userInput.sendKeys(username);
+    const a = 5;
+    this.userInput.sendKeys(username, a);
     this.passInput.sendKeys(password);
     this.loginButton.click();
   }
