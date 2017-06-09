@@ -1,4 +1,8 @@
-export const merchantUser = {
+const merchantUser = {
   username: 'Hillotestm',
   password: '123456',
+};
+
+export {
+  merchantUser,
 };
