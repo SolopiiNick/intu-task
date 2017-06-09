@@ -28,8 +28,6 @@ describe('merchant login', () => {
     browser.wait(EC.elementToBeClickable(login.selectDashboard), 30000, 'Dashboard should be present on the page after open');
   });
 
-
-
   // it('should go to Customer', function() {
   //   CustomerPage.search(userData.testUser);
   //
