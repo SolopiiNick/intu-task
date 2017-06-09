@@ -23,6 +23,6 @@ describe('Customer search', () => {
     customer.search();
 
     // expect(friendPage.at()).toBeTruthy();
-    browser.pause();
+    // browser.pause();
   });
 });
