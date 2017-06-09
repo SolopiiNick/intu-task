@@ -1,32 +1,23 @@
 // page is non-angular
 
-import BasePage from './Base';
+import Base from '../utils/Base';
 
 browser.ignoreSynchronization = false;
 
-class LoginPage extends BasePage {
-  get url() {
-    return 'http://merchant.release.accept.blue/login';
-  }
-  get userInput() {
-    return element(by.name('username'));
-  }
-  get passInput() {
-    return element(by.name('password'));
-  }
-  get loginButton() {
-    return element(by.buttonText('Log in'));
-  }
-  get selectCustomer() {
-    return element(by.linkText('Customers'));
-  }
-  get errorMessage() {
-    return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]')); // eslint-disable-line
-  }
-  get pageLoaded() {
-    return this.and(
-      this.isVisible($('div#page')),
-    );
+class LoginPage extends Base {
+  get selector() { return $('div#page'); }
+
+  get url() { return 'http://merchant.release.accept.blue/login'; }
+
+  get userInput() { return element(by.name('username')); }
+  get passInput() { return element(by.name('password')); }
+  get loginButton() { return element(by.buttonText('Log in')); }
+  get selectCustomer() { return element(by.linkText('Customers')); }
+  get errorMessage() { return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]')); }
+
+  get() {
+    browser.get(this.url);
+    this.waitUntilDisplayed();
   }
 
   loginAs({ username, password }) {
