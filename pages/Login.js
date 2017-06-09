@@ -5,9 +5,8 @@ import Base from '../utils/Base';
 browser.ignoreSynchronization = false;
 
 class LoginPage extends Base {
+  get url() { return `${this.baseUrl}/login`; }
   get selector() { return $('div#page'); }
-
-  get url() { return 'http://merchant.release.accept.blue/login'; }
 
   get userInput() { return element(by.name('username')); }
   get passInput() { return element(by.name('password')); }

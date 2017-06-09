@@ -1,4 +1,6 @@
 require('babel-register')({ presets: ['es2015'] });
+
+const config = require('./app.js');
 const SpecReporter = require('jasmine-spec-reporter');
 
 exports.config = {
@@ -11,8 +13,8 @@ exports.config = {
   // webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
   directConnect: true,
 
-  specs: ['specs/*.spec.js'],
-  baseUrl: 'http://merchant.release.accept.blue/login',
+  specs: ['../specs/*.spec.js'],
+  baseUrl: config.baseUrl,
   // framework: 'jasmine2',
 
   onPrepare() {

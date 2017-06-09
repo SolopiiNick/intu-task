@@ -1,6 +1,9 @@
+import config from '../configs/app';
 const EC = protractor.ExpectedConditions;
 
 class Base {
+  get baseUrl() { return config.baseUrl; }
+
   /**
    * This class property enables use of specific functions 'isDisplayed' and 'waitUntilDisplayed'
    * @type {ElementFinder}
