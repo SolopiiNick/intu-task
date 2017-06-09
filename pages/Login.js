@@ -2,6 +2,8 @@
 
 import Base from '../utils/Base';
 
+browser.ignoreSynchronization = false;
+
 class LoginPage extends Base {
   get url() { return `${this.baseUrl}/login`; }
   get selector() { return element(by.css('span.logo-text')); }
