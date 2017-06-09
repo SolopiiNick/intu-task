@@ -11,6 +11,7 @@ class LoginPage extends Base {
   get userInput() { return element(by.name('username')); }
   get passInput() { return element(by.name('password')); }
   get loginButton() { return element(by.buttonText('Log in')); }
+  get logoutButton() { return element(by.buttonText('Logout')); }
   get selectTransaction() { return element(by.linkText('Process Transaction')); }
   get selectDashboard() { return element(by.css('i.icon.icon-ic-menu-dashboard-normal')); }
   get errorMessage() { return element(by.css('div[ng-show="vm.wrongLoginData"]')); }
