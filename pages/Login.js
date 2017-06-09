@@ -6,7 +6,7 @@ browser.ignoreSynchronization = false;
 
 class LoginPage extends BasePage {
   get url() {
-    return 'http://merchant.release.accept.blue/login';
+    return `${this.baseUrl}/login`;
   }
   get userInput() {
     return element(by.name('username'));
