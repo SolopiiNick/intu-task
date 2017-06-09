@@ -6,12 +6,14 @@ browser.ignoreSynchronization = false;
 
 class LoginPage extends Base {
   get url() { return `${this.baseUrl}/login`; }
-  get selector() { return $('div#page'); }
+  get selector() { return element(by.css('span.logo-text')); }
 
   get userInput() { return element(by.name('username')); }
   get passInput() { return element(by.name('password')); }
   get loginButton() { return element(by.buttonText('Log in')); }
-  get selectCustomer() { return element(by.linkText('Customers')); }
+  get selectTransaction() { return element(by.linkText('Process Transaction')); }
+  get selectDashboard() { return element(by.css('i.icon.icon-ic-menu-dashboard-normal')); }
+  get errorMessage() { return element(by.xpath('//div[@ng-show = "vm.wrongLoginData"]//span [@style = "Username or password is not correct!"]')); }
 
   get() {
     browser.get(this.url);
@@ -29,11 +31,11 @@ class LoginPage extends Base {
   }
 
   dashboard() {
-    this.selectCustomer.click();
+    this.selectDashboard.click();
   }
 
   transactionTab() {
-    this.transactionButton.click();
+    this.selectTransaction.click();
   }
 }
 

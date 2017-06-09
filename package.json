@@ -7,7 +7,7 @@
     "update": "node_modules/.bin/webdriver-manager update",
     "test": "node_modules/.bin/protractor configs/protractor-config.js",
     "lint": "node_modules/.bin/eslint .",
-    "lint:pre-commit": "node_modules/.bin/eslint . --rule 'no-console:2' --rule 'no-debugger:2' --rule 'protractor/no-browser-pause:2'"
+    "lint:pre-commit": "node_modules/.bin/eslint . --rule 'no-console: 2' --rule 'no-debugger: 2' --rule 'protractor/no-browser-pause: 2'"
   },
   "pre-commit": [
     "lint:pre-commit"
