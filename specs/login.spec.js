@@ -4,19 +4,16 @@ import { merchantUser } from '../dataMock';
 
 const EC = protractor.ExpectedConditions;
 
-const selectCustomer = element(by.linkText('Customers'));
 
 describe('merchant login', () => {
   beforeEach(() => {
     login.get();
   });
 
-  it('should go to friend dashboard on successful login', () => {
+  it('should successful login', () => {
     const { username, password } = merchantUser;
     login.login(username, password);
-    // browser.sleep(5222);
-    browser.wait(EC.presenceOf(selectCustomer), 10000);
-    login.dashboard();
+    browser.wait(EC.elementToBeClickable(login.selectDashboard), 300000, 'Dashboard should be present on the page after open');
   });
 
   // it('should display message for invalid credentials', function() {
