@@ -1,13 +1,11 @@
 import { processTransactionsChecks } from '../pages';
 
-import { checkTranasction } from '../dataMock';
+// import { checkTranasction } from '../dataMock';
 
-const EC = protractor.ExpectedConditions;
+// const EC = protractor.ExpectedConditions;
 
 describe('merchant login', () => {
   beforeEach(() => {
-    console.log(checkTranasction);
-    console.log(EC);
     processTransactionsChecks.get();
   });
 
