@@ -1,8 +1,8 @@
-import BasePage from './Base';
+import Base from '../utils/Base';
 
 browser.ignoreSynchronization = true;
 
-class ProcessTransactions extends BasePage {
+class ProcessTransactions extends Base {
   get url() {
     return `${this.baseUrl}/transaction`;
   }

@@ -8,9 +8,7 @@ const selectCustomer = element(by.linkText('Customers'));
 
 describe('merchant login', () => {
   beforeEach(() => {
-    login.to();
-
-    login.at();
+    login.get();
   });
 
   it('should go to friend dashboard on successful login', () => {
