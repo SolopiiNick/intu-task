@@ -1,7 +1,5 @@
 import ProcessTransactions from './ProcessTransactions';
 
-browser.ignoreSynchronization = true;
-
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
 const setChargeAction = Symbol('set charge action');
