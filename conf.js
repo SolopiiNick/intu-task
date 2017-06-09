@@ -17,7 +17,7 @@ exports.config = {
 
   onPrepare() {
     // set browser size...
-    browser.manage().window().setSize(1024, 800);
+    browser.manage().window().maximize();
 
     jasmine.getEnv().addReporter(new SpecReporter({ displayStacktrace: 'spec' }));
   },

@@ -17,10 +17,8 @@ describe('merchant login', () => {
     const { username, password } = merchantUser;
     login.login(username, password);
     // browser.sleep(5222);
-    browser.wait(EC.presenceOf(selectCustomer), 1000);
+    browser.wait(EC.presenceOf(selectCustomer), 10000);
     login.dashboard();
-
-    // expect(friendPage.at()).toBeFalse();
   });
 
   // it('should display message for invalid credentials', function() {
