@@ -22,6 +22,7 @@ class ProcessTransactionsCheck extends ProcessTransactions {
       avsStreetInput: element(by.name('billing_street')),
       avsZipInput: element(by.name('billing_zip')),
       poNumberInput: element(by.name('po_number')),
+      companyName: element(by.name('company_name')),
       descriptionInput: element(by.name('description')),
       emailInput: element(by.name('email')),
       billingSwitchInput: element(by.model('checkBillingInfoShow')),
@@ -56,6 +57,10 @@ class ProcessTransactionsCheck extends ProcessTransactions {
     this[setChargeAction]();
     this[fillCheckGenerailFields](fieldsData);
     this[clickProcessTransaction]();
+  }
+
+  sendDuplicateTransaction(fieldsData) {
+    this.sendSimpleChargeTransaction(fieldsData);
   }
 
   [fillCheckGenerailFields](fieldsData) {
