@@ -1,9 +1,9 @@
 import login from './Login';
 import processTransactionCard from './ProcessTransactionCard';
-import processTransactionsChecks from './ProcessTransactionsCheck';
+import processTransactionChecks from './ProcessTransactionCheck';
 
 export {
   login,
   processTransactionCard,
-  processTransactionsChecks,
+  processTransactionChecks,
 };

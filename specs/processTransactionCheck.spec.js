@@ -1,4 +1,4 @@
-import { processTransactionsChecks } from '../pages';
+import { processTransactionChecks } from '../pages';
 
 // import { checkTranasction } from '../dataMock';
 
@@ -6,7 +6,7 @@ import { processTransactionsChecks } from '../pages';
 
 describe('merchant login', () => {
   beforeEach(() => {
-    processTransactionsChecks.get();
+    processTransactionChecks.get();
   });
 
   // it('should go to friend dashboard on successful login', () => {
