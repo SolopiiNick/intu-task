@@ -2,8 +2,6 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionChecks } from '../pages';
 import { checkTranasction } from '../dataMock';
 
-const processTransactionChecks = new ProcessTransactionChecks();
-
 class CheckLogic extends SpecBaseLogic {
   constructor() {
     super();
@@ -15,30 +13,30 @@ class CheckLogic extends SpecBaseLogic {
   }
 
   sendSavingWithTel() {
-    processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillFields(checkTranasction);
-    processTransactionChecks.clickProcessTransaction();
+    this.pageObject.setChargeAction();
+    this.pageObject.fillFields(checkTranasction);
+    this.pageObject.clickProcessTransaction();
   }
 
   sendCheckingWithPpd() {
-    processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillFields(checkTranasction);
-    processTransactionChecks.setNewCustomer(true);
-    processTransactionChecks.clickProcessTransaction();
+    this.pageObject.setChargeAction();
+    this.pageObject.fillFields(checkTranasction);
+    this.pageObject.setNewCustomer(true);
+    this.pageObject.clickProcessTransaction();
   }
 
   sendDuplicateSavingWithCcd() {
-    processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillCheckGenerailFields(checkTranasction);
-    processTransactionChecks.clickProcessTransaction();
+    this.pageObject.setChargeAction();
+    this.pageObject.fillCheckGenerailFields(checkTranasction);
+    this.pageObject.clickProcessTransaction();
     // TODO wait for popup
   }
 
   sendBillingCheckingWithPpd() {
-    processTransactionChecks.setRefundAction();
-    processTransactionChecks.fillCheckGenerailFields(checkTranasction);
-    processTransactionChecks.fillCheckBillingInfoFields(checkTranasction);
-    processTransactionChecks.setSameAsBillingInput();
+    this.pageObject.setRefundAction();
+    this.pageObject.fillCheckGenerailFields(checkTranasction);
+    this.pageObject.fillCheckBillingInfoFields(checkTranasction);
+    this.pageObject.setSameAsBillingInput();
   }
 }
 
