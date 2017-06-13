@@ -6,11 +6,11 @@ const checkLogic = new CheckLogic();
 
 // const EC = protractor.ExpectedConditions;
 
-describe('merchant login', () => {
-  beforeAll(checkLogic.beforeAll);
-  beforeEach(checkLogic.beforeEach);
+describe('Process Transactions Check', () => {
+  beforeAll(checkLogic.beforeAll.bind(checkLogic));
+  beforeEach(checkLogic.beforeEach.bind(checkLogic));
 
-  it('shoud be visible', checkLogic.shouldBeVisible);
+  it('shoud be visible', checkLogic.shouldBeVisible.bind(checkLogic));
 
   // it('should go to friend dashboard on successful login', () => {
   //   const { username, password } = merchantUser;

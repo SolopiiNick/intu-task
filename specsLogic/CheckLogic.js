@@ -1,43 +1,43 @@
-import { ProcessTransactionChecks } from '../pages';
 import SpecBaseLogic from '../utils/SpecLogicBase';
+import { ProcessTransactionChecks } from '../pages';
+import { checkTranasction } from '../dataMock';
 
 const processTransactionChecks = new ProcessTransactionChecks();
 
-// import { checkTranasction } from '../dataMock';
-
 class CheckLogic extends SpecBaseLogic {
-  beforeEach() {
-    processTransactionChecks.get();
+  constructor() {
+    super();
+    this.pageObject = new ProcessTransactionChecks();
   }
 
   shouldBeVisible() {
-    expect(processTransactionChecks.isDisplayed()).toBe(true);
+    expect(this.pageObject.isDisplayed()).toBe(true);
   }
 
-  sendSavingWithTel(fieldsData) {
+  sendSavingWithTel() {
     processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillFields(fieldsData);
+    processTransactionChecks.fillFields(checkTranasction);
     processTransactionChecks.clickProcessTransaction();
   }
 
-  sendCheckingWithPpd(fieldsData) {
+  sendCheckingWithPpd() {
     processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillFields(fieldsData);
+    processTransactionChecks.fillFields(checkTranasction);
     processTransactionChecks.setNewCustomer(true);
     processTransactionChecks.clickProcessTransaction();
   }
 
-  sendDuplicateSavingWithCcd(fieldsData) {
+  sendDuplicateSavingWithCcd() {
     processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillCheckGenerailFields(fieldsData);
+    processTransactionChecks.fillCheckGenerailFields(checkTranasction);
     processTransactionChecks.clickProcessTransaction();
     // TODO wait for popup
   }
 
-  sendBillingCheckingWithPpd(fieldsData) {
+  sendBillingCheckingWithPpd() {
     processTransactionChecks.setRefundAction();
-    processTransactionChecks.fillCheckGenerailFields(fieldsData);
-    processTransactionChecks.fillCheckBillingInfoFields(fieldsData);
+    processTransactionChecks.fillCheckGenerailFields(checkTranasction);
+    processTransactionChecks.fillCheckBillingInfoFields(checkTranasction);
     processTransactionChecks.setSameAsBillingInput();
   }
 }
