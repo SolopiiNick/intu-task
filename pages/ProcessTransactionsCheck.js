@@ -1,5 +1,9 @@
 import ProcessTransactions from './ProcessTransactions';
 
+const APPROVED_POPUP_TEXT = 'Approved';
+const ERROR_POPUP_TEXT = 'Error';
+const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try again';
+
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
 const setChargeAction = Symbol('set charge action');
@@ -43,6 +47,13 @@ class ProcessTransactionsCheck extends ProcessTransactions {
   }
   get newCustomerInput() { return element(by.model('createNewCustomer')); }
   get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
+  get confirmPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
+  get duplicatePopup() {
+    return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
+  }
+
+  closePopupButton() { return element(by.css('.transaction-error button')); }
 
   get() {
     browser.get(this.url);
@@ -53,21 +64,47 @@ class ProcessTransactionsCheck extends ProcessTransactions {
     this.checkTab.click();
   }
 
-  sendSimpleChargeTransaction(fieldsData) {
+  closePopup() {
+    this.closePopupButton.click();
+  }
+
+  sendSimpleSavingChargeTransaction(fieldsData) {
+    this[setChargeAction]();
+    this[fillCheckGenerailFields](fieldsData);
+    this[clickProcessTransaction]();
+  }
+
+  sendSavingChargeTransactionWithCCD(fieldsData) {
+    this[setChargeAction]();
+    this[fillCheckGenerailFields](fieldsData);
+    this[clickProcessTransaction]();
+  }
+
+  sendCheckingChargeTransactionWithCCD(fieldsData) {
+    this[setChargeAction]();
+    this[fillCheckGenerailFields](fieldsData);
+    this.newCustomerInput.sendKeys('true');
+    this[clickProcessTransaction]();
+  }
+
+  sendCheckingChargeTransactionWithTEL(fieldsData) {
     this[setChargeAction]();
     this[fillCheckGenerailFields](fieldsData);
     this[clickProcessTransaction]();
   }
 
   sendDuplicateTransaction(fieldsData) {
-    this.sendSimpleChargeTransaction(fieldsData);
+    this.sendSimpleSavingChargeTransaction(fieldsData);
+    this.sendSimpleSavingChargeTransaction(fieldsData);
   }
 
   [fillCheckGenerailFields](fieldsData) {
-    Object.keys(this.generalInfo).forEach(key => this.generalInfo[key].sendKeys(fieldsData[key]));
+    Object.keys(fieldsData.generalInfo).forEach(key => this.generalInfo[key]
+      .sendKeys(fieldsData.generalInfo[key]));
   }
-  [fillCheckBillingInfoFields](billingData) {
-    Object.keys(this.billingInfo).forEach(key => this.billingInfo[key].sendKeys(billingData[key]));
+  [fillCheckBillingInfoFields](fieldsData) {
+    Object.keys(fieldsData.billingInfo).forEach(key => this.billingInfo[key]
+      .sendKeys(fieldsData.billingInfo[key]));
   }
   [setChargeAction]() {
     this.checkActionButton.click();
