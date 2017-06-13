@@ -1,20 +1,10 @@
-import { processTransactionCard } from '../pages';
+import { CardLogic } from '../specsLogic';
 
-import { cards } from '../dataMock';
+const cardLogic = new CardLogic();
 
 describe('Process Transaction - Card Tab', () => {
-  beforeAll(() => {
-    processTransactionCard.autoLogin();
-  });
+  beforeAll(cardLogic.beforeAll.bind(cardLogic));
+  beforeEach(cardLogic.beforeEach.bind(cardLogic));
 
-  beforeEach(() => {
-    processTransactionCard.get();
-  });
-
-  it('create card process', () => {
-    processTransactionCard.setExpireDate();
-    processTransactionCard.sendSimpleChargeTransaction(cards.discover);
-    processTransactionCard.sameAsBillingBlock();
-    processTransactionCard.submit();
-  });
+  it('create card process', cardLogic.createCardProcess.bind(cardLogic));
 });

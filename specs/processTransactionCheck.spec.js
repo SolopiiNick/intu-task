@@ -1,10 +1,5 @@
 import { CheckLogic } from '../specsLogic';
-
 const checkLogic = new CheckLogic();
-
-// import { checkTranasction } from '../dataMock';
-
-// const EC = protractor.ExpectedConditions;
 
 describe('Process Transactions Check', () => {
   beforeAll(checkLogic.beforeAll.bind(checkLogic));

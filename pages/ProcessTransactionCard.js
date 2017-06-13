@@ -75,24 +75,13 @@ class ProcessTransactionCard extends Base {
     this.submitButton.click();
   }
 
-  scroll(elem) {
-    elem.scrollIntoView();
-  }
-
-  inputField(fieldsData, inputs) {
-    return (key) => {
-      browser.executeScript(this.scroll, this[inputs][key].getWebElement());
-      browser.sleep(50);
-      this[inputs][key].sendKeys(fieldsData[inputs][key]);
-    };
+  fillFields(fieldsData) {
+    if (fieldsData.generalInfo) this[fillCardGeneralFields](fieldsData);
   }
 
   sendSimpleChargeTransaction(fieldsData) {
     this[setChargeAction]();
-    this[fillCardGeneralFields](fieldsData);
-    // this[fillCardBillingInfoFields](fieldsData);
-    // this[fillCardShippingInfoFields](fieldsData);
-    // this[clickProcessTransaction]();
+    this.fillFields(fieldsData);
   }
 
   sendDuplicateTransaction(fieldsData) {
@@ -100,15 +89,8 @@ class ProcessTransactionCard extends Base {
   }
 
   [fillCardGeneralFields](fieldsData) {
-    Object.keys(this.generalInfo).forEach(this.inputField(fieldsData, 'generalInfo'));
+    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
   }
-  // [fillCardBillingInfoFields](billingData) {
-  //   Object.keys(this.billingInfo).forEach(this.inputField(billingData, 'billingInfo'));
-  // }
-  // [fillCardShippingInfoFields](shippingData) {
-  //   Object.keys(this.shippingInfo).forEach(key => this.shippingInfo[key]
-  //     .sendKeys(shippingData.shippingInfo[key]));
-  // }
   [setChargeAction]() {
     this.chargeActionButton.click();
   }
@@ -117,4 +99,4 @@ class ProcessTransactionCard extends Base {
   }
 }
 
-export default new ProcessTransactionCard();
+export default ProcessTransactionCard;

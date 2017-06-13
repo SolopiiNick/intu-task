@@ -2,7 +2,6 @@ const cards = {
   discover: {
     generalInfo: {
       cardNameInput: 'Test Discover',
-      actionSelect: 'charge',
       cardInput: '6011208702222228',
       cvvInput: '123',
       amountInput: '1010',
@@ -13,7 +12,6 @@ const cards = {
       descriptionInput: 'test description',
       emailInput: 'an@codemotion.eu',
       poNumberInput: '0002',
-      invoiceNumber: '0001',
     },
     billingInfo: {
       firstName: 'Leo',

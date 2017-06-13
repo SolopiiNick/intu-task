@@ -72,12 +72,10 @@ class ProcessTransactionsCheck extends Base {
   }
 
   [fillCheckGenerailFields](fieldsData) {
-    Object.keys(fieldsData.generalInfo).forEach(key => this.generalInfo[key]
-      .sendKeys(fieldsData.generalInfo[key]));
+    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
   }
   [fillCheckBillingInfoFields](fieldsData) {
-    Object.keys(fieldsData.billingInfo).forEach(key => this.billingInfo[key]
-      .sendKeys(fieldsData.billingInfo[key]));
+    Object.keys(fieldsData.billingInfo).forEach(this.inputField.apply(this, [fieldsData, 'billingInfo']));
   }
   setChargeAction() {
     this.checkActionButton.click();

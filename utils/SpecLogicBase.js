@@ -1,4 +1,6 @@
-import { processTransactionCard } from '../pages';
+import { ProcessTransactionCard } from '../pages';
+
+const processTransactionCard = new ProcessTransactionCard();
 
 class SpecLogicBase {
   constructor() {
