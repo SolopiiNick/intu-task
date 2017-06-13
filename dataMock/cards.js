@@ -1,5 +1,5 @@
-const cardHistory = [
-  {
+const cards = {
+  discover: {
     generalInfo: {
       cardNameInput: 'Test Discover',
       actionSelect: 'charge',
@@ -30,8 +30,8 @@ const cardHistory = [
       sameBillingInput: true,
     },
   },
-];
+};
 
 export {
-  cardHistory,
+  cards,
 };

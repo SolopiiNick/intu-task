@@ -1,9 +1,11 @@
 import { merchantUser } from './merchantUser';
 import { checkTranasction } from './checkTransaction';
-import { cardHistory } from './transactionHistory';
+import { autoLogin } from './autoLogin';
+import { cards } from './cards';
 
 export {
+  autoLogin,
   merchantUser,
   checkTranasction,
-  cardHistory,
+  cards,
 };

@@ -1,4 +1,6 @@
 import config from '../configs/app';
+import { autoLogin } from '../dataMock';
+
 const EC = protractor.ExpectedConditions;
 
 class Base {
@@ -10,6 +12,23 @@ class Base {
    */
   get selector() { return undefined; }
   get waitUntilDisplayedTimeout() { return 1000; }
+
+  autoLogin() {
+    browser.get(this.baseUrl);
+
+    browser.executeScript(function funcWithArguments() {
+      const autoLoginInner = arguments[0]; // eslint-disable-line
+
+      localStorage.setItem('lscache-user', JSON.stringify(autoLoginInner.user));
+      localStorage.setItem('lscache-timeout', autoLoginInner.timeout);
+      localStorage.setItem('lscache-userSettings', JSON.stringify(autoLoginInner.userSettings));
+    }, autoLogin);
+  }
+
+  get() {
+    browser.get(this.url);
+    this.waitUntilDisplayed();
+  }
 
   checkSelectorExist() {
     if (this.selector === undefined) {
