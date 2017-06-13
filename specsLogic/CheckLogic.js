@@ -5,38 +5,38 @@ import { checkTranasction } from '../dataMock';
 class CheckLogic extends SpecBaseLogic {
   constructor() {
     super();
-    this.pageObject = new ProcessTransactionChecks();
+    this.page = new ProcessTransactionChecks();
   }
 
   shouldBeVisible() {
-    expect(this.pageObject.isDisplayed()).toBe(true);
+    expect(this.page.isDisplayed()).toBe(true);
   }
 
   sendSavingWithTel() {
-    this.pageObject.setChargeAction();
-    this.pageObject.fillFields(checkTranasction);
-    this.pageObject.clickProcessTransaction();
+    this.page.setChargeAction();
+    this.page.fillFields(checkTranasction);
+    this.page.clickProcessTransaction();
   }
 
   sendCheckingWithPpd() {
-    this.pageObject.setChargeAction();
-    this.pageObject.fillFields(checkTranasction);
-    this.pageObject.setNewCustomer(true);
-    this.pageObject.clickProcessTransaction();
+    this.page.setChargeAction();
+    this.page.fillFields(checkTranasction);
+    this.page.setNewCustomer(true);
+    this.page.clickProcessTransaction();
   }
 
   sendDuplicateSavingWithCcd() {
-    this.pageObject.setChargeAction();
-    this.pageObject.fillCheckGenerailFields(checkTranasction);
-    this.pageObject.clickProcessTransaction();
+    this.page.setChargeAction();
+    this.page.fillCheckGenerailFields(checkTranasction);
+    this.page.clickProcessTransaction();
     // TODO wait for popup
   }
 
   sendBillingCheckingWithPpd() {
-    this.pageObject.setRefundAction();
-    this.pageObject.fillCheckGenerailFields(checkTranasction);
-    this.pageObject.fillCheckBillingInfoFields(checkTranasction);
-    this.pageObject.setSameAsBillingInput();
+    this.page.setRefundAction();
+    this.page.fillCheckGenerailFields(checkTranasction);
+    this.page.fillCheckBillingInfoFields(checkTranasction);
+    this.page.setSameAsBillingInput();
   }
 }
 

@@ -5,13 +5,13 @@ import { cards } from '../dataMock';
 class HistoryLogic extends SpecBaseLogic {
   constructor() {
     super();
-    this.pageObject = new ProcessTransactionCard();
+    this.page = new ProcessTransactionCard();
   }
   createCardProcess() {
-    this.pageObject.setExpireDate();
-    this.pageObject.sendSimpleChargeTransaction(cards.discover);
-    this.pageObject.sameAsBillingBlock();
-    this.pageObject.submit();
+    this.page.setExpireDate();
+    this.page.sendSimpleChargeTransaction(cards.discover);
+    this.page.sameAsBillingBlock();
+    this.page.submit();
   }
 }
 

@@ -1,16 +1,12 @@
-import { ProcessTransactionCard } from '../pages';
-
-const processTransactionCard = new ProcessTransactionCard();
-
 class SpecLogicBase {
   constructor() {
-    this.pageObject = null;
+    this.page = null;
   }
   beforeAll() {
-    processTransactionCard.autoLogin();
+    this.page.autoLogin();
   }
   beforeEach() {
-    this.pageObject.get();
+    this.page.get();
   }
 }
 
