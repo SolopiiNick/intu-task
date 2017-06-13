@@ -1,14 +1,19 @@
 import Base from '../utils/Base';
 
+const APPROVED_POPUP_TEXT = 'Approved';
+const ERROR_POPUP_TEXT = 'Error';
+const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try again';
+
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
-const setChargeAction = Symbol('set charge action');
-const clickProcessTransaction = Symbol('click on process transaction button');
 
 class ProcessTransactionsCheck extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=check`; }
 
+  get selector() { return $('form[name="checkingForm"]'); }
+
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
+  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund')); }
 
   get generalInfo() {
     return {
@@ -43,30 +48,50 @@ class ProcessTransactionsCheck extends Base {
     };
   }
   get newCustomerInput() { return element(by.model('createNewCustomer')); }
+  get sameAsBillingInput() { return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse')); }
   get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
-
-  sendSimpleChargeTransaction(fieldsData) {
-    this[setChargeAction]();
-    this[fillCheckGenerailFields](fieldsData);
-    this[clickProcessTransaction]();
+  get confirmPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
+  get duplicatePopup() {
+    return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
   }
 
-  sendDuplicateTransaction(fieldsData) {
-    this.sendSimpleChargeTransaction(fieldsData);
+  closePopupButton() { return element(by.css('.transaction-error button')); }
+  openProcessTransactionsCheckTab() {
+    this.checkTab.click();
+  }
+
+  closePopup() {
+    this.closePopupButton.click();
+  }
+
+  fillFields(fieldsData) {
+    if (fieldsData.generalInfo) this[fillCheckGenerailFields](fieldsData);
+    if (fieldsData.billingInfo) this[fillCheckBillingInfoFields](fieldsData);
+    if (fieldsData.shippingInfo) this[fillCheckBillingInfoFields](fieldsData);
   }
 
   [fillCheckGenerailFields](fieldsData) {
-    Object.keys(this.generalInfo).forEach(key => this.generalInfo[key].sendKeys(fieldsData[key]));
+    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
   }
-  [fillCheckBillingInfoFields](billingData) {
-    Object.keys(this.billingInfo).forEach(key => this.billingInfo[key].sendKeys(billingData[key]));
+  [fillCheckBillingInfoFields](fieldsData) {
+    Object.keys(fieldsData.billingInfo).forEach(this.inputField.apply(this, [fieldsData, 'billingInfo']));
   }
-  [setChargeAction]() {
+  setChargeAction() {
     this.checkActionButton.click();
   }
-  [clickProcessTransaction]() {
+  setRefundAction() {
+    this.checkActionButton.click();
+  }
+  setNewCustomer(value) {
+    this.newCustomerInput.sendKeys(value);
+  }
+  setSameAsBillingInput() {
+    this.sameAsBillingInput.click();
+  }
+  clickProcessTransaction() {
     this.submitButton.click();
   }
 }
 
-export default new ProcessTransactionsCheck();
+export default ProcessTransactionsCheck;
