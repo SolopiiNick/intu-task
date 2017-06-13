@@ -16,8 +16,8 @@ class Base {
   autoLogin() {
     browser.get(this.baseUrl);
 
-    browser.executeScript(function funcWithArguments() {
-      const autoLoginInner = arguments[0]; // eslint-disable-line
+    browser.executeScript((...args) => {
+      const autoLoginInner = args[0];
 
       localStorage.setItem('lscache-user', JSON.stringify(autoLoginInner.user));
       localStorage.setItem('lscache-timeout', autoLoginInner.timeout);
