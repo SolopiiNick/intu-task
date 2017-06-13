@@ -1,9 +1,12 @@
 import { processTransactionCard } from '../pages';
 
 describe('Process Transaction - Card Tab', () => {
-  beforeAll(async () => {
-    await processTransactionCard.get();
-    processTransactionCard.cardTab.click();
+  beforeAll(() => {
+    processTransactionCard.autoLogin();
+  });
+
+  beforeEach(() => {
+    processTransactionCard.get();
   });
 
   it('shoud be visible', () => {

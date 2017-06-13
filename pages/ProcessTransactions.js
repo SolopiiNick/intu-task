@@ -1,7 +1,5 @@
 import Base from '../utils/Base';
 
-browser.ignoreSynchronization = true;
-
 class ProcessTransactions extends Base {
   get url() { return `${this.baseUrl}/transaction`; }
 

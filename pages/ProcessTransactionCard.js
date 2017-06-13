@@ -1,12 +1,9 @@
 import ProcessTransaction from './ProcessTransactions';
 
 class ProcessTransactionCard extends ProcessTransaction {
-  get selector() { return $('.transaction-card'); }
+  get url() { return `${this.baseUrl}/transaction?tab=card`; }
 
-  get() {
-    browser.get(this.url);
-    this.waitUntilDisplayed();
-  }
+  get selector() { return $('div[name="cardForm"]'); }
 }
 
 export default new ProcessTransactionCard();
