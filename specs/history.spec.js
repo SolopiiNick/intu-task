@@ -1,22 +1,20 @@
-import { login, processTransactionCard } from '../pages';
+import { processTransactionCard } from '../pages';
 
-import { merchantUser, cards } from '../dataMock';
+import { cards } from '../dataMock';
 
-const EC = protractor.ExpectedConditions;
-
-describe('merchant login', () => {
-  beforeEach(() => {
-    login.get();
+describe('Process Transaction - Card Tab', () => {
+  beforeAll(() => {
+    processTransactionCard.autoLogin();
   });
 
-
-  it('should successful login + create card process', () => {
-    const { username, password } = merchantUser;
-    login.login(username, password);
-    browser.wait(EC.elementToBeClickable(login.selectDashboard), 30000, 'Dashboard should be present on the page ');
+  beforeEach(() => {
     processTransactionCard.get();
+  });
+
+  it('create card process', () => {
     processTransactionCard.setExpireDate();
-    browser.actions().mouseMove(processTransactionCard.generalInfo.taxInput).perform();
     processTransactionCard.sendSimpleChargeTransaction(cards.discover);
+    processTransactionCard.sameAsBillingBlock();
+    processTransactionCard.submit();
   });
 });
