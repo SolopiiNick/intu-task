@@ -1,7 +1,7 @@
-import CheckLogic from './CheckLogic';
-import CardLogic from './CardLogic';
+import ProcessTransactionCheckLogic from './ProcessTransactionCheckLogic';
+import ProcessTransactionCardLogic from './ProcessTransactionCardLogic';
 
 export {
-  CheckLogic,
-  CardLogic,
+  ProcessTransactionCheckLogic,
+  ProcessTransactionCardLogic,
 };

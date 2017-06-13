@@ -2,7 +2,7 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionCard } from '../pages';
 import { cards } from '../dataMock';
 
-class HistoryLogic extends SpecBaseLogic {
+class ProcessTransactionCardLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new ProcessTransactionCard();
@@ -15,4 +15,4 @@ class HistoryLogic extends SpecBaseLogic {
   }
 }
 
-export default HistoryLogic;
+export default ProcessTransactionCardLogic;

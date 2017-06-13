@@ -1,5 +1,5 @@
 const checkTransaction = {
-  savingWithTel: {
+  successSavingWithTEL: {
     generalInfo: {
       checkNameInput: 'Test Check',
       accountTypeInput: 'Savings',
@@ -13,7 +13,7 @@ const checkTransaction = {
       avsZipInput: '11747',
     },
   },
-  checkingWithPPD: {
+  successCheckingWithPPD: {
     generalInfo: {
       checkNameInput: 'Test Check',
       accountTypeInput: 'Checking',
@@ -24,7 +24,7 @@ const checkTransaction = {
       companyName: 'New Company n',
     },
   },
-  duplicateSavingWithCCD: {
+  successDuplicateSavingWithCCD: {
     generalInfo: {
       checkNameInput: 'Test Check',
       accountTypeInput: 'Savings',
@@ -34,7 +34,7 @@ const checkTransaction = {
       amountInput: '100',
     },
   },
-  checkingWithPPDAndBilling: {
+  successCheckingWithPPDAndBilling: {
     generalInfo: {
       checkNameInput: 'Test Check',
       accountTypeInput: 'Checking',
@@ -62,7 +62,7 @@ const checkTransaction = {
       phone: '(152)234234234',
     },
   },
-  refundSavingWithCCD: {
+  successRefundSavingWithCCD: {
     generalInfo: {
       checkNameInput: 'Test Check',
       accountTypeInput: 'Saving',

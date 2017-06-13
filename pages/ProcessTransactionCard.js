@@ -1,8 +1,6 @@
 import Base from '../utils/Base';
 
 const fillCardGeneralFields = Symbol('fill check tab general fields');
-// const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
-// const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
 const setChargeAction = Symbol('set charge action');
 const clickProcessTransaction = Symbol('click on process transaction button');
 
@@ -82,10 +80,6 @@ class ProcessTransactionCard extends Base {
   sendSimpleChargeTransaction(fieldsData) {
     this[setChargeAction]();
     this.fillFields(fieldsData);
-  }
-
-  sendDuplicateTransaction(fieldsData) {
-    this.sendSimpleChargeTransaction(fieldsData);
   }
 
   [fillCardGeneralFields](fieldsData) {

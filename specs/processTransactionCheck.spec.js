@@ -1,5 +1,5 @@
-import { CheckLogic } from '../specsLogic';
-const checkLogic = new CheckLogic();
+import { ProcessTransactionCheckLogic } from '../specsLogic';
+const checkLogic = new ProcessTransactionCheckLogic();
 
 describe('Process Transactions Check', () => {
   beforeAll(checkLogic.beforeAll.bind(checkLogic));

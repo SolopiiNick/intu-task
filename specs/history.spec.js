@@ -1,6 +1,6 @@
-import { CardLogic } from '../specsLogic';
+import { ProcessTransactionCardLogic } from '../specsLogic';
 
-const cardLogic = new CardLogic();
+const cardLogic = new ProcessTransactionCardLogic();
 
 describe('Process Transaction - Card Tab', () => {
   beforeAll(cardLogic.beforeAll.bind(cardLogic));

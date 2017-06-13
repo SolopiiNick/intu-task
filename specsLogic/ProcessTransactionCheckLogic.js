@@ -2,7 +2,7 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionChecks } from '../pages';
 import { checkTranasction } from '../dataMock';
 
-class CheckLogic extends SpecBaseLogic {
+class ProcessTransactionCheckLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new ProcessTransactionChecks();
@@ -12,32 +12,31 @@ class CheckLogic extends SpecBaseLogic {
     expect(this.page.isDisplayed()).toBe(true);
   }
 
-  sendSavingWithTel() {
+  sendSavingWithTEL() {
     this.page.setChargeAction();
-    this.page.fillFields(checkTranasction);
+    this.page.fillFields(checkTranasction.successSavingWithTEL);
     this.page.clickProcessTransaction();
   }
 
-  sendCheckingWithPpd() {
+  sendCheckingWithPPD() {
     this.page.setChargeAction();
-    this.page.fillFields(checkTranasction);
+    this.page.fillFields(checkTranasction.successCheckingWithPPD);
     this.page.setNewCustomer(true);
     this.page.clickProcessTransaction();
   }
 
-  sendDuplicateSavingWithCcd() {
+  sendDuplicateSavingWithCCD() {
     this.page.setChargeAction();
-    this.page.fillCheckGenerailFields(checkTranasction);
+    this.page.fillFields(checkTranasction.successDuplicateSavingWithCCD);
     this.page.clickProcessTransaction();
     // TODO wait for popup
   }
 
-  sendBillingCheckingWithPpd() {
+  sendBillingCheckingWithPPD() {
     this.page.setRefundAction();
-    this.page.fillCheckGenerailFields(checkTranasction);
-    this.page.fillCheckBillingInfoFields(checkTranasction);
+    this.page.fillFields(checkTranasction.successCheckingWithPPDAndBilling);
     this.page.setSameAsBillingInput();
   }
 }
 
-export default CheckLogic;
+export default ProcessTransactionCheckLogic;
