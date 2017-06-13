@@ -7,6 +7,10 @@ class ProcessTransactions extends Base {
     return `${this.baseUrl}/transaction`;
   }
 
+  get transactionTab() {
+    return element(by.linkText('Process Transaction'));
+  }
+
   get cardTab() {
     return element(by.cssContainingText('span.ad-tabs-wide', 'Card'));
   }
