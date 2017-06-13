@@ -65,6 +65,12 @@ class ProcessTransactionsCheck extends Base {
     this.closePopupButton.click();
   }
 
+  fillFields(fieldsData) {
+    if (fieldsData.generalInfo) this[fillCheckGenerailFields](fieldsData);
+    if (fieldsData.billingInfo) this[fillCheckBillingInfoFields](fieldsData);
+    if (fieldsData.shippingInfo) this[fillCheckBillingInfoFields](fieldsData);
+  }
+
   [fillCheckGenerailFields](fieldsData) {
     Object.keys(fieldsData.generalInfo).forEach(key => this.generalInfo[key]
       .sendKeys(fieldsData.generalInfo[key]));
@@ -78,6 +84,12 @@ class ProcessTransactionsCheck extends Base {
   }
   setRefundAction() {
     this.checkActionButton.click();
+  }
+  setNewCustomer(value) {
+    this.newCustomerInput.sendKeys(value);
+  }
+  setSameAsBillingInput() {
+    this.sameAsBillingInput.click();
   }
   clickProcessTransaction() {
     this.submitButton.click();

@@ -16,14 +16,14 @@ class CheckLogic extends SpecBaseLogic {
 
   sendSavingWithTel(fieldsData) {
     processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillCheckGenerailFields(fieldsData);
+    processTransactionChecks.fillFields(fieldsData);
     processTransactionChecks.clickProcessTransaction();
   }
 
   sendCheckingWithPpd(fieldsData) {
     processTransactionChecks.setChargeAction();
-    processTransactionChecks.fillCheckGenerailFields(fieldsData);
-    this.newCustomerInput.sendKeys(true);
+    processTransactionChecks.fillFields(fieldsData);
+    processTransactionChecks.setNewCustomer(true);
     processTransactionChecks.clickProcessTransaction();
   }
 
@@ -38,7 +38,7 @@ class CheckLogic extends SpecBaseLogic {
     processTransactionChecks.setRefundAction();
     processTransactionChecks.fillCheckGenerailFields(fieldsData);
     processTransactionChecks.fillCheckBillingInfoFields(fieldsData);
-    this.sameAsBillingInput.click();
+    processTransactionChecks.setSameAsBillingInput();
   }
 }
 
