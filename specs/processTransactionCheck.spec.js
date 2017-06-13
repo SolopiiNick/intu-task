@@ -1,13 +1,16 @@
-import { processTransactionChecks } from '../pages';
+import { CheckLogic } from '../specsLogic';
+
+const checkLogic = new CheckLogic();
 
 // import { checkTranasction } from '../dataMock';
 
 // const EC = protractor.ExpectedConditions;
 
 describe('merchant login', () => {
-  beforeEach(() => {
-    processTransactionChecks.get();
-  });
+  beforeAll(checkLogic.beforeAll);
+  beforeEach(checkLogic.beforeEach);
+
+  it('shoud be visible', checkLogic.shouldBeVisible);
 
   // it('should go to friend dashboard on successful login', () => {
   //   const { username, password } = merchantUser;

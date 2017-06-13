@@ -6,13 +6,14 @@ const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try agai
 
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
-const setChargeAction = Symbol('set charge action');
-const clickProcessTransaction = Symbol('click on process transaction button');
 
 class ProcessTransactionsCheck extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=check`; }
 
+  get selector() { return $('form[name="checkingForm"]'); }
+
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
+  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund')); }
 
   get generalInfo() {
     return {
@@ -47,6 +48,7 @@ class ProcessTransactionsCheck extends Base {
     };
   }
   get newCustomerInput() { return element(by.model('createNewCustomer')); }
+  get sameAsBillingInput() { return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse')); }
   get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
   get confirmPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
@@ -55,48 +57,12 @@ class ProcessTransactionsCheck extends Base {
   }
 
   closePopupButton() { return element(by.css('.transaction-error button')); }
-
-  get() {
-    browser.get(this.url);
-    this.waitUntilDisplayed();
-    this.openProcessTransactionsCheckTab();
-  }
   openProcessTransactionsCheckTab() {
     this.checkTab.click();
   }
 
   closePopup() {
     this.closePopupButton.click();
-  }
-
-  sendSimpleSavingChargeTransaction(fieldsData) {
-    this[setChargeAction]();
-    this[fillCheckGenerailFields](fieldsData);
-    this[clickProcessTransaction]();
-  }
-
-  sendSavingChargeTransactionWithCCD(fieldsData) {
-    this[setChargeAction]();
-    this[fillCheckGenerailFields](fieldsData);
-    this[clickProcessTransaction]();
-  }
-
-  sendCheckingChargeTransactionWithCCD(fieldsData) {
-    this[setChargeAction]();
-    this[fillCheckGenerailFields](fieldsData);
-    this.newCustomerInput.sendKeys('true');
-    this[clickProcessTransaction]();
-  }
-
-  sendCheckingChargeTransactionWithTEL(fieldsData) {
-    this[setChargeAction]();
-    this[fillCheckGenerailFields](fieldsData);
-    this[clickProcessTransaction]();
-  }
-
-  sendDuplicateTransaction(fieldsData) {
-    this.sendSimpleSavingChargeTransaction(fieldsData);
-    this.sendSimpleSavingChargeTransaction(fieldsData);
   }
 
   [fillCheckGenerailFields](fieldsData) {
@@ -107,12 +73,15 @@ class ProcessTransactionsCheck extends Base {
     Object.keys(fieldsData.billingInfo).forEach(key => this.billingInfo[key]
       .sendKeys(fieldsData.billingInfo[key]));
   }
-  [setChargeAction]() {
+  setChargeAction() {
     this.checkActionButton.click();
   }
-  [clickProcessTransaction]() {
+  setRefundAction() {
+    this.checkActionButton.click();
+  }
+  clickProcessTransaction() {
     this.submitButton.click();
   }
 }
 
-export default new ProcessTransactionsCheck();
+export default ProcessTransactionsCheck;
