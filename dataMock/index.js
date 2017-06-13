@@ -1,11 +1,11 @@
 import { merchantUser } from './merchantUser';
 import { checkTranasction } from './checkTransaction';
 import { autoLogin } from './autoLogin';
-import { cards } from './cards';
+import { processTransactionCardDataMock } from './specs/processTransactionCard';
 
 export {
   autoLogin,
   merchantUser,
   checkTranasction,
-  cards,
+  processTransactionCardDataMock,
 };
