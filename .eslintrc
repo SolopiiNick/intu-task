@@ -54,6 +54,7 @@
     "async-await/space-after-await": error,
   },
   "globals": {
+    "angular": true,
     "browser": true,
     "jasmine": true,
     "protractor": true,

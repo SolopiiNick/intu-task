@@ -25,7 +25,7 @@ describe('merchant login', () => {
   it('should successful login', () => {
     const { username, password } = merchantUser;
     login.login(username, password);
-    browser.wait(EC.elementToBeClickable(login.selectDashboard), 30000, 'Dashboard should be present on the page after open');
+    browser.wait(EC.elementToBeClickable(login.logoutButton), 30000, 'Dashboard should be present on the page after open');
   });
 
   // it('should go to Customer', function() {

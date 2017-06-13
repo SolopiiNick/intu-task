@@ -1,4 +1,4 @@
-import ProcessTransactions from './ProcessTransactions';
+import Base from '../utils/Base';
 
 const APPROVED_POPUP_TEXT = 'Approved';
 const ERROR_POPUP_TEXT = 'Error';
@@ -9,7 +9,8 @@ const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
 const setChargeAction = Symbol('set charge action');
 const clickProcessTransaction = Symbol('click on process transaction button');
 
-class ProcessTransactionsCheck extends ProcessTransactions {
+class ProcessTransactionsCheck extends Base {
+  get url() { return `${this.baseUrl}/transaction?tab=check`; }
 
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
 

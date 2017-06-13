@@ -1,10 +1,6 @@
-// page is non-angular
-
 import Base from '../utils/Base';
 
-browser.ignoreSynchronization = false;
-
-class HistoryPage extends Base {
+class History extends Base {
   get url() {
     return `${this.baseUrl}/batches`;
   }
@@ -16,7 +12,11 @@ class HistoryPage extends Base {
   get currentBatch() {
     return element(by.css('button[aria-label="Current Batch"]'));
   }
+
+  get checkTransaction() {
+    this.historyTab.click();
+    this.currentBatch.click();
+  }
 }
 
-export default new HistoryPage();
-
+export default new History();
