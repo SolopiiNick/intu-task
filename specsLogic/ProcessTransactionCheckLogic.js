@@ -6,7 +6,6 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new ProcessTransactionChecks();
-    this.EC = protractor.ExpectedConditions;
   }
 
   shouldBeVisible() {
