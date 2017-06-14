@@ -6,9 +6,9 @@ describe('Process Transactions - Check', () => {
   beforeEach(checkLogic.beforeEach.bind(checkLogic));
 
   it('Should be visible', checkLogic.shouldBeVisible.bind(checkLogic));
-  it('Send Saving With TEL', checkLogic.sendSavingWithTEL.bind(checkLogic));
-  it('Send Checking With PPD', checkLogic.sendCheckingWithPPD.bind(checkLogic));
-  it('Send Duplicate Saving With PPD', checkLogic.sendDuplicateSavingWithCCD.bind(checkLogic));
-  it('Send Billing Checking With PPD', checkLogic.sendBillingCheckingWithPPD.bind(checkLogic));
-  it('Send Refund Saving With PPD', checkLogic.sendRefundSavingWithCCD.bind(checkLogic));
+  it('Should Send Saving With TEL', checkLogic.sendSavingWithTEL.bind(checkLogic));
+  it('Should Send Checking With PPD', checkLogic.sendCheckingWithPPD.bind(checkLogic));
+  it('Should Send Duplicate Saving With PPD', checkLogic.sendDuplicateSavingWithCCD.bind(checkLogic));
+  it('Should Send Billing Checking With PPD', checkLogic.sendBillingCheckingWithPPD.bind(checkLogic));
+  it('Should Send Refund Saving With PPD', checkLogic.sendRefundSavingWithCCD.bind(checkLogic));
 });
