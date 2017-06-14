@@ -12,6 +12,7 @@ class Base {
    */
   get selector() { return undefined; }
   get waitUntilDisplayedTimeout() { return 1000; }
+  get waitUntilElementDisplayedTimeout() { return 1000; }
 
   autoLogin() {
     browser.get(this.baseUrl);
@@ -40,11 +41,11 @@ class Base {
     }
   }
 
-  inputField(fieldsData, inputs) {
+  inputField(dataMock, inputs) {
     return (key) => {
       browser.executeScript(this.scroll, this[inputs][key].getWebElement());
       browser.sleep(50);
-      this[inputs][key].sendKeys(fieldsData[inputs][key]);
+      this[inputs][key].sendKeys(dataMock[key]);
     };
   }
 
@@ -83,28 +84,36 @@ class Base {
     );
   }
 
-  inDom() {
-    this.checkSelectorExist();
-
-    return EC.presenceOf(this.selector);
+  isElementDisplayed(el) {
+    return EC.visibilityOf(el)();
   }
 
-  notInDom() {
-    this.checkSelectorExist();
-
-    return EC.stalenessOf(this.selector);
+  isElementNotDisplayed(el) {
+    return EC.invisibilityOf(el)();
   }
 
-  isClickable() {
-    this.checkSelectorExist();
-
-    return EC.elementToBeClickable(this.selector);
+  waitUntilElementDisplayed(el) {
+    browser.wait(
+      () => this.isElementDisplayed(el),
+      this.waitUntilElementDisplayedTimeout,
+      `Failed while waiting for "${el}" of Page Object Class '${this.constructor.name}' to display.`,
+    );
   }
 
-  hasText(text) {
-    this.checkSelectorExist();
+  inDom(el) {
+    return EC.presenceOf(el);
+  }
 
-    return EC.textToBePresentInElement(this.selector, text);
+  notInDom(el) {
+    return EC.stalenessOf(el);
+  }
+
+  isClickable(el) {
+    return EC.elToBeClickable(el);
+  }
+
+  hasText(el, text) {
+    return EC.textToBePresentInElement(el, text);
   }
 
   and(arrayOfFunctions) {

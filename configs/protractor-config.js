@@ -13,7 +13,7 @@ exports.config = {
   // webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
   directConnect: true,
 
-  specs: ['../specs/*.spec.js'],
+  specs: ['../specs/processTransactionCard.spec.js'],
   baseUrl: config.baseUrl,
   // framework: 'jasmine2',
 

@@ -1,5 +1,8 @@
 import Base from '../utils/Base';
 
+const APPROVED_POPUP_TEXT = 'Approved';
+const ERROR_POPUP_TEXT = 'Error';
+
 const fillCardGeneralFields = Symbol('fill check tab general fields');
 const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
 const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
@@ -26,6 +29,8 @@ class ProcessTransactionCard extends Base {
 
   get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
 
+  get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
 
   get generalInfo() {
     return {
@@ -92,12 +97,12 @@ class ProcessTransactionCard extends Base {
   }
 
   fillFields(fields) {
-    if (fields.generalInfo) this[fillCardGeneralFields](fields);
-    if (fields.billingInfo) this[fillCardBillingInfoFields](fields);
-    if (fields.shippingInfo) this[fillCardShippingInfoFields](fields);
+    if (fields.generalInfo) this[fillCardGeneralFields](fields.generalInfo);
+    if (fields.billingInfo) this[fillCardBillingInfoFields](fields.billingInfo);
+    if (fields.shippingInfo) this[fillCardShippingInfoFields](fields.shippingInfo);
   }
 
-  [fillCardGeneralFields]({ generalInfo }) {
+  [fillCardGeneralFields](generalInfo) {
     Object.keys(generalInfo).forEach((key) => {
       if (key === 'actionSelect') {
         this.selectAction(generalInfo.actionSelect);
@@ -110,13 +115,13 @@ class ProcessTransactionCard extends Base {
         return;
       }
 
-      this.generalInfo[key].sendKeys(generalInfo[key]);
+      this.inputField.apply(this, [generalInfo, 'generalInfo'])(key);
     });
   }
-  [fillCardBillingInfoFields]({ billingInfo }) {
+  [fillCardBillingInfoFields](billingInfo) {
     Object.keys(billingInfo).forEach(key => this.billingInfo[key].sendKeys(billingInfo[key]));
   }
-  [fillCardShippingInfoFields]({ shippingInfo }) {
+  [fillCardShippingInfoFields](shippingInfo) {
     Object.keys(shippingInfo).forEach(key => this.shippingInfo[key].sendKeys(shippingInfo[key]));
   }
   [setChargeAction]() {

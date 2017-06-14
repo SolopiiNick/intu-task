@@ -1,25 +1,13 @@
-import { processTransactionCard } from '../pages';
-import { processTransactionCardDataMock } from '../dataMock';
+import { ProcessTransactionCardLogic } from '../specsLogic';
+
+const checkLogic = new ProcessTransactionCardLogic();
 
 describe('Process Transaction - Card Tab', () => {
-  beforeAll(() => {
-    processTransactionCard.autoLogin();
-  });
+  beforeAll(checkLogic.beforeAll.bind(checkLogic));
+  beforeEach(checkLogic.beforeEach.bind(checkLogic));
 
-  beforeEach(() => {
-    processTransactionCard.get();
-  });
+  it('shoud be visible', checkLogic.shouldBeVisible.bind(checkLogic));
 
-  // it('shoud be visible', () => {
-  //   expect(processTransactionCard.isDisplayed()).toBe(true);
-  // });
-
-  it('shoud approve transaction with "charge" action, without Customer and by using Discover', () => {
-    const { chargeSuccess } = processTransactionCardDataMock;
-
-    processTransactionCard.fillFields(chargeSuccess);
-    processTransactionCard.submitButton.click();
-
-    expect(true).toBe(true);
-  });
+  it('shoud approve transaction with "charge" action, without Customer and by using Discover',
+    checkLogic.sendApproveWithCharge.bind(checkLogic));
 });
