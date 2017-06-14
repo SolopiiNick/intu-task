@@ -13,6 +13,10 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     this.page.sameAsBillingBlock();
     this.page.submit();
   }
+
+  checkMadeTransaction() {
+
+  }
 }
 
 export default ProcessTransactionCardLogic;

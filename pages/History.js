@@ -5,6 +5,8 @@ class History extends Base {
     return `${this.baseUrl}/batches`;
   }
 
+  get selector() { return $('button[aria-label="Current Batch"]'); }
+
   get historyTab() {
     return element(by.xpath('//*[@id="vertical-navigation"]/ms-navigation/ul/li[4]/div/a/span'));
   }
@@ -13,10 +15,15 @@ class History extends Base {
     return element(by.css('button[aria-label="Current Batch"]'));
   }
 
-  get checkTransaction() {
+  get rowData() {
+    return element(by.css('tr[ng-repeat="row in rowData"]'));
+  }
+
+  checkTransaction() {
     this.historyTab.click();
     this.currentBatch.click();
+    this.rowData.isPresent();
   }
 }
 
-export default new History();
+export default History;

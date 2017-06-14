@@ -1,10 +1,10 @@
-import { ProcessTransactionCardLogic } from '../specsLogic';
+import { HistoryLogic } from '../specsLogic';
 
-const cardLogic = new ProcessTransactionCardLogic();
+const batchLogic = new HistoryLogic();
 
 describe('Process Transaction - Card Tab', () => {
-  beforeAll(cardLogic.beforeAll.bind(cardLogic));
-  beforeEach(cardLogic.beforeEach.bind(cardLogic));
+  beforeAll(batchLogic.beforeAll.bind(batchLogic));
+  beforeEach(batchLogic.beforeEach.bind(batchLogic));
 
-  it('create card process', cardLogic.createCardProcess.bind(cardLogic));
+  it('check made transaction', batchLogic.checkMadeTransaction.bind(batchLogic));
 });

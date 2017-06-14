@@ -1,6 +1,6 @@
 import Base from '../utils/Base';
 
-class LoginPage extends Base {
+class Login extends Base {
   get url() { return `${this.baseUrl}/login`; }
   get selector() { return element(by.css('span.logo-text')); }
 
@@ -13,8 +13,10 @@ class LoginPage extends Base {
   get errorMessage() { return element(by.css('div[ng-show="vm.wrongLoginData"]')); }
   get emptyMassage() { return element(by.css('.md-input-message-animation')); }
 
-  loginAs({ username, password }) {
-    this.login(username, password);
+  invalidUser() {
+    this.userInput.sendKeys('invalid_user');
+    this.passInput.sendKeys('invalid_password');
+    this.loginButton.click();
   }
 
   login(username, password) {
@@ -37,4 +39,4 @@ class LoginPage extends Base {
   }
 }
 
-export default new LoginPage();
+export default Login;
