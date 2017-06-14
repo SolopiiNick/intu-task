@@ -20,6 +20,13 @@ class ProcessTransactionCard extends Base {
 
   expirationYearSelect(year) { return element(by.css(`md-option[value="${year}"]`)); }
 
+  get checkBillingBlock() { return element(by.model('cardShippingInfoShow')); }
+
+  get checkSameAsBilling() { return element(by.model('cardShippingInfoShow')); }
+
+  get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
+
+
   get generalInfo() {
     return {
       cardNameInput: element(by.name('cardName')),
@@ -58,13 +65,20 @@ class ProcessTransactionCard extends Base {
     };
   }
 
-  get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
-
   fillCardExpireFields(month, year) {
     this.expirationMonthInput.click();
     this.expirationMonthSelect(month).click();
     this.expirationYearInput.click();
     this.expirationYearSelect(year).click();
+  }
+
+  sameAsBillingBlock() {
+    this.checkBillingBlock.click();
+    this.checkSameAsBilling.click();
+  }
+
+  submit() {
+    this.submitButton.click();
   }
 
   selectAction(action) {
@@ -110,4 +124,4 @@ class ProcessTransactionCard extends Base {
   }
 }
 
-export default new ProcessTransactionCard();
+export default ProcessTransactionCard;

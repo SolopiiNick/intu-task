@@ -1,6 +1,6 @@
 import Base from '../utils/Base';
 
-class LoginPage extends Base {
+class Login extends Base {
   get url() { return `${this.baseUrl}/login`; }
   get selector() { return element(by.css('span.logo-text')); }
 
@@ -12,29 +12,6 @@ class LoginPage extends Base {
   get selectDashboard() { return element(by.css('i.icon.icon-ic-menu-dashboard-normal')); }
   get errorMessage() { return element(by.css('div[ng-show="vm.wrongLoginData"]')); }
   get emptyMassage() { return element(by.css('.md-input-message-animation')); }
-
-  loginAs({ username, password }) {
-    this.login(username, password);
-  }
-
-  login(username, password) {
-    this.userInput.sendKeys(username);
-    this.passInput.sendKeys(password);
-    this.loginButton.click();
-  }
-
-  emptyLogin(username, password) {
-    this.userInput.sendKeys(username);
-    this.passInput.sendKeys(password);
-  }
-
-  dashboard() {
-    this.selectDashboard.click();
-  }
-
-  transactionTab() {
-    this.selectTransaction.click();
-  }
 }
 
-export default new LoginPage();
+export default Login;

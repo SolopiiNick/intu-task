@@ -1,11 +1,11 @@
-import login from './Login';
-import processTransactionCard from './ProcessTransactionCard';
-import processTransactionChecks from './ProcessTransactionCheck';
-import history from './History';
+import Login from './Login';
+import ProcessTransactionCard from './ProcessTransactionCard';
+import ProcessTransactionChecks from './ProcessTransactionCheck';
+import History from './History';
 
 export {
-  login,
-  processTransactionCard,
-  processTransactionChecks,
-  history,
+  Login,
+  ProcessTransactionCard,
+  ProcessTransactionChecks,
+  History,
 };

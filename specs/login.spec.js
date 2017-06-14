@@ -1,37 +1,14 @@
-import { login } from '../pages';
+import { LoginLogic } from '../specsLogic';
 
-import { merchantUser } from '../dataMock';
+const loginLogic = new LoginLogic();
 
-const EC = protractor.ExpectedConditions;
+describe('login user', () => {
+  beforeEach(loginLogic.beforeEach.bind(loginLogic));
 
+  it('invalid_user', loginLogic.loginInvalidUser.bind(loginLogic));
 
-describe('merchant login', () => {
-  beforeEach(() => {
-    login.get();
-  });
+  it('empty field', loginLogic.loginEmptyUser.bind(loginLogic));
 
-  it('should display message for invalid credentials', () => {
-    login.login('invalid_user', 'invalid_password');
-
-    expect(login.errorMessage.isDisplayed()).toBe(true);
-  });
-
-  it('should display message for empty credentials', () => {
-    login.emptyLogin('', '123456');
-
-    expect(login.emptyMassage.isDisplayed()).toBe(true);
-  });
-
-  it('should successful login', () => {
-    const { username, password } = merchantUser;
-    login.login(username, password);
-    browser.wait(EC.elementToBeClickable(login.logoutButton), 30000, 'Dashboard should be present on the page after open');
-  });
-
-  // it('should go to Customer', function() {
-  //   CustomerPage.search(userData.testUser);
-  //
-  //   // expect(friendPage.at()).toBeTruthy();
-  //   browser.pause();
-  // });
+  it('valid user', loginLogic.loginValidUser.bind(loginLogic));
 });
+

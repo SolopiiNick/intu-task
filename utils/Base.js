@@ -40,6 +40,18 @@ class Base {
     }
   }
 
+  inputField(fieldsData, inputs) {
+    return (key) => {
+      browser.executeScript(this.scroll, this[inputs][key].getWebElement());
+      browser.sleep(50);
+      this[inputs][key].sendKeys(fieldsData[inputs][key]);
+    };
+  }
+
+  scroll(elem) {
+    elem.scrollIntoView();
+  }
+
   /**
    * @returns Function which resolves to boolean
    */

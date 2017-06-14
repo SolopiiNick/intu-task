@@ -1,25 +1,10 @@
-import { login, processTransactionCard } from '../pages';
+import { HistoryLogic } from '../specsLogic';
 
-import { merchantUser, processTransactionCardDataMock } from '../dataMock';
+const batchLogic = new HistoryLogic();
 
-const EC = protractor.ExpectedConditions;
+describe('Process Transaction - Card Tab', () => {
+  beforeAll(batchLogic.beforeAll.bind(batchLogic));
+  beforeEach(batchLogic.beforeEach.bind(batchLogic));
 
-describe('merchant login', () => {
-  beforeEach(() => {
-    login.get();
-  });
-
-
-  it('should successful login + create card process', () => {
-    const { username, password } = merchantUser;
-    login.login(username, password);
-    browser.wait(EC.elementToBeClickable(login.selectDashboard), 30000, 'Dashboard should be present on the page ');
-
-    processTransactionCard.get();
-
-    const { chargeSuccess } = processTransactionCardDataMock;
-
-    processTransactionCard.fillFields(chargeSuccess);
-    processTransactionCard.submitButton.click();
-  });
+  it('check made transaction', batchLogic.checkMadeTransaction.bind(batchLogic));
 });
