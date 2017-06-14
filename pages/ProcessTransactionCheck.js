@@ -65,17 +65,16 @@ class ProcessTransactionsCheck extends Base {
     this.closePopupButton.click();
   }
 
-  fillFields(fieldsData) {
-    if (fieldsData.generalInfo) this[fillCheckGenerailFields](fieldsData);
-    if (fieldsData.billingInfo) this[fillCheckBillingInfoFields](fieldsData);
-    if (fieldsData.shippingInfo) this[fillCheckBillingInfoFields](fieldsData);
+  fillFields(field) {
+    if (field.generalInfo) this[fillCheckGenerailFields](field.generalInfo);
+    if (field.billingInfo) this[fillCheckBillingInfoFields](field.billingInfo);
   }
 
-  [fillCheckGenerailFields](fieldsData) {
-    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
+  [fillCheckGenerailFields](generalInfo) {
+    Object.keys(generalInfo).forEach(this.inputField.apply(this, [generalInfo, 'generalInfo']));
   }
-  [fillCheckBillingInfoFields](fieldsData) {
-    Object.keys(fieldsData.billingInfo).forEach(this.inputField.apply(this, [fieldsData, 'billingInfo']));
+  [fillCheckBillingInfoFields](billingInfo) {
+    Object.keys(billingInfo).forEach(this.inputField.apply(this, [billingInfo, 'billingInfo']));
   }
   setChargeAction() {
     this.checkActionButton.click();

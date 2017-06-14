@@ -1,4 +1,4 @@
-const checkTransaction = {
+const processTransactionCheckDataMock = {
   successSavingWithTEL: {
     generalInfo: {
       checkNameInput: 'Test Check',
@@ -80,5 +80,5 @@ const checkTransaction = {
 };
 
 export {
-  checkTransaction,
+  processTransactionCheckDataMock,
 };
