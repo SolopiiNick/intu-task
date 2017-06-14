@@ -16,7 +16,7 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setChargeAction();
     this.page.fillFields(checkTransaction.successSavingWithTEL);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    browser.wait(this.EC.presenceOf(this.page.confirmPopup), 5000, 'Approved Popup');
   }
 
   sendCheckingWithPPD() {
@@ -24,19 +24,19 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.fillFields(checkTransaction.successCheckingWithPPD);
     this.page.setNewCustomer(true);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    browser.wait(this.EC.presenceOf(this.page.confirmPopup), 5000, 'Approved Popup');
   }
 
   sendDuplicateSavingWithCCD() {
     this.page.setChargeAction();
     this.page.fillFields(checkTransaction.successDuplicateSavingWithCCD);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup')
+    browser.wait(this.EC.presenceOf(this.page.confirmPopup), 5000, 'Approved Popup')
       .then(() => {
         this.page.setChargeAction();
         this.page.fillFields(checkTransaction.successDuplicateSavingWithCCD);
         this.page.clickProcessTransaction();
-        browser.wait(this.EC.presenceOf(this.duplicatePopup), 5000, 'Duplicate popup');
+        browser.wait(this.EC.presenceOf(this.page.duplicatePopup), 5000, 'Duplicate popup');
       });
   }
 
@@ -44,14 +44,14 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setRefundAction();
     this.page.fillFields(checkTransaction.successCheckingWithPPDAndBilling);
     this.page.setSameAsBillingInput();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    browser.wait(this.EC.presenceOf(this.page.confirmPopup), 5000, 'Approved Popup');
   }
 
   sendRefundSavingWithCCD() {
     this.page.setRefundAction();
     this.page.fillFields(checkTransaction.successRefundSavingWithCCD);
     this.page.setNewCustomer(true);
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    browser.wait(this.EC.presenceOf(this.page.confirmPopup), 5000, 'Approved Popup');
   }
 }
 

@@ -43,7 +43,7 @@ class Base {
   inputField(fieldsData, inputs) {
     return (key) => {
       browser.executeScript(this.scroll, this[inputs][key].getWebElement());
-      browser.sleep(50);
+      browser.sleep(500);
       this[inputs][key].sendKeys(fieldsData[inputs][key]);
     };
   }
