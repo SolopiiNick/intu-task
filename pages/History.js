@@ -18,12 +18,6 @@ class History extends Base {
   get rowData() {
     return element(by.css('tr[ng-repeat="row in rowData"]'));
   }
-
-  checkTransaction() {
-    this.historyTab.click();
-    this.currentBatch.click();
-    this.rowData.isPresent();
-  }
 }
 
 export default History;

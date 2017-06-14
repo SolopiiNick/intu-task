@@ -7,7 +7,9 @@ class HistoryLogic extends SpecBaseLogic {
     this.page = new History();
   }
   checkMadeTransaction() {
-    this.page.checkTransaction();
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.rowData.isPresent();
   }
 }
 

@@ -12,31 +12,6 @@ class Login extends Base {
   get selectDashboard() { return element(by.css('i.icon.icon-ic-menu-dashboard-normal')); }
   get errorMessage() { return element(by.css('div[ng-show="vm.wrongLoginData"]')); }
   get emptyMassage() { return element(by.css('.md-input-message-animation')); }
-
-  invalidUser() {
-    this.userInput.sendKeys('invalid_user');
-    this.passInput.sendKeys('invalid_password');
-    this.loginButton.click();
-  }
-
-  login(username, password) {
-    this.userInput.sendKeys(username);
-    this.passInput.sendKeys(password);
-    this.loginButton.click();
-  }
-
-  emptyLogin(username, password) {
-    this.userInput.sendKeys(username);
-    this.passInput.sendKeys(password);
-  }
-
-  dashboard() {
-    this.selectDashboard.click();
-  }
-
-  transactionTab() {
-    this.selectTransaction.click();
-  }
 }
 
 export default Login;

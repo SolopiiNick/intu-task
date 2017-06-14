@@ -6,6 +6,7 @@ import { merchantUser } from '../dataMock';
 
 const EC = protractor.ExpectedConditions;
 
+const { username, password } = merchantUser;
 
 class LoginLogic extends SpecBaseLogic {
   constructor() {
@@ -14,18 +15,22 @@ class LoginLogic extends SpecBaseLogic {
   }
 
   loginInvalidUser() {
-    this.page.invalidUser();
+    this.page.userInput.sendKeys('invalid_user');
+    this.page.passInput.sendKeys('invalid_password');
+    this.page.loginButton.click();
     expect(this.page.errorMessage.isDisplayed()).toBe(true);
   }
 
   loginEmptyUser() {
-    this.page.emptyLogin('', '123456');
+    this.page.userInput.sendKeys('');
+    this.page.passInput.sendKeys('123456');
     expect(this.page.emptyMassage.isDisplayed()).toBe(true);
   }
 
   loginValidUser() {
-    const { username, password } = merchantUser;
-    this.page.login(username, password);
+    this.page.userInput.sendKeys(username);
+    this.page.passInput.sendKeys(password);
+    this.page.loginButton.click();
     browser.wait(EC.elementToBeClickable(this.page.logoutButton), 30000, 'Dashboard should be present on the page');
   }
 }

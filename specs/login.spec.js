@@ -1,15 +1,14 @@
 import { LoginLogic } from '../specsLogic';
 
-const login = new LoginLogic();
+const loginLogic = new LoginLogic();
 
 describe('login user', () => {
-  // beforeAll(login.beforeAll.bind(login));
-  beforeEach(login.beforeEach.bind(login));
+  beforeEach(loginLogic.beforeEach.bind(loginLogic));
 
-  it('invalid_user', login.loginInvalidUser.bind(login));
+  it('invalid_user', loginLogic.loginInvalidUser.bind(loginLogic));
 
-  it('empty field', login.loginEmptyUser.bind(login));
+  it('empty field', loginLogic.loginEmptyUser.bind(loginLogic));
 
-  it('valid user', login.loginValidUser.bind(login));
+  it('valid user', loginLogic.loginValidUser.bind(loginLogic));
 });
 
