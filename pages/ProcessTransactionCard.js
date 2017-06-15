@@ -32,6 +32,8 @@ class ProcessTransactionCard extends Base {
   get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
 
+  get completeButton() { return element(by.buttonText('Complete')); }
+
   get generalInfo() {
     return {
       cardNameInput: element(by.name('cardName')),
@@ -86,6 +88,10 @@ class ProcessTransactionCard extends Base {
     this.submitButton.click();
   }
 
+  complite() {
+    this.completeButton.click();
+  }
+
   selectAction(action) {
     switch (action) {
       case 'charge':
@@ -104,6 +110,7 @@ class ProcessTransactionCard extends Base {
 
   [fillCardGeneralFields](generalInfo) {
     Object.keys(generalInfo).forEach((key) => {
+      console.log(key);
       if (key === 'actionSelect') {
         this.selectAction(generalInfo.actionSelect);
         return;
