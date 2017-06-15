@@ -1,8 +1,12 @@
 import Base from '../utils/Base';
 
+const APPROVED_POPUP_TEXT = 'Approved';
+const ERROR_POPUP_TEXT = 'Error';
+
 const fillCardGeneralFields = Symbol('fill check tab general fields');
+const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
+const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
 const setChargeAction = Symbol('set charge action');
-const clickProcessTransaction = Symbol('click on process transaction button');
 
 class ProcessTransactionCard extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=card`; }
@@ -11,13 +15,13 @@ class ProcessTransactionCard extends Base {
 
   get chargeActionButton() { return element(by.css('div[ng-class="{\\\'active\\\': cardForm.generalInfo.action === \\\'charge\\\'}"]')); }
 
-  get expirationDateInput() { return element(by.name('expiry_month')); }
+  get expirationMonthInput() { return element(by.name('expiry_month')); }
 
-  get expirationDateSelect() { return element(by.css('md-option[value="4"]')); }
+  expirationMonthSelect(month) { return element(by.css(`md-option[value="${month}"]`)); }
 
   get expirationYearInput() { return element(by.name('expiry_year')); }
 
-  get expirationYearSelect() { return element(by.css('md-option[value="20"]')); }
+  expirationYearSelect(year) { return element(by.css(`md-option[value="${year}"]`)); }
 
   get checkBillingBlock() { return element(by.model('cardShippingInfoShow')); }
 
@@ -25,12 +29,14 @@ class ProcessTransactionCard extends Base {
 
   get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
 
+  get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
 
   get generalInfo() {
     return {
       cardNameInput: element(by.name('cardName')),
-      cardInput: element(by.name('cardsSearch')),
-      cvvInput: element(by.name('CardCvc')),
+      cardNumberInput: element(by.name('cardsSearch')),
+      cardCvvInput: element(by.name('CardCvc')),
       amountInput: element(by.model('cardForm.amount')),
       taxInput: element(by.name('tax_currency')),
       surchargeInput: element(by.name('surcharge_currency')),
@@ -57,11 +63,18 @@ class ProcessTransactionCard extends Base {
     };
   }
 
-  setExpireDate() {
-    this.expirationDateInput.click();
-    this.expirationDateSelect.click();
+  get shippingInfo() {
+    return {
+      sameBillingInput: element(by.model('cardShippingInfoShow')),
+      sameBillingTrue: element(by.model('sameAsBilling')),
+    };
+  }
+
+  fillCardExpireFields(month, year) {
+    this.expirationMonthInput.click();
+    this.expirationMonthSelect(month).click();
     this.expirationYearInput.click();
-    this.expirationYearSelect.click();
+    this.expirationYearSelect(year).click();
   }
 
   sameAsBillingBlock() {
@@ -73,23 +86,46 @@ class ProcessTransactionCard extends Base {
     this.submitButton.click();
   }
 
-  fillFields(fieldsData) {
-    if (fieldsData.generalInfo) this[fillCardGeneralFields](fieldsData);
+  selectAction(action) {
+    switch (action) {
+      case 'charge':
+        this[setChargeAction]();
+        break;
+      default:
+        this[setChargeAction]();
+    }
   }
 
-  sendSimpleChargeTransaction(fieldsData) {
-    this[setChargeAction]();
-    this.fillFields(fieldsData);
+  fillFields(fields) {
+    if (fields.generalInfo) this[fillCardGeneralFields](fields.generalInfo);
+    if (fields.billingInfo) this[fillCardBillingInfoFields](fields.billingInfo);
+    if (fields.shippingInfo) this[fillCardShippingInfoFields](fields.shippingInfo);
   }
 
-  [fillCardGeneralFields](fieldsData) {
-    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
+  [fillCardGeneralFields](generalInfo) {
+    Object.keys(generalInfo).forEach((key) => {
+      if (key === 'actionSelect') {
+        this.selectAction(generalInfo.actionSelect);
+        return;
+      }
+
+      if (key === 'cardExpireDropdown') {
+        const { month, year } = generalInfo.cardExpireDropdown;
+        this.fillCardExpireFields(month, year);
+        return;
+      }
+
+      this.inputField.apply(this, [generalInfo, 'generalInfo'])(key);
+    });
+  }
+  [fillCardBillingInfoFields](billingInfo) {
+    Object.keys(billingInfo).forEach(key => this.billingInfo[key].sendKeys(billingInfo[key]));
+  }
+  [fillCardShippingInfoFields](shippingInfo) {
+    Object.keys(shippingInfo).forEach(key => this.shippingInfo[key].sendKeys(shippingInfo[key]));
   }
   [setChargeAction]() {
     this.chargeActionButton.click();
-  }
-  [clickProcessTransaction]() {
-    this.submitButton.click();
   }
 }
 

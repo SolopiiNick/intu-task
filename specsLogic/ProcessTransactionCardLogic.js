@@ -1,17 +1,26 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionCard } from '../pages';
-import { cards } from '../dataMock';
+import { processTransactionCardDataMock } from '../dataMock';
 
 class ProcessTransactionCardLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new ProcessTransactionCard();
   }
-  createCardProcess() {
-    this.page.setExpireDate();
-    this.page.sendSimpleChargeTransaction(cards.discover);
-    this.page.sameAsBillingBlock();
+
+  shouldBeVisible() {
+    expect(this.page.isDisplayed()).toBe(true);
+  }
+
+  sendApproveWithCharge() {
+    const { chargeSuccess } = processTransactionCardDataMock;
+
+    this.page.fillFields(chargeSuccess);
     this.page.submit();
+
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 }
 

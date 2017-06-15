@@ -6,6 +6,8 @@ const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try agai
 
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
+const fillTransactionTypeInput = Symbol('fill transaction type select');
+const fillAccountTypeInput = Symbol('fill account type select');
 
 class ProcessTransactionsCheck extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=check`; }
@@ -13,7 +15,7 @@ class ProcessTransactionsCheck extends Base {
   get selector() { return $('form[name="checkingForm"]'); }
 
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
-  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund')); }
+  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund span')); }
 
   get generalInfo() {
     return {
@@ -22,73 +24,102 @@ class ProcessTransactionsCheck extends Base {
       transactionTypeInput: element(by.name('transaction_type')),
       routingNumberInput: element(by.name('routingNumber')),
       accountNumberInput: element(by.name('checksSearch')),
-      amountInput: element(by.name('amount')),
-      taxInput: element(by.name('tax_currency')),
-      surchargeInput: element(by.name('surcharge_currency')),
-      avsStreetInput: element(by.name('billing_street')),
-      avsZipInput: element(by.name('billing_zip')),
-      poNumberInput: element(by.name('po_number')),
-      companyName: element(by.name('company_name')),
-      descriptionInput: element(by.name('description')),
-      emailInput: element(by.name('email')),
+      amountInput: element(by.model('checkForm.amount')),
+      taxInput: element(by.model('checkForm.taxCurrency')),
+      surchargeInput: element(by.model('checkForm.surchargeCurrency')),
+      avsStreetInput: element(by.model('checkForm.generalInfo.billingAddress')),
+      avsZipInput: element(by.model('checkForm.generalInfo.billingZip')),
+      poNumberInput: element(by.model('checkForm.generalInfo.po')),
+      companyName: element(by.model('checkForm.generalInfo.company')),
+      descriptionInput: element(by.model('checkForm.generalInfo.description')),
+      emailInput: element(by.model('checkForm.generalInfo.email')),
       billingSwitchInput: element(by.model('checkBillingInfoShow')),
     };
   }
   get billingInfo() {
     return {
-      firstName: element(by.name('first_name')),
-      lastName: element(by.name('last_name')),
-      street: element(by.name('street')),
-      street2: element(by.name('street2')),
-      city: element(by.name('city')),
-      zipCode: element(by.name('zip_code')),
-      country: element(by.name('country')),
-      state: element(by.name('billingStatesSearchCheck')),
-      phone: element(by.name('billing_phone')),
+      firstName: element(by.css('form[name=checkingForm] input[name=first_name]')),
+      lastName: element(by.css('form[name=checkingForm] input[name=last_name]')),
+      street: element(by.css('form[name=checkingForm] input[name=street]')),
+      street2: element(by.css('form[name=checkingForm] input[name=street2]')),
+      city: element(by.css('form[name=checkingForm] input[name=city]')),
+      zipCode: element(by.css('form[name=checkingForm] input[name=zip_code]')),
+      country: element(by.css('form[name=checkingForm] input[name=country]')),
+      state: element(by.css('form[name=checkingForm] input[name=billingStatesSearchCheck]')),
+      phone: element(by.css('form[name=checkingForm] input[name=billing_phone]')),
     };
   }
-  get newCustomerInput() { return element(by.model('createNewCustomer')); }
+  get newCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=createNewCustomer]')); }
+  get checkBillingBlock() { return element(by.model('checkBillingInfoShow')); }
+  get checkShippingBlock() { return element(by.model('checkShippingInfoShow')); }
+
+  get accountTypeInput() { return element(by.name('account_type')); }
+  accountTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
+
+  get transactionTypeInput() { return element(by.name('transaction_type')); }
+  transactionTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
+
   get sameAsBillingInput() { return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse')); }
-  get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
-  get confirmPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get submitButton() { return element(by.cssContainingText('form[name=checkingForm] [type=submit] span', 'Process')); }
+  get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
   get duplicatePopup() {
     return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
   }
 
   closePopupButton() { return element(by.css('.transaction-error button')); }
-  openProcessTransactionsCheckTab() {
-    this.checkTab.click();
-  }
+
+  completePopupButton() { return element(by.css('button[ng-click=completeAction()]')); }
 
   closePopup() {
-    this.closePopupButton.click();
+    this.completePopupButton.click();
   }
 
-  fillFields(fieldsData) {
-    if (fieldsData.generalInfo) this[fillCheckGenerailFields](fieldsData);
-    if (fieldsData.billingInfo) this[fillCheckBillingInfoFields](fieldsData);
-    if (fieldsData.shippingInfo) this[fillCheckBillingInfoFields](fieldsData);
+  fillFields(field) {
+    if (field.generalInfo) this[fillCheckGenerailFields](field.generalInfo);
+    if (field.billingInfo) this[fillCheckBillingInfoFields](field.billingInfo);
   }
 
-  [fillCheckGenerailFields](fieldsData) {
-    Object.keys(fieldsData.generalInfo).forEach(this.inputField.apply(this, [fieldsData, 'generalInfo']));
+  [fillCheckGenerailFields](generalInfo) {
+    Object.keys(generalInfo).forEach((key) => {
+      if (key === 'accountTypeInput') return this[fillAccountTypeInput](generalInfo[key]);
+      if (key === 'transactionTypeInput') return this[fillTransactionTypeInput](generalInfo[key]);
+      this.inputField.apply(this, [generalInfo, 'generalInfo'])(key);
+    });
   }
-  [fillCheckBillingInfoFields](fieldsData) {
-    Object.keys(fieldsData.billingInfo).forEach(this.inputField.apply(this, [fieldsData, 'billingInfo']));
+
+  [fillCheckBillingInfoFields](billingInfo) {
+    this.checkBillingBlock.click();
+    Object.keys(billingInfo).forEach(this.inputField.apply(this, [billingInfo, 'billingInfo']));
   }
+
+  [fillTransactionTypeInput](type) {
+    this.transactionTypeInput.click();
+    this.transactionTypeSelect(type).click();
+  }
+
+  [fillAccountTypeInput](type) {
+    this.accountTypeInput.click();
+    this.accountTypeSelect(type).click();
+  }
+
   setChargeAction() {
     this.checkActionButton.click();
   }
+
   setRefundAction() {
-    this.checkActionButton.click();
+    this.refundActionButton.click();
   }
-  setNewCustomer(value) {
-    this.newCustomerInput.sendKeys(value);
+
+  setNewCustomer() {
+    this.newCustomerInput.click();
   }
+
   setSameAsBillingInput() {
+    this.checkShippingBlock.click();
     this.sameAsBillingInput.click();
   }
+
   clickProcessTransaction() {
     this.submitButton.click();
   }

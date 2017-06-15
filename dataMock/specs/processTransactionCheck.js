@@ -1,4 +1,4 @@
-const checkTransaction = {
+const processTransactionCheckDataMock = {
   successSavingWithTEL: {
     generalInfo: {
       checkNameInput: 'Test Check',
@@ -65,7 +65,7 @@ const checkTransaction = {
   successRefundSavingWithCCD: {
     generalInfo: {
       checkNameInput: 'Test Check',
-      accountTypeInput: 'Saving',
+      accountTypeInput: 'Savings',
       transactionTypeInput: 'CCD',
       routingNumberInput: '061000227',
       accountNumberInput: '10102233',
@@ -80,5 +80,5 @@ const checkTransaction = {
 };
 
 export {
-  checkTransaction,
+  processTransactionCheckDataMock,
 };
