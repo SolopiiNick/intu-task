@@ -110,7 +110,6 @@ class ProcessTransactionCard extends Base {
 
   [fillCardGeneralFields](generalInfo) {
     Object.keys(generalInfo).forEach((key) => {
-      console.log(key);
       if (key === 'actionSelect') {
         this.selectAction(generalInfo.actionSelect);
         return;
