@@ -12,7 +12,8 @@ class History extends Base {
   }
 
   get allTransactionsTab() {
-    return element(by.xpath('//*[@id="batches"]/div[2]/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[3]'));
+    return element(by.xpath('//*[@id="batches"]/div[2]/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/' +
+      'md-pagination-wrapper/md-tab-item[3]'));
   }
 
   voidFilter() {
