@@ -26,11 +26,6 @@ const historyDataMock = {
       amountInput: '74.31',
       taxInput: '1',
       surchargeInput: '1',
-      avsStreetInput: '1307 Broad Hollow Road',
-      avsZipInput: '11746',
-      descriptionInput: 'test description visa',
-      emailInput: 'an@codemotion.eu',
-      poNumberInput: '0002',
     },
   },
   madeMasterCard: {

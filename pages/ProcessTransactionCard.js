@@ -88,7 +88,7 @@ class ProcessTransactionCard extends Base {
     this.submitButton.click();
   }
 
-  complite() {
+  complete() {
     this.completeButton.click();
   }
 

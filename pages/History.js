@@ -11,6 +11,14 @@ class History extends Base {
     return element(by.xpath('//*[@id="vertical-navigation"]/ms-navigation/ul/li[4]/div/a/span'));
   }
 
+  get allTransactionsTab() {
+    return element(by.xpath('//*[@id="batches"]/div[2]/div/md-tabs/md-tabs-wrapper/md-tabs-canvas/md-pagination-wrapper/md-tab-item[3]'));
+  }
+
+  voidFilter() {
+    return element(by.css('.quick-filters-item.status.voided'));
+  }
+
   get queuedTab() {
     return element(by.css('md-tab-item[aria-controls="tab-content-47"]'));
   }
@@ -36,7 +44,7 @@ class History extends Base {
   }
 
   get okButton() {
-    return element(by.css('button[aria-label="Ok"]'));
+    return element(by.cssContainingText('button span', 'Ok'));
   }
 
   get repeaterData() {
@@ -47,6 +55,13 @@ class History extends Base {
     cell.element(by.class('md-cell ng-binding ng-scope'));
   }
 
+  clickVoidButton() {
+    browser.executeScript('arguments[0].click();', this.voidButton);
+  }
+
+  clickVoidFilter() {
+    browser.executeScript('arguments[0].click();', this.voidFilter());
+  }
 
 }
 export default History;

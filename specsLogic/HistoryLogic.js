@@ -29,6 +29,28 @@ class HistoryLogic extends SpecBaseLogic {
     this.cardNumber();
     this.amount();
   }
+
+  checkVoidTransaction() {
+    const { madeVisaCard } = historyDataMock;
+    processTransactionCard.fillFields(madeVisaCard);
+    processTransactionCard.submit();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.complete();
+
+    this.page.historyTab.click();
+    this.page.waitUntilDisplayed();
+    this.page.currentBatch.click();
+    this.page.clickVoidButton();
+    this.page.okButton.click();
+    this.page.waitUntilElementDisplayed(this.page.allTransactionsTab);
+    browser.executeScript('arguments[0].scrollIntoView()', this.page.allTransactionsTab.getWebElement());
+    this.page.allTransactionsTab.click();
+    this.page.clickVoidFilter();
+    this.transactionDate();
+    this.companyName();
+    this.cardNumber();
+    this.amount();
+  }
   async transactionDate() {
     const rows = await element.all(by.repeater('row in rowData'));
 
