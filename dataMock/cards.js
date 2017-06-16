@@ -17,6 +17,24 @@ const cards = {
       year: 20,
     },
   },
+  masterCard: {
+    name: 'Test Master',
+    number: '5405001111111165',
+    cvv: '123',
+    expire: {
+      month: 4,
+      year: 20,
+    },
+  },
+  amex: {
+    name: 'Test Master',
+    number: '5405001111111165',
+    cvv: '123',
+    expire: {
+      month: 4,
+      year: 20,
+    },
+  },
 };
 
 export {
