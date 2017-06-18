@@ -50,6 +50,8 @@ class ProcessTransactionsCheck extends Base {
     };
   }
   get newCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=createNewCustomer]')); }
+  get editCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=updateCurrentCustomer]')); }
+  get customerInput() { return element(by.css('form[name=checkingForm] input[name=customersSearchCheck]')); }
   get checkBillingBlock() { return element(by.model('checkBillingInfoShow')); }
   get checkShippingBlock() { return element(by.model('checkShippingInfoShow')); }
 
@@ -58,6 +60,11 @@ class ProcessTransactionsCheck extends Base {
 
   get transactionTypeInput() { return element(by.name('transaction_type')); }
   transactionTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
+
+  get autoCompleteItem() {
+    return element(by
+      .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
+  }
 
   get sameAsBillingInput() { return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse')); }
   get submitButton() { return element(by.cssContainingText('form[name=checkingForm] [type=submit] span', 'Process')); }
@@ -69,7 +76,7 @@ class ProcessTransactionsCheck extends Base {
 
   closePopupButton() { return element(by.css('.transaction-error button')); }
 
-  completePopupButton() { return element(by.css('button[ng-click=completeAction()]')); }
+  completePopupButton() { return element(by.css('button[ng-click="completeAction()"]')); }
 
   closePopup() {
     this.completePopupButton.click();
@@ -115,12 +122,32 @@ class ProcessTransactionsCheck extends Base {
     this.newCustomerInput.click();
   }
 
+  setEditCustomer() {
+    this.editCustomerInput.click();
+  }
+
   setSameAsBillingInput() {
     this.checkShippingBlock.click();
     this.sameAsBillingInput.click();
   }
 
+  clickOnAutoCompleteItem() {
+    this.waitUntilElementDisplayed(this.autoCompleteItem);
+    this.autoCompleteItem.click();
+  }
+
+  fillCustomerAutoComplete(companyName) {
+    this.customerInput.sendKeys(companyName);
+    this.clickOnAutoCompleteItem();
+  }
+
+  fillAccountNumberAutoComplete() {
+    this.generalInfo.accountNumberInput.click();
+    this.clickOnAutoCompleteItem();
+  }
+
   clickProcessTransaction() {
+    browser.executeScript('arguments[0].scrollIntoView()', this.submitButton.getWebElement());
     this.submitButton.click();
   }
 }
