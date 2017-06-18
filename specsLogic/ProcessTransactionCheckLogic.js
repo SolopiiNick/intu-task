@@ -2,6 +2,7 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionChecks, Customers } from '../pages';
 import { processTransactionCheckDataMock } from '../dataMock';
 
+const createNewCustomer = Symbol('Create new customer');
 const createNewCustomerWithCheck = Symbol('Create new customer with check');
 
 class ProcessTransactionCheckLogic extends SpecBaseLogic {
@@ -100,17 +101,64 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
       });
   }
 
+  sendRecurringChargeWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.successChargeRecurringWithExistingCustomer;
+
+    this[createNewCustomerWithCheck](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        // this.page.setEditCustomer();
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  sendErrorRecurringDuplicateWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.errorChargeRecurringWithExistingCustomer;
+
+    this[createNewCustomer](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillFields(testData);
+        this.page.setEditCustomer();
+        this.page.clickProcessTransaction();
+        return browser.wait(this.EC.presenceOf(this.page.approvePopup), 5000, 'Approved Popup');
+      })
+      .then(() => {
+        this.page.closePopup();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
   [createNewCustomerWithCheck](testData) {
-    this.customersPage.get();
-    this.customersPage.createCustomer();
-    this.customersPage.fillCompanyName(testData.companyName);
-    this.customersPage.completeCreateCustomer();
+    this[createNewCustomer](testData);
     this.customersPage.selectCreatedCustomer();
     this.customersPage.selectWalletTab();
     this.customersPage.clickAddPaymentMethod();
     this.customersPage.selectCheckPage();
     this.customersPage.fillFields(testData);
     this.customersPage.clickSavePaymentMethod();
+  }
+  [createNewCustomer](testData) {
+    this.customersPage.get();
+    this.customersPage.createCustomer();
+    this.customersPage.fillCompanyName(testData.companyName);
+    this.customersPage.completeCreateCustomer();
   }
 }
 

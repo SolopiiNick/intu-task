@@ -111,6 +111,48 @@ const processTransactionCheckDataMock = {
       taxInput: '0.01',
     },
   },
+  successChargeRecurringWithExistingCustomer: {
+    companyName: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+    newCheckInfo: {
+      checkNameInput: 'Test Check',
+      accountTypeInput: 'Checking',
+      transactionTypeInput: 'CCD',
+      routingNumberInput: '061092387',
+      accountNumberInput: '10104455',
+    },
+    generalInfo: {
+      amountInput: '100.50',
+      taxInput: '2.48',
+      surchargeInput: '0.02',
+    },
+    recurringInfo: {
+      paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      startBillingDate: null,
+      everyPeriodValue: '2 weeks',
+      repeatTimes: '2',
+      billFirstTransaction: true,
+    },
+  },
+  errorChargeRecurringWithExistingCustomer: {
+    companyName: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+    generalInfo: {
+      checkNameInput: 'Test Check',
+      accountTypeInput: 'Savings',
+      transactionTypeInput: 'PPD',
+      routingNumberInput: '061092387',
+      accountNumberInput: '10107788',
+      amountInput: '100.50',
+      taxInput: '10.22',
+      surchargeInput: '10.23',
+    },
+    recurringInfo: {
+      paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      startBillingDate: null,
+      everyPeriodValue: '2 weeks',
+      repeatTimes: '2',
+      billFirstTransaction: true,
+    },
+  },
 };
 
 export {
