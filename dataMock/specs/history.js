@@ -1,6 +1,6 @@
 import { cards } from '../cards';
 
-const { discover, visa } = cards;
+const { discover, visa, masterCard } = cards;
 
 const historyDataMock = {
   madeDiscoverCard: {
@@ -30,9 +30,10 @@ const historyDataMock = {
   },
   madeMasterCard: {
     generalInfo: {
-      cardNameInput: 'Test Master',
-      cardInput: '5405001111111165',
-      cvvInput: '123',
+      cardNameInput: masterCard.name,
+      cardNumberInput: masterCard.number,
+      cardCvvInput: masterCard.cvv,
+      cardExpireDropdown: masterCard.expire,
       amountInput: '74.43',
       taxInput: '1',
       surchargeInput: '1',

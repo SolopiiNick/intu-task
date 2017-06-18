@@ -17,7 +17,7 @@ class HistoryLogic extends SpecBaseLogic {
   checkMadeTransaction() {
     const { madeDiscoverCard } = historyDataMock;
     processTransactionCard.fillFields(madeDiscoverCard);
-    processTransactionCard.submit();
+    processTransactionCard.process();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.complite();
 
@@ -33,7 +33,7 @@ class HistoryLogic extends SpecBaseLogic {
   checkVoidTransaction() {
     const { madeVisaCard } = historyDataMock;
     processTransactionCard.fillFields(madeVisaCard);
-    processTransactionCard.submit();
+    processTransactionCard.process();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.complete();
 

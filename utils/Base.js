@@ -28,7 +28,7 @@ class Base {
 
   get() {
     browser.get(this.url);
-    this.waitUntilDisplayed();
+    return this.waitUntilDisplayed();
   }
 
   checkSelectorExist() {
