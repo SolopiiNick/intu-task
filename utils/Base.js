@@ -44,7 +44,7 @@ class Base {
   inputField(dataMock, inputs) {
     return (key) => {
       browser.executeScript(this.scroll, this[inputs][key].getWebElement());
-      browser.sleep(50);
+      this.waitUntilElementDisplayed(this[inputs][key]);
       this[inputs][key].sendKeys(dataMock[key]);
     };
   }
@@ -77,7 +77,7 @@ class Base {
   waitUntilDisplayed() {
     this.checkSelectorExist();
 
-    browser.wait(
+    return browser.wait(
       () => this.isDisplayed(),
       this.waitUntilDisplayedTimeout,
       `Failed while waiting for "${this.selector.locator()}" of Page Object Class '${this.constructor.name}' to display.`,
@@ -93,10 +93,10 @@ class Base {
   }
 
   waitUntilElementDisplayed(el) {
-    browser.wait(
+    return browser.wait(
       () => this.isElementDisplayed(el),
       this.waitUntilElementDisplayedTimeout,
-      `Failed while waiting for "${el}" of Page Object Class '${this.constructor.name}' to display.`,
+      `Failed while waiting for "${el.locator()}" of Page Object Class '${this.constructor.name}' to display.`,
     );
   }
 
