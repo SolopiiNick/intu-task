@@ -63,7 +63,7 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRemoveButton();
-    expect(this.page.removedTextPopup.getText()).toEqual(this.page.removedTextPopup);
+    expect(this.page.removedTextPopup.getText()).toEqual('Are you sure you want to move transaction to «Queued» page?');
     this.page.okButton.click();
     this.page.waitUntilElementDisplayed(this.page.removedNotification);
     expect(this.page.isElementDisplayed(this.page.removedNotification)).toBe(true);
@@ -86,9 +86,21 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRefundButton();
-    expect(this.page.isElementDisplayed(this.page.refundTextPopup)).toBe(true);
     this.page.refundSubmitButton.click();
     this.cardType();
+  }
+
+  checkRechargeTransaction() {
+    const { madeVisaCard } = historyDataMock;
+    processTransactionCard.fillFields(madeVisaCard);
+    processTransactionCard.submit();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.complete();
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.clickRechargeButton();
+    expect(processTransactionCard.generalInfo.cardNameInput.getText()).toEqual('');
   }
 
   async transactionDate() {

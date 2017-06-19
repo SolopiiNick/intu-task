@@ -53,6 +53,10 @@ class History extends Base {
     return element(by.css('img[alt="refund"]'));
   }
 
+  get rechargeButton() {
+    return element(by.css('img[alt="recharge"]'));
+  }
+
   get refundAmountInput() {
     return element(by.css('input[name="refund"]'));
   }
@@ -99,6 +103,10 @@ class History extends Base {
 
   clickRefundButton() {
     browser.executeScript('arguments[0].click();', this.refundButton);
+  }
+
+  clickRechargeButton() {
+    browser.executeScript('arguments[0].click();', this.rechargeButton);
   }
 
 }
