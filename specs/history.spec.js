@@ -13,4 +13,7 @@ describe('Process Transaction - Batch', () => {
     historyLogic.checkRemovedTransaction.bind(historyLogic));
   it('should process Amex card  + refund and check refunded transaction in History tab',
     historyLogic.checkRefundTransaction.bind(historyLogic));
+  it('should process Visa card  + recharge and check out all fields on the Process Transaction page',
+    historyLogic.checkRechargeTransaction.bind(historyLogic));
 });
+
