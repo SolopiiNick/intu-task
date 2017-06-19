@@ -12,7 +12,7 @@ const selectCard = Symbol('select card');
 const fillCardExpireMonthField = Symbol('fill card expire month field');
 const fillCardExpireYearField = Symbol('fill card expire year field');
 const checkCreateCustomer = Symbol('check create customer');
-
+const checkEditCustomer = Symbol('check edit customer');
 
 class ProcessTransactionCard extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=card`; }
@@ -35,6 +35,8 @@ class ProcessTransactionCard extends Base {
       actions: {
         chargeButton: $('.layout-align-space-around-center .item-btn-charge'),
         authorizeButton: $('.layout-align-space-around-center .item-btn-authorize'),
+        postauthorizeButton: $('.layout-align-space-around-center .item-btn-postauthorize'),
+        refundButton: $('.layout-align-space-around-center .item-btn-refund'),
       },
       cardNameInput: element(by.name('cardName')),
       cardNumberInput: element(by.name('cardsSearch')),
@@ -48,6 +50,7 @@ class ProcessTransactionCard extends Base {
         dropdown: element(by.name('expiry_year')),
         select: year => element(by.css(`md-option[value="${year}"]`)),
       },
+      authNumberInput: element(by.name('auth_number')),
       amountInput: element(by.model('cardForm.amount')),
       taxInput: $('input[aria-label="TaxCurrency"]'),
       surchargeInput: $('input[aria-label="SurchargeCurrency"]'),
@@ -59,6 +62,8 @@ class ProcessTransactionCard extends Base {
       emailInput: element(by.name('email')),
       // appeares after 'companyNameInput' has some text
       createCustomerCheckbox: element(by.css('md-checkbox[aria-label="Create a new customer"]')),
+      // appeares after 'cardNumberInput' and 'avsStreetInput' has some text
+      editCustomerCheckbox: element(by.css('md-checkbox[aria-label="Edit current customer"]')),
     };
   }
 
@@ -134,6 +139,11 @@ class ProcessTransactionCard extends Base {
         return;
       }
 
+      if (key === 'editCustomerCheckbox') {
+        this[checkEditCustomer]();
+        return;
+      }
+
       this.inputField.apply(this, [generalInfo, 'generalInfo'])(key);
     });
   }
@@ -160,8 +170,11 @@ class ProcessTransactionCard extends Base {
       case 'authorize':
         this.generalInfo.actions.authorizeButton.click();
         break;
+      case 'postauthorize':
+        this.generalInfo.actions.postauthorizeButton.click();
+        break;
       default:
-        this.chargeActionButton.click();
+        this.generalInfo.actions.chargeButton.click();
     }
   }
 
@@ -183,6 +196,10 @@ class ProcessTransactionCard extends Base {
 
   [checkCreateCustomer]() {
     this.generalInfo.createCustomerCheckbox.click();
+  }
+
+  [checkEditCustomer]() {
+    this.generalInfo.editCustomerCheckbox.click();
   }
 }
 

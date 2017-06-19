@@ -1,6 +1,6 @@
 import { cards } from '../cards';
 
-const { discover, visa, masterCard } = cards;
+const { discover, visa, masterCard, amex } = cards;
 
 const processTransactionCardDataMock = {
   successApproveWithChargeByDiscover: {
@@ -57,6 +57,32 @@ const processTransactionCardDataMock = {
         amountInput: '74',
         taxInput: '0.43',
         surchargeInput: '2',
+      },
+    },
+  },
+  successApproveWithPostauthorizeEditingCustomerByAmex: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: 'Test Process Transaction Card 5',
+      },
+      addPaymentMethodCard: {
+        cardNameInput: amex.name,
+        cardNumberInput: amex.number,
+        cardExpireMonth: amex.expire.month,
+        cardExpireYear: amex.expire.year,
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Test Process Transaction Card 5',
+        actionSelect: 'postauthorize',
+        cardNumberInput: 'autocomplete',
+        cardCvvInput: amex.cvv,
+        authNumberInput: '212121',
+        amountInput: '77.19',
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+        editCustomerCheckbox: true,
       },
     },
   },

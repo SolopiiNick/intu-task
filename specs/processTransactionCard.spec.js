@@ -16,4 +16,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should approve transaction with "charge" action, with existing Customer and by using Master Card',
     cardLogic.successApproveWithChargeWithCustomerByMasterCard.bind(cardLogic));
+
+  it('should approve transaction with "postauthorize" action, editing existing Customer and by using Amex',
+    cardLogic.successApproveWithPostauthorizeEditingCustomerByAmex.bind(cardLogic));
 });
