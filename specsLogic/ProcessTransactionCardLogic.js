@@ -116,6 +116,20 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
 
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
+
+  successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa() {
+    const dataMock =
+      processTransactionCardDataMock.successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa;
+
+    this.page.fillFields(dataMock);
+    this.page.process();
+
+    this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+    this.page.tryAgainButton.click();
+    this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+
+    expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
+  }
 }
 
 export default ProcessTransactionCardLogic;

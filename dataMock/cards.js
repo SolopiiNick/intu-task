@@ -17,6 +17,15 @@ const cards = {
       year: 20,
     },
   },
+  visaDeclined: {
+    name: 'Test Visa Declined',
+    number: '4005571702222222',
+    cvv: '123',
+    expire: {
+      month: 4,
+      year: 20,
+    },
+  },
   masterCard: {
     name: 'Test Master Card',
     number: '5405001111111165',

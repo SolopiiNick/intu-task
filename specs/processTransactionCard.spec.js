@@ -19,4 +19,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should approve transaction with "postauthorize" action, editing existing Customer and by using Amex',
     cardLogic.successApproveWithPostauthorizeEditingCustomerByAmex.bind(cardLogic));
+
+  it('should decline repeatedly transaction with "charge" action, with unexisting Customer and by using Visa',
+    cardLogic.successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa.bind(cardLogic));
 });

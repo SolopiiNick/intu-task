@@ -1,6 +1,7 @@
 import Base from '../utils/Base';
 
 const APPROVED_POPUP_TEXT = 'Approved';
+const DECLINED_POPUP_TEXT = 'Declined!';
 const ERROR_POPUP_TEXT = 'Error';
 
 const fillCardGeneralFields = Symbol('fill check tab general fields');
@@ -24,9 +25,11 @@ class ProcessTransactionCard extends Base {
   get processButton() { return $('button[ng-click="processCard()"]'); }
 
   get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get declinedPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', DECLINED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
 
   get completeButton() { return element(by.buttonText('Complete')); }
+  get tryAgainButton() { return element(by.buttonText('Try Again')); }
 
   get generalInfo() {
     return {

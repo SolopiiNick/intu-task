@@ -1,6 +1,6 @@
 import { cards } from '../cards';
 
-const { discover, visa, masterCard, amex } = cards;
+const { discover, visa, visaDeclined, masterCard, amex } = cards;
 
 const processTransactionCardDataMock = {
   successApproveWithChargeByDiscover: {
@@ -84,6 +84,19 @@ const processTransactionCardDataMock = {
         avsZipInput: '11747',
         editCustomerCheckbox: true,
       },
+    },
+  },
+  successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa: {
+    generalInfo: {
+      actionSelect: 'charge',
+      companyNameInput: 'Unexisting Test Process Transaction Card 1',
+      cardNameInput: visaDeclined.name,
+      cardNumberInput: visaDeclined.number,
+      cardExpireMonth: visaDeclined.expire.month,
+      cardExpireYear: visaDeclined.expire.year,
+      amountInput: '137.50',
+      avsStreetInput: '1307 Broad Hollow Road',
+      avsZipInput: '11747',
     },
   },
 };
