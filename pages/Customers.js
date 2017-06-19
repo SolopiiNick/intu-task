@@ -48,14 +48,6 @@ class Customers extends Base {
     };
   }
 
-  closePopupButton() { return element(by.css('.transaction-error button')); }
-
-  completePopupButton() { return element(by.css('button[ng-click=completeAction()]')); }
-
-  closePopup() {
-    this.completePopupButton.click();
-  }
-
   fillFields(field) {
     if (field.newCheckInfo) this[fillCheckGenerailFields](field.newCheckInfo);
   }
@@ -76,10 +68,6 @@ class Customers extends Base {
   [fillAccountTypeInput](type) {
     this.accountTypeInput.click();
     this.accountTypeSelect(type).click();
-  }
-
-  clickProcessTransaction() {
-    this.submitButton.click();
   }
 
   createCustomer() {

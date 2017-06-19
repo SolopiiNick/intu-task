@@ -53,9 +53,9 @@ class ProcessTransactionsCheck extends Base {
   get newCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=createNewCustomer]')); }
   get editCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=updateCurrentCustomer]')); }
   get customerInput() { return element(by.css('form[name=checkingForm] input[name=customersSearchCheck]')); }
-  get checkBillingBlock() { return element(by.model('checkBillingInfoShow')); }
-  get checkShippingBlock() { return element(by.model('checkShippingInfoShow')); }
-  get checkRecurringBlock() { return element(by.model('checkRecurringInfoShow')); }
+  get checkBillingBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkBillingInfoShow]')); }
+  get checkShippingBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkShippingInfoShow]')); }
+  get checkRecurringBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkRecurringInfoShow]')); }
 
   get accountTypeInput() { return element(by.css('form[name=checkingForm] [name=account_type]')); }
   accountTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
@@ -98,9 +98,9 @@ class ProcessTransactionsCheck extends Base {
     return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
   }
 
-  closePopupButton() { return element(by.css('.transaction-error button')); }
+  get closePopupButton() { return element(by.css('.transaction-error button')); }
 
-  completePopupButton() { return element(by.css('button[ng-click="completeAction()"]')); }
+  get completePopupButton() { return element(by.css('button[ng-click="completeAction()"]')); }
 
   closePopup() {
     this.completePopupButton.click();
@@ -126,7 +126,8 @@ class ProcessTransactionsCheck extends Base {
   }
 
   [fillCheckRecurringInfoFields](recurringInfo) {
-    this.checkRecurringBlock.click();
+    browser.executeScript('arguments[0].scrollIntoView()', this.checkRecurringBlock.getWebElement());
+    browser.executeScript('arguments[0].click()', this.checkRecurringBlock.getWebElement());
 
     browser.executeScript('arguments[0].scrollIntoView()', this.paymentTitle.getWebElement());
     this.paymentTitle.sendKeys(recurringInfo.paymentTitle);
@@ -141,12 +142,16 @@ class ProcessTransactionsCheck extends Base {
   }
 
   [fillTransactionTypeInput](type) {
-    this.transactionTypeInput.click();
+    const transactionTypeInputWebElement = this.transactionTypeInput.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', transactionTypeInputWebElement);
+    browser.executeScript('arguments[0].click()', transactionTypeInputWebElement);
     this.transactionTypeSelect(type).click();
   }
 
   [fillAccountTypeInput](type) {
-    this.accountTypeInput.click();
+    const accountTypeInputWebElement = this.accountTypeInput.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', accountTypeInputWebElement);
+    browser.executeScript('arguments[0].click()', accountTypeInputWebElement);
     this.accountTypeSelect(type).click();
   }
 
@@ -207,8 +212,9 @@ class ProcessTransactionsCheck extends Base {
   }
 
   clickProcessTransaction() {
-    browser.executeScript('arguments[0].scrollIntoView()', this.submitButton.getWebElement());
-    this.submitButton.click();
+    const submitButtonWebElement = this.submitButton.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', submitButtonWebElement);
+    browser.executeScript('arguments[0].click()', submitButtonWebElement);
   }
 }
 
