@@ -9,17 +9,17 @@ describe('Process Transaction - Card Tab', () => {
   it('should be visible', cardLogic.shouldBeVisible.bind(cardLogic));
 
   it('should approve transaction with "charge" action, without Customer and by using Discover',
-    cardLogic.successApproveWithChargeByDiscover.bind(cardLogic));
+    cardLogic.approveWithChargeByDiscover.bind(cardLogic));
 
   it('should approve transaction with "authorize" action, create Customer and by using Visa',
-    cardLogic.successApproveWithAuthorizeCreateCustomerByVisa.bind(cardLogic));
+    cardLogic.approveWithAuthorizeCreateCustomerByVisa.bind(cardLogic));
 
   it('should approve transaction with "charge" action, with existing Customer and by using Master Card',
-    cardLogic.successApproveWithChargeWithCustomerByMasterCard.bind(cardLogic));
+    cardLogic.approveWithChargeWithCustomerByMasterCard.bind(cardLogic));
 
   it('should approve transaction with "postauthorize" action, editing existing Customer and by using Amex',
-    cardLogic.successApproveWithPostauthorizeEditingCustomerByAmex.bind(cardLogic));
+    cardLogic.approveWithPostauthorizeEditingCustomerByAmex.bind(cardLogic));
 
   it('should decline repeatedly transaction with "charge" action, with unexisting Customer and by using Visa',
-    cardLogic.successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa.bind(cardLogic));
+    cardLogic.declineRepeatedlyWithChargeWithUnexistingCustomerByVisa.bind(cardLogic));
 });

@@ -13,8 +13,8 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isDisplayed()).toBe(true);
   }
 
-  successApproveWithChargeByDiscover() {
-    const dataMock = processTransactionCardDataMock.successApproveWithChargeByDiscover;
+  approveWithChargeByDiscover() {
+    const dataMock = processTransactionCardDataMock.approveWithChargeByDiscover;
 
     this.page.fillFields(dataMock);
     this.page.process();
@@ -24,8 +24,8 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  successApproveWithAuthorizeCreateCustomerByVisa() {
-    const dataMock = processTransactionCardDataMock.successApproveWithAuthorizeCreateCustomerByVisa;
+  approveWithAuthorizeCreateCustomerByVisa() {
+    const dataMock = processTransactionCardDataMock.approveWithAuthorizeCreateCustomerByVisa;
 
     this.page.fillFields(dataMock);
     this.page.process();
@@ -35,11 +35,11 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  async successApproveWithChargeWithCustomerByMasterCard() {
+  async approveWithChargeWithCustomerByMasterCard() {
     const customersDataMock =
-      processTransactionCardDataMock.successApproveWithChargeWithCustomerByMasterCard.customersPage;
+      processTransactionCardDataMock.approveWithChargeWithCustomerByMasterCard.customersPage;
     const cardDataMock =
-      processTransactionCardDataMock.successApproveWithChargeWithCustomerByMasterCard
+      processTransactionCardDataMock.approveWithChargeWithCustomerByMasterCard
       .processTransactionCardPage;
 
     await this.customersPage.get();
@@ -75,12 +75,11 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  async successApproveWithPostauthorizeEditingCustomerByAmex() {
+  async approveWithPostauthorizeEditingCustomerByAmex() {
     const customersDataMock =
-      processTransactionCardDataMock.successApproveWithPostauthorizeEditingCustomerByAmex
-      .customersPage;
+      processTransactionCardDataMock.approveWithPostauthorizeEditingCustomerByAmex.customersPage;
     const cardDataMock =
-      processTransactionCardDataMock.successApproveWithPostauthorizeEditingCustomerByAmex
+      processTransactionCardDataMock.approveWithPostauthorizeEditingCustomerByAmex
       .processTransactionCardPage;
 
     await this.customersPage.get();
@@ -117,9 +116,9 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa() {
+  declineRepeatedlyWithChargeWithUnexistingCustomerByVisa() {
     const dataMock =
-      processTransactionCardDataMock.successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa;
+      processTransactionCardDataMock.declineRepeatedlyWithChargeWithUnexistingCustomerByVisa;
 
     this.page.fillFields(dataMock);
     this.page.process();

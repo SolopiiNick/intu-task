@@ -3,7 +3,7 @@ import { cards } from '../cards';
 const { discover, visa, visaDeclined, masterCard, amex } = cards;
 
 const processTransactionCardDataMock = {
-  successApproveWithChargeByDiscover: {
+  approveWithChargeByDiscover: {
     generalInfo: {
       actionSelect: 'charge',
       cardNameInput: discover.name,
@@ -17,7 +17,7 @@ const processTransactionCardDataMock = {
       avsZipInput: '11747',
     },
   },
-  successApproveWithAuthorizeCreateCustomerByVisa: {
+  approveWithAuthorizeCreateCustomerByVisa: {
     generalInfo: {
       actionSelect: 'authorize',
       cardNameInput: visa.name,
@@ -34,7 +34,7 @@ const processTransactionCardDataMock = {
       createCustomerCheckbox: true,
     },
   },
-  successApproveWithChargeWithCustomerByMasterCard: {
+  approveWithChargeWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {
         companyNameInput: 'Test Process Transaction Card 2',
@@ -60,7 +60,7 @@ const processTransactionCardDataMock = {
       },
     },
   },
-  successApproveWithPostauthorizeEditingCustomerByAmex: {
+  approveWithPostauthorizeEditingCustomerByAmex: {
     customersPage: {
       createCustomer: {
         companyNameInput: 'Test Process Transaction Card 5',
@@ -86,7 +86,7 @@ const processTransactionCardDataMock = {
       },
     },
   },
-  successDeclineRepeatedlyWithChargeWithUnexistingCustomerByVisa: {
+  declineRepeatedlyWithChargeWithUnexistingCustomerByVisa: {
     generalInfo: {
       actionSelect: 'charge',
       companyNameInput: 'Unexisting Test Process Transaction Card 1',
