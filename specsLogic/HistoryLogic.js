@@ -63,7 +63,7 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRemoveButton();
-    expect(this.page.removedTextPopup.getText()).toEqual('Are you sure you want to move transaction to «Queued» page?');
+    expect(this.page.removedTextPopup.getText()).toEqual(this.page.removedTextPopup);
     this.page.okButton.click();
     this.page.waitUntilElementDisplayed(this.page.removedNotification);
     expect(this.page.isElementDisplayed(this.page.removedNotification)).toBe(true);
