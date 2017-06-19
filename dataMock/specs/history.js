@@ -1,6 +1,6 @@
 import { cards } from '../cards';
 
-const { discover, visa } = cards;
+const { discover, visa, masterCard, amex } = cards;
 
 const historyDataMock = {
   madeDiscoverCard: {
@@ -25,22 +25,34 @@ const historyDataMock = {
       cardExpireDropdown: visa.expire,
       amountInput: '74.31',
       taxInput: '1',
-      surchargeInput: '1',
+      avsStreetInput: '1307 Broad Hollow Road',
+      avsZipInput: '11746',
     },
   },
   madeMasterCard: {
     generalInfo: {
-      cardNameInput: 'Test Master',
-      cardInput: '5405001111111165',
-      cvvInput: '123',
-      amountInput: '74.43',
+      actionSelect: 'charge',
+      cardNameInput: masterCard.name,
+      cardNumberInput: masterCard.number,
+      cardCvvInput: masterCard.cvv,
+      cardExpireDropdown: masterCard.expire,
+      amountInput: '74.31',
       taxInput: '1',
-      surchargeInput: '1',
       avsStreetInput: '1307 Broad Hollow Road',
       avsZipInput: '11746',
-      descriptionInput: 'test description visa',
-      emailInput: 'an@codemotion.eu',
-      poNumberInput: '0002',
+    },
+  },
+  madeAmexCard: {
+    generalInfo: {
+      actionSelect: 'charge',
+      cardNameInput: amex.name,
+      cardNumberInput: amex.number,
+      cardCvvInput: amex.cvv,
+      cardExpireDropdown: amex.expire,
+      amountInput: '70',
+      taxInput: '1',
+      avsStreetInput: '1307 Broad Hollow Road',
+      avsZipInput: '11747',
     },
   },
 };
