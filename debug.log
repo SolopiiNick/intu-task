@@ -1,0 +1,3 @@
+[0613/155214.583:ERROR:process_reader_win.cc(114)] NtOpenThread: {Отказ доступа} Процесс запросил доступ к объекту, однако права доступа не предоставлены.  (0xc0000022)
+[0613/155214.583:ERROR:exception_snapshot_win.cc(87)] thread ID 10360 not found in process
+[0613/155214.583:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::Initialize failed
