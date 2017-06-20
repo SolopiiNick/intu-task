@@ -9,4 +9,11 @@ describe('Process Transaction - Batch', () => {
     historyLogic.checkMadeTransaction.bind(historyLogic));
   it('should process Visa card  + void and check made transaction in History tab',
     historyLogic.checkVoidTransaction.bind(historyLogic));
+  it('should process Master card  + remove and check removed transaction in History tab',
+    historyLogic.checkRemovedTransaction.bind(historyLogic));
+  it('should process Amex card  + refund and check refunded transaction in History tab',
+    historyLogic.checkRefundTransaction.bind(historyLogic));
+  it('should process Visa card  + recharge and check out all fields on the Process Transaction page',
+    historyLogic.checkRechargeTransaction.bind(historyLogic));
 });
+

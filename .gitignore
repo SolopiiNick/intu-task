@@ -2,3 +2,5 @@
 /node_modules
 .DS_Store
 configs/app.js
+configs/protractor-config.js
+debug.log
