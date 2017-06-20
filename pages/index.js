@@ -1,13 +1,13 @@
+import Customers from './Customers';
 import Login from './Login';
 import ProcessTransactionCard from './ProcessTransactionCard';
 import ProcessTransactionChecks from './ProcessTransactionCheck';
 import History from './History';
-import Customers from './Customers';
 
 export {
+  Customers,
   Login,
   ProcessTransactionCard,
   ProcessTransactionChecks,
   History,
-  Customers,
 };

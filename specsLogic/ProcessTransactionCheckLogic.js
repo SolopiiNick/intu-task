@@ -2,8 +2,9 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionChecks, Customers } from '../pages';
 import { processTransactionCheckDataMock } from '../dataMock';
 
-const createNewCustomer = Symbol('Create new customer');
-const createNewCustomerWithCheck = Symbol('Create new customer with check');
+const createNewCustomer = Symbol('create new customer');
+const createNewCheck = Symbol('create new card');
+const createNewCustomerWithCheck = Symbol('create new customer with check');
 
 class ProcessTransactionCheckLogic extends SpecBaseLogic {
   constructor() {
@@ -21,6 +22,7 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.fillFields(processTransactionCheckDataMock.successSavingWithTEL);
     this.page.clickProcessTransaction();
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
@@ -30,22 +32,23 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setNewCustomer();
     this.page.clickProcessTransaction();
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  sendDuplicateSavingWithCCD() {
+  async sendDuplicateSavingWithCCD() {
     this.page.setChargeAction();
     this.page.fillFields(processTransactionCheckDataMock.successDuplicateSavingWithCCD);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.page.approvePopup), 5000, 'Approved Popup')
-      .then(() => {
-        this.page.closePopup();
-        this.page.setChargeAction();
-        this.page.fillFields(processTransactionCheckDataMock.successDuplicateSavingWithCCD);
-        this.page.clickProcessTransaction();
-        this.page.waitUntilElementDisplayed(this.page.duplicatePopup);
-        expect(this.page.isElementDisplayed(this.page.duplicatePopup)).toBe(true);
-      });
+    await this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    this.page.closePopup();
+    this.page.setChargeAction();
+    this.page.fillFields(processTransactionCheckDataMock.successDuplicateSavingWithCCD);
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.duplicatePopup);
+
+    expect(this.page.isElementDisplayed(this.page.duplicatePopup)).toBe(true);
   }
 
   sendBillingCheckingWithPPD() {
@@ -54,6 +57,7 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setSameAsBillingInput();
     this.page.clickProcessTransaction();
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
@@ -63,102 +67,119 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setNewCustomer();
     this.page.clickProcessTransaction();
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
   sendRefundWithExistingCustomer() {
-    const testData = processTransactionCheckDataMock.successRefundWithExistingCustomer;
+    const customersDataMock =
+      processTransactionCheckDataMock.successRefundWithExistingCustomer.customersPage;
+    const checkDataMock =
+      processTransactionCheckDataMock.successRefundWithExistingCustomer.processTransactionCheck;
 
-    this[createNewCustomerWithCheck](testData);
-    browser.sleep(500)
+    this[createNewCustomerWithCheck](customersDataMock);
+
+    browser.waitForAngular()
       .then(() => {
         this.page.get();
         this.page.setRefundAction();
-        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillCustomerAutoComplete(customersDataMock.createCustomer.companyNameInput);
         this.page.fillAccountNumberAutoComplete();
-        this.page.fillFields(testData);
+        this.page.fillFields(checkDataMock);
         this.page.clickProcessTransaction();
         this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
         expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
       });
   }
 
   sendChargeWithExistingCustomer() {
-    const testData = processTransactionCheckDataMock.successChargeWithExistingCustomer;
+    const customersDataMock =
+      processTransactionCheckDataMock.successChargeWithExistingCustomer.customersPage;
+    const checkDataMock =
+      processTransactionCheckDataMock.successChargeWithExistingCustomer.processTransactionCheck;
 
-    this[createNewCustomerWithCheck](testData);
-    browser.sleep(500)
-      .then(() => {
-        this.page.get();
-        this.page.setChargeAction();
-        this.page.fillCustomerAutoComplete(testData.companyName);
-        this.page.fillAccountNumberAutoComplete();
-        this.page.fillFields(testData);
-        this.page.setEditCustomer();
-        this.page.clickProcessTransaction();
-        this.page.waitUntilElementDisplayed(this.page.approvePopup);
-        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
-      });
+    this[createNewCustomerWithCheck](customersDataMock);
+
+    this.page.get();
+    this.page.setChargeAction();
+    this.page.fillCustomerAutoComplete(customersDataMock.createCustomer.companyNameInput);
+    this.page.fillAccountNumberAutoComplete();
+    this.page.fillFields(checkDataMock);
+    this.page.setEditCustomer();
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
   sendRecurringChargeWithExistingCustomer() {
-    const testData = processTransactionCheckDataMock.successChargeRecurringWithExistingCustomer;
+    const customersDataMock =
+      processTransactionCheckDataMock.successChargeRecurringWithExistingCustomer.customersPage;
+    const checkDataMock =
+      processTransactionCheckDataMock.successChargeRecurringWithExistingCustomer
+      .processTransactionCheck;
 
-    this[createNewCustomerWithCheck](testData);
-    browser.sleep(500)
-      .then(() => {
-        this.page.get();
-        this.page.setChargeAction();
-        this.page.fillCustomerAutoComplete(testData.companyName);
-        this.page.fillAccountNumberAutoComplete();
-        this.page.fillFields(testData);
-        // this.page.setEditCustomer();
-        this.page.clickProcessTransaction();
-        this.page.waitUntilElementDisplayed(this.page.approvePopup);
-        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
-      });
+    this[createNewCustomerWithCheck](customersDataMock);
+    this.page.get();
+    this.page.setChargeAction();
+    this.page.fillCustomerAutoComplete(customersDataMock.createCustomer.companyNameInput);
+    this.page.fillAccountNumberAutoComplete();
+    this.page.fillFields(checkDataMock);
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  sendErrorRecurringDuplicateWithExistingCustomer() {
-    const testData = processTransactionCheckDataMock.errorChargeRecurringWithExistingCustomer;
+  async sendErrorRecurringDuplicateWithExistingCustomer() {
+    const customersDataMock =
+      processTransactionCheckDataMock.errorChargeRecurringWithExistingCustomer.customersPage;
+    const checkDataMock =
+      processTransactionCheckDataMock.errorChargeRecurringWithExistingCustomer
+      .processTransactionCheck;
 
-    this[createNewCustomer](testData);
-    browser.sleep(500)
-      .then(() => {
-        this.page.get();
-        this.page.setChargeAction();
-        this.page.fillCustomerAutoComplete(testData.companyName);
-        this.page.fillFields(testData);
-        this.page.setEditCustomer();
-        this.page.clickProcessTransaction();
-        return browser.wait(this.EC.presenceOf(this.page.approvePopup), 5000, 'Approved Popup');
-      })
-      .then(() => {
-        this.page.closePopup();
-        this.page.setChargeAction();
-        this.page.fillCustomerAutoComplete(testData.companyName);
-        this.page.fillAccountNumberAutoComplete();
-        this.page.fillFields(testData);
-        this.page.clickProcessTransaction();
-        this.page.waitUntilElementDisplayed(this.page.approvePopup);
-        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
-      });
+    this[createNewCustomer](customersDataMock);
+    this.page.get();
+    this.page.setChargeAction();
+    this.page.fillCustomerAutoComplete(customersDataMock.createCustomer.companyNameInput);
+    this.page.fillFields(checkDataMock);
+    this.page.setEditCustomer();
+    this.page.clickProcessTransaction();
+    await this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    this.page.closePopup();
+    this.page.setChargeAction();
+    this.page.fillCustomerAutoComplete(customersDataMock.createCustomer.companyNameInput);
+    this.page.fillAccountNumberAutoComplete();
+    this.page.fillFields(checkDataMock);
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  [createNewCustomerWithCheck](testData) {
-    this[createNewCustomer](testData);
-    this.customersPage.selectCreatedCustomer();
+  [createNewCustomerWithCheck](customersDataMock) {
+    this[createNewCustomer](customersDataMock);
+    return this[createNewCheck](customersDataMock);
+  }
+
+  [createNewCustomer](customersDataMock) {
+    this.customersPage.get();
+    this.customersPage.clickCreateCustomer();
+    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
+    this.customersPage.clickCompleteCreateCustomer();
+  }
+
+  [createNewCheck](customersDataMock) {
+    this.customersPage.selectCreatedCustomer(customersDataMock.createCustomer.companyNameInput);
     this.customersPage.selectWalletTab();
     this.customersPage.clickAddPaymentMethod();
-    this.customersPage.selectCheckPage();
-    this.customersPage.fillFields(testData);
-    this.customersPage.clickSavePaymentMethod();
-  }
-  [createNewCustomer](testData) {
-    this.customersPage.get();
-    this.customersPage.createCustomer();
-    this.customersPage.fillCompanyName(testData.companyName);
-    this.customersPage.completeCreateCustomer();
+    this.customersPage.selectCheckTab();
+    this.customersPage.fillFields({
+      addPaymentMethodCheck: customersDataMock.addPaymentMethodCheck,
+    });
+    return this.customersPage.clickAddCheck();
   }
 }
 

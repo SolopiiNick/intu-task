@@ -16,7 +16,7 @@ class ProcessTransactionsCheck extends Base {
   get selector() { return $('form[name="checkingForm"]'); }
 
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
-  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund span')); }
+  get refundActionButton() { return $('form[name=checkingForm] .item-btn-refund'); }
 
   get generalInfo() {
     return {
@@ -160,7 +160,9 @@ class ProcessTransactionsCheck extends Base {
   }
 
   setRefundAction() {
-    this.refundActionButton.click();
+    const refundActionButtonWebElement = this.refundActionButton.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', refundActionButtonWebElement);
+    browser.executeScript('arguments[0].click()', refundActionButtonWebElement);
   }
 
   setNewCustomer() {

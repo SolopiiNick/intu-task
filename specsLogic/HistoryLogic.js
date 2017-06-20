@@ -17,9 +17,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkMadeTransaction() {
     const { madeDiscoverCard } = historyDataMock;
     processTransactionCard.fillFields(madeDiscoverCard);
-    processTransactionCard.submit();
+    processTransactionCard.process();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.complete();
+    processTransactionCard.clickComplete();
 
     this.page.historyTab.click();
     this.page.waitUntilDisplayed();
@@ -33,9 +33,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkVoidTransaction() {
     const { madeVisaCard } = historyDataMock;
     processTransactionCard.fillFields(madeVisaCard);
-    processTransactionCard.submit();
+    processTransactionCard.process();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.complete();
+    processTransactionCard.clickComplete();
 
     this.page.historyTab.click();
     this.page.waitUntilDisplayed();
@@ -56,9 +56,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkRemovedTransaction() {
     const { madeMasterCard } = historyDataMock;
     processTransactionCard.fillFields(madeMasterCard);
-    processTransactionCard.submit();
+    processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.complete();
+    processTransactionCard.clickComplete();
 
     this.page.historyTab.click();
     this.page.currentBatch.click();
@@ -79,9 +79,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkRefundTransaction() {
     const { madeAmexCard } = historyDataMock;
     processTransactionCard.fillFields(madeAmexCard);
-    processTransactionCard.submit();
+    processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.complete();
+    processTransactionCard.clickComplete();
 
     this.page.historyTab.click();
     this.page.currentBatch.click();
@@ -93,9 +93,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkRechargeTransaction() {
     const { madeVisaCard } = historyDataMock;
     processTransactionCard.fillFields(madeVisaCard);
-    processTransactionCard.submit();
+    processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.complete();
+    processTransactionCard.clickComplete();
 
     this.page.historyTab.click();
     this.page.currentBatch.click();
