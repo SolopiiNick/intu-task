@@ -2,6 +2,10 @@ import SpecBaseLogic from '../utils/SpecLogicBase';
 import { ProcessTransactionCard, Customers } from '../pages';
 import { processTransactionCardDataMock } from '../dataMock';
 
+const createNewCustomer = Symbol('create new customer');
+const createNewCard = Symbol('create new card');
+const createNewCustomerWithCard = Symbol('create new customer with card');
+
 class ProcessTransactionCardLogic extends SpecBaseLogic {
   constructor() {
     super();
@@ -17,7 +21,7 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     const dataMock = processTransactionCardDataMock.approveWithChargeByDiscover;
 
     this.page.fillFields(dataMock);
-    this.page.process();
+    this.page.clickProcess();
 
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
 
@@ -28,7 +32,7 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     const dataMock = processTransactionCardDataMock.approveWithAuthorizeCreateCustomerByVisa;
 
     this.page.fillFields(dataMock);
-    this.page.process();
+    this.page.clickProcess();
 
     this.page.waitUntilElementDisplayed(this.page.approvePopup);
 
@@ -42,33 +46,11 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
       processTransactionCardDataMock.approveWithChargeWithCustomerByMasterCard
       .processTransactionCardPage;
 
-    await this.customersPage.get();
-
-    this.customersPage.createNewButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.createCustomer.popup);
-    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
-    this.customersPage.createCustomer.completeButton.click();
-
-    const createdCustomerItem = this.customersPage.customersList.createdCustomerItem(
-      customersDataMock.createCustomer.companyNameInput,
-    );
-    await this.customersPage.waitUntilElementDisplayed(createdCustomerItem);
-    createdCustomerItem.click();
-    this.customersPage.customersList.walletTab.tab.click();
-
-    this.customersPage.customersList.walletTab.addButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.addPaymentMethod.popup);
-    this.customersPage.addPaymentMethod.cardTab.click();
-
-    this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
-    this.customersPage.addPaymentMethod.addCardButton.click();
+    this[createNewCustomerWithCard](customersDataMock);
 
     this.page.get();
-
     this.page.fillFields(cardDataMock);
-    // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
-    browser.executeScript('arguments[0].scrollIntoView()', this.page.processButton.getWebElement());
-    browser.executeScript('arguments[0].click()', this.page.processButton.getWebElement());
+    this.page.clickProcessBrowserExecute();
 
     await this.page.waitUntilElementDisplayed(this.page.approvePopup);
 
@@ -82,34 +64,11 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
       processTransactionCardDataMock.approveWithPostauthorizeEditingCustomerByAmex
       .processTransactionCardPage;
 
-    await this.customersPage.get();
-
-    this.customersPage.createNewButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.createCustomer.popup);
-    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
-    this.customersPage.createCustomer.completeButton.click();
-
-    const createdCustomerItem = this.customersPage.customersList.createdCustomerItem(
-      customersDataMock.createCustomer.companyNameInput,
-    );
-    await this.customersPage.waitUntilElementDisplayed(createdCustomerItem);
-    createdCustomerItem.click();
-    this.customersPage.customersList.walletTab.tab.click();
-
-    this.customersPage.customersList.walletTab.addButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.addPaymentMethod.popup);
-    this.customersPage.addPaymentMethod.cardTab.click();
-
-    this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
-    this.customersPage.addPaymentMethod.addCardButton.click();
+    this[createNewCustomerWithCard](customersDataMock);
 
     this.page.get();
-
     this.page.fillFields(cardDataMock);
-    // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
-    browser.executeScript('arguments[0].scrollIntoView()', this.page.processButton.getWebElement());
-    browser.executeScript('arguments[0].click()', this.page.processButton.getWebElement());
-    this.page.process();
+    this.page.clickProcessBrowserExecute();
 
     await this.page.waitUntilElementDisplayed(this.page.approvePopup);
 
@@ -121,10 +80,10 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
       processTransactionCardDataMock.declineRepeatedlyWithChargeWithUnexistingCustomerByVisa;
 
     this.page.fillFields(dataMock);
-    this.page.process();
+    this.page.clickProcess();
 
     this.page.waitUntilElementDisplayed(this.page.declinedPopup);
-    this.page.tryAgainButton.click();
+    this.page.clickTryAgainButton();
     this.page.waitUntilElementDisplayed(this.page.declinedPopup);
 
     expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
@@ -138,39 +97,38 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
       processTransactionCardDataMock.declineRepeatedlyWithChargeWithCustomerByDiscover
       .processTransactionCardPage;
 
-    await this.customersPage.get();
-
-    this.customersPage.createNewButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.createCustomer.popup);
-    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
-    this.customersPage.createCustomer.completeButton.click();
-
-    const createdCustomerItem = this.customersPage.customersList.createdCustomerItem(
-      customersDataMock.createCustomer.companyNameInput,
-    );
-    await this.customersPage.waitUntilElementDisplayed(createdCustomerItem);
-    createdCustomerItem.click();
-    this.customersPage.customersList.walletTab.tab.click();
-
-    this.customersPage.customersList.walletTab.addButton.click();
-    await this.customersPage.waitUntilElementDisplayed(this.customersPage.addPaymentMethod.popup);
-    this.customersPage.addPaymentMethod.cardTab.click();
-
-    this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
-    this.customersPage.addPaymentMethod.addCardButton.click();
+    this[createNewCustomerWithCard](customersDataMock);
 
     this.page.get();
-
     this.page.fillFields(cardDataMock);
-    // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
-    browser.executeScript('arguments[0].scrollIntoView()', this.page.processButton.getWebElement());
-    browser.executeScript('arguments[0].click()', this.page.processButton.getWebElement());
+    this.page.clickProcessBrowserExecute();
 
     await this.page.waitUntilElementDisplayed(this.page.declinedPopup);
-    this.page.tryAgainButton.click();
+    this.page.clickTryAgainButton();
     await this.page.waitUntilElementDisplayed(this.page.declinedPopup);
 
     expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
+  }
+
+  [createNewCustomerWithCard](customersDataMock) {
+    this[createNewCustomer](customersDataMock);
+    this[createNewCard](customersDataMock);
+  }
+
+  [createNewCustomer](customersDataMock) {
+    this.customersPage.get();
+    this.customersPage.clickCreateCustomer();
+    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
+    this.customersPage.clickCompleteCreateCustomer();
+  }
+
+  [createNewCard](customersDataMock) {
+    this.customersPage.selectCreatedCustomer(customersDataMock.createCustomer.companyNameInput);
+    this.customersPage.selectWalletTab();
+    this.customersPage.clickAddPaymentMethod();
+    this.customersPage.selectCardTab();
+    this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
+    this.customersPage.clickAddCard();
   }
 }
 

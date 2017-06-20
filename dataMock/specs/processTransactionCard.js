@@ -1,6 +1,10 @@
+import { getRandomInt } from '../../utils/helpers';
 import { cards } from '../cards';
 
 const { discover, discoverDeclined, visa, visaDeclined, masterCard, amex } = cards;
+
+const MIN_NUM = 0;
+const MAX_NUM = 100000000;
 
 const processTransactionCardDataMock = {
   approveWithChargeByDiscover: {
@@ -28,7 +32,7 @@ const processTransactionCardDataMock = {
       amountInput: '75',
       taxInput: '1',
       surchargeInput: '0.31',
-      companyNameInput: 'Test Process Transaction Card 1',
+      companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       avsStreetInput: '1307 Broad Hollow Road',
       avsZipInput: '11747',
       createCustomerCheckbox: true,
@@ -37,7 +41,7 @@ const processTransactionCardDataMock = {
   approveWithChargeWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {
-        companyNameInput: 'Test Process Transaction Card 2',
+        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: masterCard.name,
@@ -63,7 +67,7 @@ const processTransactionCardDataMock = {
   approveWithPostauthorizeEditingCustomerByAmex: {
     customersPage: {
       createCustomer: {
-        companyNameInput: 'Test Process Transaction Card 3',
+        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: amex.name,
@@ -89,7 +93,7 @@ const processTransactionCardDataMock = {
   declineRepeatedlyWithChargeWithUnexistingCustomerByVisa: {
     generalInfo: {
       actionSelect: 'charge',
-      companyNameInput: 'Unexisting Test Process Transaction Card 1',
+      companyNameInput: `Unexisting Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       cardNameInput: visaDeclined.name,
       cardNumberInput: visaDeclined.number,
       cardExpireMonth: visaDeclined.expire.month,
@@ -102,7 +106,7 @@ const processTransactionCardDataMock = {
   declineRepeatedlyWithChargeWithCustomerByDiscover: {
     customersPage: {
       createCustomer: {
-        companyNameInput: 'Test Process Transaction Card 4',
+        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: discoverDeclined.name,

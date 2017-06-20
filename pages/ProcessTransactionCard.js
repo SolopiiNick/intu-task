@@ -96,12 +96,22 @@ class ProcessTransactionCard extends Base {
     this.checkSameAsBilling.click();
   }
 
-  process() {
+  clickProcess() {
     this.processButton.click();
   }
 
-  complete() {
+  clickProcessBrowserExecute() {
+    // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
+    browser.executeScript('arguments[0].scrollIntoView()', this.processButton.getWebElement());
+    browser.executeScript('arguments[0].click()', this.processButton.getWebElement());
+  }
+
+  clickComplete() {
     this.completeButton.click();
+  }
+
+  clickTryAgainButton() {
+    this.tryAgainButton.click();
   }
 
   fillFields(fields) {

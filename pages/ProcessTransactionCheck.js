@@ -6,6 +6,9 @@ const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try agai
 
 const fillCheckGenerailFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
+const fillCheckRecurringInfoFields = Symbol('fill check tab recurring info fields');
+const fillTransactionTypeInput = Symbol('fill transaction type select');
+const fillAccountTypeInput = Symbol('fill account type select');
 
 class ProcessTransactionsCheck extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=check`; }
@@ -13,7 +16,7 @@ class ProcessTransactionsCheck extends Base {
   get selector() { return $('form[name="checkingForm"]'); }
 
   get checkActionButton() { return element(by.css('form[name=checkingForm] .item-btn-charge')); }
-  get refundActionButton() { return element(by.css('form[name=checkingForm] .item-btn-refund')); }
+  get refundActionButton() { return $('form[name=checkingForm] .item-btn-refund'); }
 
   get generalInfo() {
     return {
@@ -22,74 +25,198 @@ class ProcessTransactionsCheck extends Base {
       transactionTypeInput: element(by.name('transaction_type')),
       routingNumberInput: element(by.name('routingNumber')),
       accountNumberInput: element(by.name('checksSearch')),
-      amountInput: element(by.name('amount')),
-      taxInput: element(by.name('tax_currency')),
-      surchargeInput: element(by.name('surcharge_currency')),
-      avsStreetInput: element(by.name('billing_street')),
-      avsZipInput: element(by.name('billing_zip')),
-      poNumberInput: element(by.name('po_number')),
-      companyName: element(by.name('company_name')),
-      descriptionInput: element(by.name('description')),
-      emailInput: element(by.name('email')),
+      amountInput: element(by.model('checkForm.amount')),
+      taxInput: element(by.model('checkForm.taxCurrency')),
+      surchargeInput: element(by.model('checkForm.surchargeCurrency')),
+      avsStreetInput: element(by.model('checkForm.generalInfo.billingAddress')),
+      avsZipInput: element(by.model('checkForm.generalInfo.billingZip')),
+      poNumberInput: element(by.model('checkForm.generalInfo.po')),
+      companyName: element(by.model('checkForm.generalInfo.company')),
+      descriptionInput: element(by.model('checkForm.generalInfo.description')),
+      emailInput: element(by.model('checkForm.generalInfo.email')),
       billingSwitchInput: element(by.model('checkBillingInfoShow')),
     };
   }
   get billingInfo() {
     return {
-      firstName: element(by.name('first_name')),
-      lastName: element(by.name('last_name')),
-      street: element(by.name('street')),
-      street2: element(by.name('street2')),
-      city: element(by.name('city')),
-      zipCode: element(by.name('zip_code')),
-      country: element(by.name('country')),
-      state: element(by.name('billingStatesSearchCheck')),
-      phone: element(by.name('billing_phone')),
+      firstName: element(by.css('form[name=checkingForm] input[name=first_name]')),
+      lastName: element(by.css('form[name=checkingForm] input[name=last_name]')),
+      street: element(by.css('form[name=checkingForm] input[name=street]')),
+      street2: element(by.css('form[name=checkingForm] input[name=street2]')),
+      city: element(by.css('form[name=checkingForm] input[name=city]')),
+      zipCode: element(by.css('form[name=checkingForm] input[name=zip_code]')),
+      country: element(by.css('form[name=checkingForm] input[name=country]')),
+      state: element(by.css('form[name=checkingForm] input[name=billingStatesSearchCheck]')),
+      phone: element(by.css('form[name=checkingForm] input[name=billing_phone]')),
     };
   }
-  get newCustomerInput() { return element(by.model('createNewCustomer')); }
-  get sameAsBillingInput() { return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse')); }
-  get submitButton() { return element(by.cssContainingText('[type=submit] span', 'Process')); }
-  get confirmPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+  get newCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=createNewCustomer]')); }
+  get editCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=updateCurrentCustomer]')); }
+  get customerInput() { return element(by.css('form[name=checkingForm] input[name=customersSearchCheck]')); }
+  get checkBillingBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkBillingInfoShow]')); }
+  get checkShippingBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkShippingInfoShow]')); }
+  get checkRecurringBlock() { return element(by.css('form[name=checkingForm] [ng-model=checkRecurringInfoShow]')); }
+
+  get accountTypeInput() { return element(by.css('form[name=checkingForm] [name=account_type]')); }
+  accountTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
+
+  get transactionTypeInput() { return element(by.css('form[name=checkingForm] [name=transaction_type]')); }
+  transactionTypeSelect(type) { return element(by.css(`md-option[value="${type}"]`)); }
+
+  get paymentTitle() { return element(by.css('form[name=checkingForm] input[name=payment_title]')); }
+
+  get startBillingDate() { return element(by.css('form[name=checkingForm] input[name=start_date]')); }
+  getElementStartDate(date) {
+    const selector = date
+      || 'form[name=checkingForm] .moment-picker-specific-views tr:last-child td:last-child';
+    return element(by.css(selector));
+  }
+
+  get everyPeriodInput() { return element(by.css('form[name=checkingForm] [name=period]')); }
+  everyPeriodSelect(period) {
+    return element(by.cssContainingText('._md-active md-option ._md-text', period));
+  }
+
+  get repeatTimesRadio() { return element(by.css('form[name=checkingForm] [value=remTransNumber]')); }
+  get repeatTimesInput() { return element(by.css('form[name=checkingForm] input[name=repeat_amount]')); }
+  get repeatOngoingRadio() { return element(by.css('form[name=checkingForm] [value=recurringOngoing]')); }
+
+  get billFirstTransactionToday() { return element(by.model('checkForm.recurringInfo.billFirstToday')); }
+
+  get autoCompleteItem() {
+    return element(by
+      .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
+  }
+
+  get sameAsBillingInput() {
+    return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse'));
+  }
+  get submitButton() { return element(by.cssContainingText('form[name=checkingForm] [type=submit] span', 'Process')); }
+  get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
   get duplicatePopup() {
     return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
   }
 
-  closePopupButton() { return element(by.css('.transaction-error button')); }
-  openProcessTransactionsCheckTab() {
-    this.checkTab.click();
-  }
+  get closePopupButton() { return element(by.css('.transaction-error button')); }
+
+  get completePopupButton() { return element(by.css('button[ng-click="completeAction()"]')); }
 
   closePopup() {
-    this.closePopupButton.click();
+    this.completePopupButton.click();
   }
 
   fillFields(field) {
     if (field.generalInfo) this[fillCheckGenerailFields](field.generalInfo);
     if (field.billingInfo) this[fillCheckBillingInfoFields](field.billingInfo);
+    if (field.recurringInfo) this[fillCheckRecurringInfoFields](field.recurringInfo);
   }
 
   [fillCheckGenerailFields](generalInfo) {
-    Object.keys(generalInfo).forEach(this.inputField.apply(this, [generalInfo, 'generalInfo']));
+    Object.keys(generalInfo).forEach((key) => {
+      if (key === 'accountTypeInput') return this[fillAccountTypeInput](generalInfo[key]);
+      if (key === 'transactionTypeInput') return this[fillTransactionTypeInput](generalInfo[key]);
+      this.inputField.apply(this, [generalInfo, 'generalInfo'])(key);
+    });
   }
+
   [fillCheckBillingInfoFields](billingInfo) {
+    this.checkBillingBlock.click();
     Object.keys(billingInfo).forEach(this.inputField.apply(this, [billingInfo, 'billingInfo']));
   }
+
+  [fillCheckRecurringInfoFields](recurringInfo) {
+    browser.executeScript('arguments[0].scrollIntoView()', this.checkRecurringBlock.getWebElement());
+    browser.executeScript('arguments[0].click()', this.checkRecurringBlock.getWebElement());
+
+    browser.executeScript('arguments[0].scrollIntoView()', this.paymentTitle.getWebElement());
+    this.paymentTitle.sendKeys(recurringInfo.paymentTitle);
+    this.setStartBillingDate(recurringInfo.startBillingDate);
+    this.everyPeriodInput.click();
+    this.everyPeriodSelect(recurringInfo.everyPeriodValue).click();
+
+    if (recurringInfo.repeatTimes) this.setRepeatTimes(recurringInfo.repeatTimes);
+    if (recurringInfo.ongoing) this.setOngoing();
+
+    if (recurringInfo.billFirstTransaction) this.setFirstBillingToday();
+  }
+
+  [fillTransactionTypeInput](type) {
+    const transactionTypeInputWebElement = this.transactionTypeInput.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', transactionTypeInputWebElement);
+    browser.executeScript('arguments[0].click()', transactionTypeInputWebElement);
+    this.transactionTypeSelect(type).click();
+  }
+
+  [fillAccountTypeInput](type) {
+    const accountTypeInputWebElement = this.accountTypeInput.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', accountTypeInputWebElement);
+    browser.executeScript('arguments[0].click()', accountTypeInputWebElement);
+    this.accountTypeSelect(type).click();
+  }
+
   setChargeAction() {
     this.checkActionButton.click();
   }
+
   setRefundAction() {
-    this.checkActionButton.click();
+    const refundActionButtonWebElement = this.refundActionButton.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', refundActionButtonWebElement);
+    browser.executeScript('arguments[0].click()', refundActionButtonWebElement);
   }
-  setNewCustomer(value) {
-    this.newCustomerInput.sendKeys(value);
+
+  setNewCustomer() {
+    this.newCustomerInput.click();
   }
+
+  setEditCustomer() {
+    this.editCustomerInput.click();
+  }
+
   setSameAsBillingInput() {
+    this.checkShippingBlock.click();
     this.sameAsBillingInput.click();
   }
+
+  clickOnAutoCompleteItem() {
+    this.waitUntilElementDisplayed(this.autoCompleteItem);
+    this.autoCompleteItem.click();
+  }
+
+  fillCustomerAutoComplete(companyName) {
+    this.customerInput.sendKeys(companyName);
+    this.clickOnAutoCompleteItem();
+  }
+
+  fillAccountNumberAutoComplete() {
+    this.generalInfo.accountNumberInput.click();
+    this.clickOnAutoCompleteItem();
+  }
+
+  setStartBillingDate(date = null) {
+    this.startBillingDate.click();
+    const selectedTD = this.getElementStartDate(date);
+    browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
+    selectedTD.click();
+  }
+
+  setRepeatTimes(time) {
+    this.repeatTimesRadio.click();
+    this.repeatTimesInput.sendKeys(time);
+  }
+
+  setOngoing() {
+    this.repeatOngoingRadio.click();
+  }
+
+  setFirstBillingToday() {
+    this.billFirstTransactionToday.click();
+  }
+
   clickProcessTransaction() {
-    this.submitButton.click();
+    const submitButtonWebElement = this.submitButton.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView()', submitButtonWebElement);
+    browser.executeScript('arguments[0].click()', submitButtonWebElement);
   }
 }
 
