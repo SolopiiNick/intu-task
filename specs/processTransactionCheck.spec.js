@@ -11,4 +11,10 @@ describe('Process Transactions - Check', () => {
   it('should send duplicate saving with PPD', checkLogic.sendDuplicateSavingWithCCD.bind(checkLogic));
   it('should send billing checking with PPD', checkLogic.sendBillingCheckingWithPPD.bind(checkLogic));
   it('should send refund saving with PPD', checkLogic.sendRefundSavingWithCCD.bind(checkLogic));
+  it('should send refund with existing customer', checkLogic.sendRefundWithExistingCustomer.bind(checkLogic));
+  it('should send charge with existing customer', checkLogic.sendChargeWithExistingCustomer.bind(checkLogic));
+  it('should send recurring charge with existing customer',
+    checkLogic.sendRecurringChargeWithExistingCustomer.bind(checkLogic));
+  it('should send error with duplicate error recurring charge',
+    checkLogic.sendErrorRecurringDuplicateWithExistingCustomer.bind(checkLogic));
 });

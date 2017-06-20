@@ -1,11 +1,15 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
-import { ProcessTransactionChecks } from '../pages';
+import { ProcessTransactionChecks, Customers } from '../pages';
 import { processTransactionCheckDataMock } from '../dataMock';
+
+const createNewCustomer = Symbol('Create new customer');
+const createNewCustomerWithCheck = Symbol('Create new customer with check');
 
 class ProcessTransactionCheckLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new ProcessTransactionChecks();
+    this.customersPage = new Customers();
   }
 
   shouldBeVisible() {
@@ -16,27 +20,31 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setChargeAction();
     this.page.fillFields(processTransactionCheckDataMock.successSavingWithTEL);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
   sendCheckingWithPPD() {
     this.page.setChargeAction();
     this.page.fillFields(processTransactionCheckDataMock.successCheckingWithPPD);
-    this.page.setNewCustomer(true);
+    this.page.setNewCustomer();
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
   sendDuplicateSavingWithCCD() {
     this.page.setChargeAction();
     this.page.fillFields(processTransactionCheckDataMock.successDuplicateSavingWithCCD);
     this.page.clickProcessTransaction();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup')
+    browser.wait(this.EC.presenceOf(this.page.approvePopup), 5000, 'Approved Popup')
       .then(() => {
+        this.page.closePopup();
         this.page.setChargeAction();
         this.page.fillFields(processTransactionCheckDataMock.successDuplicateSavingWithCCD);
         this.page.clickProcessTransaction();
-        browser.wait(this.EC.presenceOf(this.duplicatePopup), 5000, 'Duplicate popup');
+        this.page.waitUntilElementDisplayed(this.page.duplicatePopup);
+        expect(this.page.isElementDisplayed(this.page.duplicatePopup)).toBe(true);
       });
   }
 
@@ -44,14 +52,113 @@ class ProcessTransactionCheckLogic extends SpecBaseLogic {
     this.page.setRefundAction();
     this.page.fillFields(processTransactionCheckDataMock.successCheckingWithPPDAndBilling);
     this.page.setSameAsBillingInput();
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
   sendRefundSavingWithCCD() {
     this.page.setRefundAction();
     this.page.fillFields(processTransactionCheckDataMock.successRefundSavingWithCCD);
-    this.page.setNewCustomer(true);
-    browser.wait(this.EC.presenceOf(this.confirmPopup), 5000, 'Approved Popup');
+    this.page.setNewCustomer();
+    this.page.clickProcessTransaction();
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+  }
+
+  sendRefundWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.successRefundWithExistingCustomer;
+
+    this[createNewCustomerWithCheck](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setRefundAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  sendChargeWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.successChargeWithExistingCustomer;
+
+    this[createNewCustomerWithCheck](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        this.page.setEditCustomer();
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  sendRecurringChargeWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.successChargeRecurringWithExistingCustomer;
+
+    this[createNewCustomerWithCheck](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        // this.page.setEditCustomer();
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  sendErrorRecurringDuplicateWithExistingCustomer() {
+    const testData = processTransactionCheckDataMock.errorChargeRecurringWithExistingCustomer;
+
+    this[createNewCustomer](testData);
+    browser.sleep(500)
+      .then(() => {
+        this.page.get();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillFields(testData);
+        this.page.setEditCustomer();
+        this.page.clickProcessTransaction();
+        return browser.wait(this.EC.presenceOf(this.page.approvePopup), 5000, 'Approved Popup');
+      })
+      .then(() => {
+        this.page.closePopup();
+        this.page.setChargeAction();
+        this.page.fillCustomerAutoComplete(testData.companyName);
+        this.page.fillAccountNumberAutoComplete();
+        this.page.fillFields(testData);
+        this.page.clickProcessTransaction();
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  [createNewCustomerWithCheck](testData) {
+    this[createNewCustomer](testData);
+    this.customersPage.selectCreatedCustomer();
+    this.customersPage.selectWalletTab();
+    this.customersPage.clickAddPaymentMethod();
+    this.customersPage.selectCheckPage();
+    this.customersPage.fillFields(testData);
+    this.customersPage.clickSavePaymentMethod();
+  }
+  [createNewCustomer](testData) {
+    this.customersPage.get();
+    this.customersPage.createCustomer();
+    this.customersPage.fillCompanyName(testData.companyName);
+    this.customersPage.completeCreateCustomer();
   }
 }
 
