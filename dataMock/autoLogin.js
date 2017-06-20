@@ -11,9 +11,9 @@ const autoLogin = {
     firstName: 'Artem',
     forgotPasswordLink: 'XB7wS0mqDPShgL6NCdyFFFbDHJo7hZALKMuioN8tZaScrN7J',
     forgotPasswordTime: '1492640528',
-    id: 4,
-    idIso: 1,
-    idMerchant: 9,
+    id: 420,
+    idIso: 61,
+    idMerchant: 355,
     idRole: null,
     idTimezone: null,
     isNewUser: null,
@@ -28,7 +28,7 @@ const autoLogin = {
     theme: null,
     token: 'tokenForE2ETests',
     updatedAt: '2017-06-12T11:06:44.000Z',
-    username: 'hillotestm',
+    username: 'Autotest',
   },
   userSettings: {
     availablePages: {

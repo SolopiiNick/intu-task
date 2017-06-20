@@ -1,6 +1,6 @@
 import { cards } from '../cards';
 
-const { discover, visa, visaDeclined, masterCard, amex } = cards;
+const { discover, discoverDeclined, visa, visaDeclined, masterCard, amex } = cards;
 
 const processTransactionCardDataMock = {
   approveWithChargeByDiscover: {
@@ -63,7 +63,7 @@ const processTransactionCardDataMock = {
   approveWithPostauthorizeEditingCustomerByAmex: {
     customersPage: {
       createCustomer: {
-        companyNameInput: 'Test Process Transaction Card 5',
+        companyNameInput: 'Test Process Transaction Card 3',
       },
       addPaymentMethodCard: {
         cardNameInput: amex.name,
@@ -74,7 +74,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 5',
+        customerSelectInput: 'Test Process Transaction Card 3',
         actionSelect: 'postauthorize',
         cardNumberInput: 'autocomplete',
         cardCvvInput: amex.cvv,
@@ -97,6 +97,28 @@ const processTransactionCardDataMock = {
       amountInput: '137.50',
       avsStreetInput: '1307 Broad Hollow Road',
       avsZipInput: '11747',
+    },
+  },
+  declineRepeatedlyWithChargeWithCustomerByDiscover: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: 'Test Process Transaction Card 4',
+      },
+      addPaymentMethodCard: {
+        cardNameInput: discoverDeclined.name,
+        cardNumberInput: discoverDeclined.number,
+        cardExpireMonth: discoverDeclined.expire.month,
+        cardExpireYear: discoverDeclined.expire.year,
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Test Process Transaction Card 4',
+        actionSelect: 'charge',
+        cardNumberInput: 'autocomplete',
+        amountInput: '1100.07',
+        surchargeInput: '68',
+      },
     },
   },
 };

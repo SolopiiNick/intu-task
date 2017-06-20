@@ -22,4 +22,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should decline repeatedly transaction with "charge" action, with unexisting Customer and by using Visa',
     cardLogic.declineRepeatedlyWithChargeWithUnexistingCustomerByVisa.bind(cardLogic));
+
+  it('should decline repeatedly transaction with "charge" action, with existing Customer and by using Discover',
+    cardLogic.declineRepeatedlyWithChargeWithCustomerByDiscover.bind(cardLogic));
 });
