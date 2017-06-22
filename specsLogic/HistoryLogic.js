@@ -1,6 +1,10 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
-import { History, ProcessTransactionCard } from '../pages';
+import { History, ProcessTransactionCard, Customers } from '../pages';
 import { historyDataMock } from '../dataMock';
+
+const createNewCustomer = Symbol('create new customer');
+const createNewCard = Symbol('create new card');
+const createNewCustomerWithCard = Symbol('create new customer with card');
 
 const processTransactionCard = new ProcessTransactionCard();
 
@@ -8,6 +12,7 @@ class HistoryLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new History();
+    this.customersPage = new Customers();
   }
 
   beforeEach() {
@@ -15,9 +20,9 @@ class HistoryLogic extends SpecBaseLogic {
   }
 
   checkMadeTransaction() {
-    const { madeDiscoverCard } = historyDataMock;
+    const madeDiscoverCard = historyDataMock.madeDiscoverCard;
     processTransactionCard.fillFields(madeDiscoverCard);
-    processTransactionCard.process();
+    processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
@@ -33,7 +38,7 @@ class HistoryLogic extends SpecBaseLogic {
   checkVoidTransaction() {
     const { madeVisaCard } = historyDataMock;
     processTransactionCard.fillFields(madeVisaCard);
-    processTransactionCard.process();
+    processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
@@ -63,7 +68,8 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRemoveButton();
-    expect(this.page.removedTextPopup.getText()).toEqual('Are you sure you want to move transaction to «Queued» page?');
+    expect(this.page.removedTextPopup.getText())
+      .toEqual('Are you sure you want to move transaction to «Queued» page?');
     this.page.okButton.click();
     this.page.waitUntilElementDisplayed(this.page.removedNotification);
     expect(this.page.isElementDisplayed(this.page.removedNotification)).toBe(true);
@@ -100,8 +106,78 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRechargeButton();
-    expect(processTransactionCard.generalInfo.cardNameInput.getText()).toEqual('');
+    browser.executeScript('arguments[0].scrollIntoView(true);', processTransactionCard.generalInfo.cardNameInput);
+    // expect(processTransactionCard.generalInfo.cardNameInput.getAttribute('value'))
+    //   .toEqual('Test Visa');
+    // expect(processTransactionCard.generalInfo.amountInput.getAttribute('value'))
+    //   .toEqual('74.31');
+    expect(processTransactionCard.generalInfo.cardCvvInput.getAttribute('value')).toEqual('123');
+    expect(processTransactionCard.generalInfo.taxInput.getAttribute('value')).toEqual('1');
+    expect(processTransactionCard.generalInfo.avsStreetInput.getAttribute('value'))
+      .toEqual('1307 Broad Hollow Road');
+    expect(processTransactionCard.generalInfo.avsZipInput.getAttribute('value'))
+      .toEqual('11746');
+    expect(processTransactionCard.generalInfo.cardNameInput.isDisplayed());
   }
+
+  checkMadeAuthTransaction() {
+    const { madeMasterCardWithAuthAction } = historyDataMock;
+    processTransactionCard.fillFields(madeMasterCardWithAuthAction);
+    processTransactionCard.clickProcess();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.queuedTab.click();
+    this.cardType();
+  }
+
+  async checkAuthorizeCreateCustomerByVisaInQueuedTAb() {
+    const customersDataMock =
+      historyDataMock.approveWithAuthorizeCreateCustomerByVisa
+        .customersPage;
+    const cardDataMock =
+      historyDataMock.approveWithAuthorizeCreateCustomerByVisa
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    processTransactionCard.get();
+    processTransactionCard.fillFields(cardDataMock);
+    processTransactionCard.clickProcess();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.queuedTab.click();
+    this.cardType();
+  }
+
+  [createNewCustomerWithCard](customersDataMock) {
+    this[createNewCustomer](customersDataMock);
+    this[createNewCard](customersDataMock);
+  }
+
+  [createNewCustomer](customersDataMock) {
+    this.customersPage.get();
+    this.customersPage.clickCreateCustomer();
+    this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer,
+      addBillingInfo: customersDataMock.addBillingInfo,
+      addShippingInfo: customersDataMock.addShippingInfo });
+    this.customersPage.clickCompleteCreateCustomer();
+  }
+
+  [createNewCard](customersDataMock) {
+    this.customersPage.selectCreatedCustomer(customersDataMock.createCustomer.companyNameInput);
+    this.customersPage.selectWalletTab();
+    this.customersPage.clickAddPaymentMethod();
+    this.customersPage.selectCardTab();
+    this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
+    this.customersPage.clickAddCard();
+  }
+
 
   async transactionDate() {
     const rows = await element.all(by.repeater('row in rowData'));

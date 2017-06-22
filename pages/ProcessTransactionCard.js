@@ -7,6 +7,7 @@ const ERROR_POPUP_TEXT = 'Error';
 const fillCardGeneralFields = Symbol('fill check tab general fields');
 const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
 const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
+const fillStateField = Symbol('fill state in billing info fields');
 const selectCustomer = Symbol('select customer');
 const selectAction = Symbol('select action');
 const selectCard = Symbol('select card');
@@ -19,7 +20,12 @@ class ProcessTransactionCard extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=card`; }
   get selector() { return $('div[name="cardForm"]'); }
 
-  get checkBillingBlock() { return element(by.model('cardShippingInfoShow')); }
+  get autoCompleteItem() {
+    return element(by
+      .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
+  }
+
+  get checkBillingBlock() { return element(by.model('cardBillingInfoShow')); }
   get checkSameAsBilling() { return element(by.model('cardShippingInfoShow')); }
 
   get processButton() { return $('button[ng-click="processCard()"]'); }
@@ -30,6 +36,8 @@ class ProcessTransactionCard extends Base {
 
   get completeButton() { return element(by.buttonText('Complete')); }
   get tryAgainButton() { return element(by.buttonText('Try Again')); }
+
+  get checkShippingBlock() { return element(by.model('cardShippingInfoShow')); }
 
   get generalInfo() {
     return {
@@ -79,7 +87,7 @@ class ProcessTransactionCard extends Base {
       city: element(by.name('city')),
       zipCode: element(by.name('zip_code')),
       country: element(by.name('country')),
-      state: element(by.name('billingStatesSearchCheck')),
+      state: element(by.name('billingStatesSearch')),
       phone: element(by.name('billing_phone')),
     };
   }
@@ -92,12 +100,16 @@ class ProcessTransactionCard extends Base {
   }
 
   sameAsBillingBlock() {
-    this.checkBillingBlock.click();
+    this.checkShippingBlock.click();
     this.checkSameAsBilling.click();
   }
 
   clickProcess() {
     this.processButton.click();
+  }
+
+  selectBillingBlock() {
+    this.checkBillingBlock.click();
   }
 
   clickProcessBrowserExecute() {
@@ -113,6 +125,17 @@ class ProcessTransactionCard extends Base {
   clickTryAgainButton() {
     this.tryAgainButton.click();
   }
+
+  clickOnAutoCompleteItem() {
+    this.waitUntilElementDisplayed(this.autoCompleteItem);
+    this.autoCompleteItem.click();
+  }
+
+  fillStateAutoComplete(state) {
+    this.billingInfo.state.sendKeys(state);
+    this.clickOnAutoCompleteItem();
+  }
+
 
   fillFields(fields) {
     if (fields.generalInfo) this[fillCardGeneralFields](fields.generalInfo);
@@ -162,7 +185,17 @@ class ProcessTransactionCard extends Base {
   }
 
   [fillCardBillingInfoFields](billingInfo) {
-    Object.keys(billingInfo).forEach(key => this.billingInfo[key].sendKeys(billingInfo[key]));
+    Object.keys(billingInfo).forEach((key) => {
+      if (key === 'checkBillingBlock') {
+        this.selectBillingBlock(billingInfo.checkBillingBlock);
+        return;
+      }
+      if (key === 'state') {
+        this[fillStateField](billingInfo.state);
+        return;
+      }
+      this.inputField.apply(this, [billingInfo, 'billingInfo'])(key);
+    });
   }
 
   [fillCardShippingInfoFields](shippingInfo) {
@@ -213,6 +246,10 @@ class ProcessTransactionCard extends Base {
 
   [checkEditCustomer]() {
     this.generalInfo.editCustomerCheckbox.click();
+  }
+
+  [fillStateField](state) {
+    this.fillStateAutoComplete(state);
   }
 }
 
