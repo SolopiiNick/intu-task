@@ -1,4 +1,4 @@
-import { getRandomInt } from '../../utils/helpers';
+import { getRandomInt } from '../../utils/Helpers';
 import { cards } from '../cards';
 
 const { discover, discoverDeclined, visa, visaDeclined, masterCard, amex } = cards;

@@ -1,4 +1,4 @@
-import { getRandomInt } from '../../utils/helpers';
+import { getRandomInt } from '../../utils/Helpers';
 
 const MIN_NUM = 0;
 const MAX_NUM = 100000000;

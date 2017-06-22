@@ -5,6 +5,10 @@ const CHECK_TAB_TEXT = 'check';
 const CARD_TAB_TEXT = 'card';
 
 const fillCreateCustomerFields = Symbol('fill create customer fields');
+const fillBillingInfoFields = Symbol('fill check tab billing info fields');
+const fillCountryField = Symbol('fill country in billing info fields');
+const fillStateField = Symbol('fill state in billing info fields');
+const fillShippingInfoFields = Symbol('fill check tab shipping info fields');
 const fillAddPaymentMethodCardFields = Symbol('fill add payment method card fields');
 const fillAddPaymentMethodCheckFields = Symbol('fill add payment method check fields');
 const fillCardExpireMonthField = Symbol('fill card expire month field');
@@ -12,10 +16,18 @@ const fillCardExpireYearField = Symbol('fill card expire year field');
 const fillCheckTransactionTypeInput = Symbol('fill transaction type select');
 const fillCheckAccountTypeInput = Symbol('fill account type select');
 
+
 class Customers extends Base {
   get url() { return `${this.baseUrl}/customer/list`; }
 
   get selector() { return $('.customers-list'); }
+
+  get autoCompleteItem() {
+    return element(by
+      .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
+  }
+  get selectBillingBlock() { return element(by.model('billingInfoShow')); }
+  get selectShippingBlock() { return element(by.model('shippingInfoShow')); }
 
   get hideFiltersButton() { return $('a[aria-label="Hide filters"]'); }
   get createNewButton() { return $('a[aria-label="Create new"]'); }
@@ -31,8 +43,39 @@ class Customers extends Base {
     return {
       popup: $('form[name="customerForm"]'),
       companyNameInput: $('input[aria-label="Company Name"]'),
+      emailInput: $('input[aria-label="Email"]'),
       cancelButton: $('button[aria-label="Cancel"]'),
       completeButton: $('button[aria-label="Complete"]'),
+    };
+  }
+
+  get addBillingInfo() {
+    return {
+      firstName: element(by.name('first_name2')),
+      lastName: element(by.name('last_name2')),
+      street: element(by.name('street')),
+      street2: element(by.name('street2')),
+      city: element(by.name('city')),
+      zipCode: element(by.name('zip_code')),
+      country: {
+        dropdown: element(by.name('country2')),
+        select: country => element(by.cssContainingText('md-content._md.md-default-theme', country)),
+      },
+      state: element(by.name('billingStatesSearch')),
+      phone: element(by.name('billing_phone1')),
+    };
+  }
+
+  get addShippingInfo() {
+    return {
+      firstName: element(by.name('first_name3')),
+      lastName: element(by.name('last_name3')),
+      street: element(by.name('street3')),
+      street2: element(by.name('street4')),
+      city: element(by.name('city')),
+      zipCode: element(by.name('zip_code2')),
+      country: element(by.name('country')),
+      phone: element(by.name('billing_phone2')),
     };
   }
 
@@ -86,8 +129,11 @@ class Customers extends Base {
     };
   }
 
-  fillFields({ createCustomer, addPaymentMethodCard, addPaymentMethodCheck }) {
+  fillFields({ createCustomer, addPaymentMethodCard, addPaymentMethodCheck, addBillingInfo,
+    addShippingInfo }) {
     if (createCustomer) this[fillCreateCustomerFields](createCustomer);
+    if (addBillingInfo) this[fillBillingInfoFields](addBillingInfo);
+    if (addShippingInfo) this[fillShippingInfoFields](addShippingInfo);
     if (addPaymentMethodCard) this[fillAddPaymentMethodCardFields](addPaymentMethodCard);
     if (addPaymentMethodCheck) this[fillAddPaymentMethodCheckFields](addPaymentMethodCheck);
   }
@@ -96,6 +142,34 @@ class Customers extends Base {
     Object.keys(createCustomer).forEach(
       this.inputField.apply(this, [createCustomer, 'createCustomer']),
     );
+  }
+
+  [fillBillingInfoFields](addBillingInfo) {
+    Object.keys(addBillingInfo).forEach((key) => {
+      if (key === 'checkBillingBlock') {
+        this.clickSwitchBillingInfo(addBillingInfo.selectBillingBlock);
+        return;
+      }
+      if (key === 'country') {
+        this[fillCountryField](addBillingInfo.country);
+        return;
+      }
+      if (key === 'state') {
+        this[fillStateField](addBillingInfo.state);
+        return;
+      }
+      this.inputField.apply(this, [addBillingInfo, 'addBillingInfo'])(key);
+    });
+  }
+
+  [fillShippingInfoFields](addShippingInfo) {
+    Object.keys(addShippingInfo).forEach((key) => {
+      if (key === 'checkShippingBlock') {
+        this.clickSwitchShippingInfo(addShippingInfo.selectShippingBlock);
+        return;
+      }
+      this.inputField.apply(this, [addShippingInfo, 'addShippingInfo'])(key);
+    });
   }
 
   [fillAddPaymentMethodCardFields](addPaymentMethodCard) {
@@ -150,12 +224,40 @@ class Customers extends Base {
     this.accountTypeSelect(type).click();
   }
 
+  [fillCountryField](country) {
+    this.clickOnAutoCompleteItem();
+    this.addBillingInfo.country.dropdown.click();
+    this.addBillingInfo.country.select(country).click();
+  }
+
+  [fillStateField](state) {
+    this.fillStateAutoComplete(state);
+  }
+
   clickCreateCustomer() {
     this.createNewButton.click();
   }
 
   fillCompanyName(companyName) {
     this.createCustomer.companyNameInput.sendKeys(companyName);
+  }
+
+  clickSwitchBillingInfo() {
+    this.selectBillingBlock.click();
+  }
+
+  clickSwitchShippingInfo() {
+    this.selectShippingBlock.click();
+  }
+
+  clickOnAutoCompleteItem() {
+    this.waitUntilElementDisplayed(this.autoCompleteItem);
+    this.autoCompleteItem.click();
+  }
+
+  fillStateAutoComplete(state) {
+    this.addBillingInfo.state.sendKeys(state);
+    this.clickOnAutoCompleteItem();
   }
 
   clickCompleteCreateCustomer() {
