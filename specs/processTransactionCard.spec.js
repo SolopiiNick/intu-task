@@ -25,4 +25,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should decline repeatedly transaction with "charge" action, with existing Customer and by using Discover',
     cardLogic.declineRepeatedlyWithChargeWithCustomerByDiscover.bind(cardLogic));
+
+  it('should error transaction with "charge" action, with existing Customer and by using Amex',
+    cardLogic.errorWithChargeWithExistingCustomerByAmex.bind(cardLogic));
 });

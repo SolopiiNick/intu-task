@@ -72,7 +72,8 @@ class ProcessTransactionCard extends Base {
       avsZipInput: element(by.name('billing_zip')),
       poNumberInput: element(by.name('po_number')),
       companyNameInput: element(by.name('company_name')),
-      descriptionInput: element(by.name('description')),
+      invoiceNumber: element(by.name('invoice_number')),
+      descriptionInput: element(by.model('cardForm.generalInfo.description')),
       emailInput: element(by.name('email')),
       // appeares after 'companyNameInput' has some text
       createCustomerCheckbox: element(by.css('md-checkbox[aria-label="Create a new customer"]')),

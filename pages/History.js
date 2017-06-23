@@ -1,5 +1,6 @@
 import Base from '../utils/Base';
 
+const HISTORY_TAB = 'History';
 const QUEUED_TAB = 'Queued';
 const ALL_TRANSACTION_TAB = 'All transactions';
 const VOID_FILTER_TEXT = 'voided';
@@ -18,7 +19,7 @@ class History extends Base {
   }
 
   get historyTab() {
-    return element(by.xpath('//*[@id="vertical-navigation"]/ms-navigation/ul/li[4]/div/a/span'));
+    return element(by.linkText(HISTORY_TAB));
   }
 
   get queuedTab() {

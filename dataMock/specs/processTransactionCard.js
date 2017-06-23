@@ -1,7 +1,7 @@
 import { getRandomInt } from '../../utils/Helpers';
 import { cards } from '../cards';
 
-const { discover, discoverDeclined, visa, visaDeclined, masterCard, amex } = cards;
+const { discover, discoverDeclined, visa, visaDeclined, masterCard, amex, amexError } = cards;
 
 const MIN_NUM = 0;
 const MAX_NUM = 100000000;
@@ -122,6 +122,28 @@ const processTransactionCardDataMock = {
         cardNumberInput: 'autocomplete',
         amountInput: '1100.07',
         surchargeInput: '68',
+      },
+    },
+  },
+  errorWithChargeWithCustomerByAmex: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Test Process Transaction Card 3',
+        actionSelect: 'charge',
+        cardNameInput: amexError.name,
+        cardNumberInput: amexError.number,
+        cardExpireMonth: amexError.expire.month,
+        cardExpireYear: amexError.expire.year,
+        amountInput: '349',
+        surchargeInput: '0.01',
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+        editCustomerCheckbox: true,
       },
     },
   },

@@ -110,6 +110,24 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
   }
 
+  errorWithChargeWithExistingCustomerByAmex() {
+    const cardDataMock =
+      processTransactionCardDataMock.errorWithChargeWithCustomerByAmex.processTransactionCardPage;
+    const customersDataMock =
+      processTransactionCardDataMock.errorWithChargeWithCustomerByAmex
+        .customersPage;
+
+    this[createNewCustomer](customersDataMock);
+
+    this.page.get();
+    this.page.fillFields(cardDataMock);
+    this.page.clickProcess();
+
+    this.page.waitUntilElementDisplayed(this.page.errorPopup);
+
+    expect(this.page.isElementDisplayed(this.page.errorPopup)).toBe(true);
+  }
+
   [createNewCustomerWithCard](customersDataMock) {
     this[createNewCustomer](customersDataMock);
     this[createNewCard](customersDataMock);

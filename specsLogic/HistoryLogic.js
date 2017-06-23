@@ -173,9 +173,37 @@ class HistoryLogic extends SpecBaseLogic {
         processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
         processTransactionCard.clickComplete();
       });
+
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
+    this.cardType();
+  }
+
+  checkCreateCustomerByDiscoverRefundInAllTransactionTAb() {
+    const customersDataMock =
+      historyDataMock.approveWithRefundCreateCustomerByDiscover
+        .customersPage;
+    const cardDataMock =
+      historyDataMock.approveWithRefundCreateCustomerByDiscover
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCard.get();
+        processTransactionCard.fillFields(cardDataMock);
+        processTransactionCard.clickProcess();
+        processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+        processTransactionCard.clickComplete();
+      });
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.waitUntilElementDisplayed(this.page.allTransactionsTab);
+    browser.executeScript('arguments[0].scrollIntoView()', this.page.allTransactionsTab.getWebElement());
+    this.page.allTransactionsTab.click();
     this.cardType();
   }
 
