@@ -16,7 +16,6 @@ const fillCardExpireYearField = Symbol('fill card expire year field');
 const fillCheckTransactionTypeInput = Symbol('fill transaction type select');
 const fillCheckAccountTypeInput = Symbol('fill account type select');
 
-
 class Customers extends Base {
   get url() { return `${this.baseUrl}/customer/list`; }
 

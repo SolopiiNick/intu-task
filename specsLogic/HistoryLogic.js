@@ -133,7 +133,7 @@ class HistoryLogic extends SpecBaseLogic {
     this.cardType();
   }
 
-  async checkAuthorizeCreateCustomerByVisaInQueuedTAb() {
+  checkAuthorizeCreateCustomerByVisaInQueuedTAb() {
     const customersDataMock =
       historyDataMock.approveWithAuthorizeCreateCustomerByVisa
         .customersPage;
@@ -149,6 +149,30 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.queuedTab.click();
+    this.cardType();
+  }
+
+  checkPostAuthorizeCreateCustomerByAmexInQueuedTAb() {
+    const customersDataMock =
+      historyDataMock.approveWithPostAuthorizeCreateCustomerByAmex
+        .customersPage;
+    const cardDataMock =
+      historyDataMock.approveWithPostAuthorizeCreateCustomerByAmex
+        .processTransactionCardPage;
+
+    this[createNewCustomer](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCard.get();
+        processTransactionCard.fillFields(cardDataMock);
+        processTransactionCard.clickProcess();
+        processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+        processTransactionCard.clickComplete();
+      });
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();

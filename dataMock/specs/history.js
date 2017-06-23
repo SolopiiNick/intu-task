@@ -132,7 +132,7 @@ const historyDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'New Company n',
+        customerSelectInput: 'New Company 1',
         actionSelect: 'authorize',
         cardNameInput: visa.name,
         cardNumberInput: visa.number,
@@ -144,6 +144,40 @@ const historyDataMock = {
         surchargeInput: '2',
         avsStreetInput: '938 Whitemarsh Lane',
         avsZipInput: '11803',
+      },
+    },
+  },
+
+  approveWithPostAuthorizeCreateCustomerByAmex: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        emailInput: 'test@codemotion.eu',
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'New Company 2',
+        actionSelect: 'postauthorize',
+        cardNameInput: amex.name,
+        cardNumberInput: amex.number,
+        cardCvvInput: amex.cvv,
+        authNumberInput: '212121',
+        cardExpireMonth: amex.expire.month,
+        cardExpireYear: amex.expire.year,
+        amountInput: '77',
+        taxInput: '0.19',
+        editCustomerCheckbox: true,
+      },
+      shippingInfo: {
+        firstName: 'Olga',
+        lastName: 'Riy',
+        street: '591 Brickell Dr.',
+        street2: '595 Brickell Dr.',
+        city: 'Jamaica Plain',
+        zipCode: '',
+        state: 'Maryland',
+        phone: '(125)212121345',
       },
     },
   },
