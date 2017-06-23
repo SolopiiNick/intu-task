@@ -53,6 +53,15 @@ const cards = {
       year: 20,
     },
   },
+  amexError: {
+    name: 'Test Amex',
+    number: '371030089222119',
+    cvv: '1234',
+    expire: {
+      month: 4,
+      year: 20,
+    },
+  },
 };
 
 export {

@@ -181,6 +181,49 @@ const historyDataMock = {
       },
     },
   },
+  approveWithRefundCreateCustomerByDiscover: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        emailInput: 'test@codemotion.eu',
+      },
+      addBillingInfo: {
+        checkBillingBlock: 'true',
+        firstName: 'Nick',
+        lastName: 'Test',
+        street: '694 Woodsman Ave.',
+        street2: '695 Woodsman Ave.',
+        city: 'Skokie',
+        zipCode: '60076',
+        // country: 'US',
+        state: 'Illinois',
+        phone: '(125)23423412',
+      },
+      addPaymentMethodCard: {
+        cardNameInput: discover.name,
+        cardNumberInput: discover.number,
+        cardExpireMonth: discover.expire.month,
+        cardExpireYear: discover.expire.year,
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'New Company 3',
+        actionSelect: 'refund',
+        cardNumberInput: discover.number,
+        cardExpireMonth: discover.expire.month,
+        cardExpireYear: discover.expire.year,
+        amountInput: '80',
+        taxInput: '12',
+        surchargeInput: '10',
+        descriptionInput: 'test description',
+        poNumberInput: '21',
+        invoiceNumber: '14',
+      },
+    },
+  },
 };
 
 export {
