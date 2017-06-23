@@ -8,6 +8,7 @@ const fillCardGeneralFields = Symbol('fill check tab general fields');
 const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
 const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
 const fillStateField = Symbol('fill state in billing info fields');
+const fillShippingStateField = Symbol('fill state in shipping info fields');
 const selectCustomer = Symbol('select customer');
 const selectAction = Symbol('select action');
 const selectCard = Symbol('select card');
@@ -27,6 +28,8 @@ class ProcessTransactionCard extends Base {
 
   get checkBillingBlock() { return element(by.model('cardBillingInfoShow')); }
   get checkSameAsBilling() { return element(by.model('cardShippingInfoShow')); }
+
+  get selectShippingBlock() { return element(by.model('cardShippingInfoShow')); }
 
   get processButton() { return $('button[ng-click="processCard()"]'); }
 
@@ -96,6 +99,15 @@ class ProcessTransactionCard extends Base {
     return {
       sameBillingInput: element(by.model('cardShippingInfoShow')),
       sameBillingTrue: element(by.model('sameAsBilling')),
+      firstName: element(by.name('first_name2')),
+      lastName: element(by.name('last_name2')),
+      street: element(by.name('street3')),
+      street2: element(by.name('street4')),
+      city: element(by.name('city2')),
+      zipCode: element(by.name('zip_code2')),
+      state: element(by.name('shippingStatesSearch')),
+      country: element(by.name('country')),
+      phone: element(by.name('card_shipping_phone')),
     };
   }
 
@@ -131,8 +143,17 @@ class ProcessTransactionCard extends Base {
     this.autoCompleteItem.click();
   }
 
+  clickSwitchShippingInfo() {
+    this.selectShippingBlock.click();
+  }
+
   fillStateAutoComplete(state) {
     this.billingInfo.state.sendKeys(state);
+    this.clickOnAutoCompleteItem();
+  }
+
+  fillSippingStateAutoComplete(state) {
+    this.shippingInfo.state.sendKeys(state);
     this.clickOnAutoCompleteItem();
   }
 
@@ -199,7 +220,17 @@ class ProcessTransactionCard extends Base {
   }
 
   [fillCardShippingInfoFields](shippingInfo) {
-    Object.keys(shippingInfo).forEach(key => this.shippingInfo[key].sendKeys(shippingInfo[key]));
+    Object.keys(shippingInfo).forEach((key) => {
+      if (key === 'firstName') {
+        this.clickSwitchShippingInfo(shippingInfo.selectShippingBlock);
+        return;
+      }
+      if (key === 'state') {
+        this[fillShippingStateField](shippingInfo.state);
+        return;
+      }
+      this.inputField.apply(this, [shippingInfo, 'shippingInfo'])(key);
+    });
   }
 
   [selectCustomer](customerName) {
@@ -250,6 +281,10 @@ class ProcessTransactionCard extends Base {
 
   [fillStateField](state) {
     this.fillStateAutoComplete(state);
+  }
+
+  [fillShippingStateField](state) {
+    this.fillSippingStateAutoComplete(state);
   }
 }
 

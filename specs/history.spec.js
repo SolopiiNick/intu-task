@@ -25,5 +25,8 @@ describe('Process Transaction - Batch', () => {
 
   it('all data of created transaction with existing Customer is correct on Queued tab',
     historyLogic.checkAuthorizeCreateCustomerByVisaInQueuedTAb.bind(historyLogic));
+
+  it('all data of created transaction with existing Customer is correct on Queued tab Amex Card',
+    historyLogic.checkPostAuthorizeCreateCustomerByAmexInQueuedTAb.bind(historyLogic));
 });
 
