@@ -31,4 +31,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should approve transaction with "refund" action, without Customer and by using Visa',
     cardLogic.approveWithRefundByVisa.bind(cardLogic));
+
+  it('should approve transaction with "refund" action, with existing Customer and by using Master Card',
+    cardLogic.approveWithRefundWithCustomerByMasterCard.bind(cardLogic));
 });

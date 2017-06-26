@@ -139,6 +139,24 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
+  async approveWithRefundWithCustomerByMasterCard() {
+    const customersDataMock =
+      processTransactionCardDataMock.approveWithRefundWithCustomerByMasterCard.customersPage;
+    const cardDataMock =
+      processTransactionCardDataMock.approveWithRefundWithCustomerByMasterCard
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    this.page.get();
+    this.page.fillFields(cardDataMock);
+    this.page.clickProcessBrowserExecute();
+
+    await this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+  }
+
   [createNewCustomerWithCard](customersDataMock) {
     this[createNewCustomer](customersDataMock);
     this[createNewCard](customersDataMock);

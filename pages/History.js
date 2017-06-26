@@ -79,7 +79,7 @@ class History extends Base {
   }
 
   get removedNotification() {
-    return element(by.css('div[layout-align="space-between center"]'));
+    return element(by.css('div[layout-align="space-between center"] '));
   }
 
   get okButton() {
