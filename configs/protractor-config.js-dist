@@ -33,6 +33,7 @@ exports.config = {
         // disable chrome's wakiness
         '--disable-infobars',
         '--disable-extensions',
+        'no-sandbox',
         'verbose',
         'log-path=/tmp/chromedriver.log',
       ],

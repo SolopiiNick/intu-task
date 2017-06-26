@@ -38,6 +38,21 @@ const processTransactionCardDataMock = {
       createCustomerCheckbox: true,
     },
   },
+  approveWithRefundByVisa: {
+    generalInfo: {
+      actionSelect: 'refund',
+      cardNumberInput: visa.number,
+      cardExpireMonth: visa.expire.month,
+      cardExpireYear: visa.expire.year,
+      amountInput: '100',
+      taxInput: '10',
+      surchargeInput: '15',
+      descriptionInput: 'test description',
+      poNumberInput: '0002',
+      invoiceNumber: '0001',
+      emailInput: 'test@codemotion.eu',
+    },
+  },
   approveWithChargeWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {
@@ -144,6 +159,30 @@ const processTransactionCardDataMock = {
         avsStreetInput: '1307 Broad Hollow Road',
         avsZipInput: '11747',
         editCustomerCheckbox: true,
+      },
+    },
+  },
+  approveWithRefundWithCustomerByMasterCard: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      },
+      addPaymentMethodCard: {
+        cardNameInput: masterCard.name,
+        cardNumberInput: masterCard.number,
+        cardExpireMonth: masterCard.expire.month,
+        cardExpireYear: masterCard.expire.year,
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Test Process Transaction Card 3',
+        actionSelect: 'refund',
+        cardNumberInput: 'autocomplete',
+        amountInput: '99.99',
+        taxInput: '0.43',
       },
     },
   },

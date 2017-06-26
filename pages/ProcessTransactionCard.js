@@ -251,6 +251,9 @@ class ProcessTransactionCard extends Base {
       case 'postauthorize':
         this.generalInfo.actions.postauthorizeButton.click();
         break;
+      case 'refund':
+        this.generalInfo.actions.refundButton.click();
+        break;
       default:
         this.generalInfo.actions.chargeButton.click();
     }
