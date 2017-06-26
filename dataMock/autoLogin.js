@@ -43,7 +43,7 @@ const autoLogin = {
       tickets: true,
       recurringBilling: true,
     },
-    upsell: { active: true, text: 'rewqrew' },
+    upsell: { active: false, text: 'rewqrew' },
     permissions: {
       masterAccount: true,
       processTransaction: { fullAccess: false, viewOnly: false },

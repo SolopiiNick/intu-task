@@ -128,6 +128,17 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.errorPopup)).toBe(true);
   }
 
+  approveWithRefundByVisa() {
+    const dataMock = processTransactionCardDataMock.approveWithRefundByVisa;
+
+    this.page.fillFields(dataMock);
+    this.page.clickProcess();
+
+    this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+  }
+
   [createNewCustomerWithCard](customersDataMock) {
     this[createNewCustomer](customersDataMock);
     this[createNewCard](customersDataMock);

@@ -38,6 +38,21 @@ const processTransactionCardDataMock = {
       createCustomerCheckbox: true,
     },
   },
+  approveWithRefundByVisa: {
+    generalInfo: {
+      actionSelect: 'refund',
+      cardNumberInput: visa.number,
+      cardExpireMonth: visa.expire.month,
+      cardExpireYear: visa.expire.year,
+      amountInput: '100',
+      taxInput: '10',
+      surchargeInput: '15',
+      descriptionInput: 'test description',
+      poNumberInput: '0002',
+      invoiceNumber: '0001',
+      emailInput: 'test@codemotion.eu',
+    },
+  },
   approveWithChargeWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {

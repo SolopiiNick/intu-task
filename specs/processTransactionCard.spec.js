@@ -28,4 +28,7 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should error transaction with "charge" action, with existing Customer and by using Amex',
     cardLogic.errorWithChargeWithExistingCustomerByAmex.bind(cardLogic));
+
+  it('should approve transaction with "refund" action, without Customer and by using Visa',
+    cardLogic.approveWithRefundByVisa.bind(cardLogic));
 });
