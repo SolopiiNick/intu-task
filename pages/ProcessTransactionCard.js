@@ -16,6 +16,7 @@ const fillCardExpireMonthField = Symbol('fill card expire month field');
 const fillCardExpireYearField = Symbol('fill card expire year field');
 const checkCreateCustomer = Symbol('check create customer');
 const checkEditCustomer = Symbol('check edit customer');
+const fillCardRecurringInfoFields = Symbol('fill check tab recurring info fields');
 
 class ProcessTransactionCard extends Base {
   get url() { return `${this.baseUrl}/transaction?tab=card`; }
@@ -28,6 +29,27 @@ class ProcessTransactionCard extends Base {
 
   get checkBillingBlock() { return element(by.model('cardBillingInfoShow')); }
   get checkSameAsBilling() { return element(by.model('cardShippingInfoShow')); }
+  get checkRecurringBlock() { return element(by.css('form[name=creditCardForm] [ng-model=cardRecurringInfoShow]')); }
+
+  get paymentTitle() { return element(by.model('cardForm.recurringInfo.name')); }
+
+  get startingFromDate() { return element(by.css('form[name=creditCardForm] input[name=start_date]')); }
+  getElementStartDate(date) {
+    const selector = date
+      || 'form[name=creditCardForm] .moment-picker-specific-views tr:last-child td:last-child';
+    return element(by.css(selector));
+  }
+
+  get everyPeriodInput() { return element(by.css('md-select[ng-model="cardForm.recurringInfo.schedule"]')); }
+  everyPeriodSelect(period) {
+    return element(by.cssContainingText('._md-active md-option ._md-text', period));
+  }
+
+  get repeatTimesRadio() { return element(by.css('form[name=creditCardForm] [value=remTransNumber]')); }
+  get repeatTimesInput() { return element(by.css('form[name=creditCardForm] input[name=repeat_amount]')); }
+  get repeatOngoingRadio() { return element(by.css('form[name=creditCardForm] [value=recurringOngoing]')); }
+
+  get billFirstTransactionToday() { return element(by.model('cardForm.recurringInfo.billFirstToday')); }
 
   get selectShippingBlock() { return element(by.model('cardShippingInfoShow')); }
 
@@ -112,6 +134,7 @@ class ProcessTransactionCard extends Base {
     };
   }
 
+
   sameAsBillingBlock() {
     this.checkShippingBlock.click();
     this.checkSameAsBilling.click();
@@ -148,6 +171,28 @@ class ProcessTransactionCard extends Base {
     this.selectShippingBlock.click();
   }
 
+  setRepeatTimes(time) {
+    this.repeatTimesRadio.click();
+    this.repeatTimesInput.sendKeys(time);
+  }
+
+  setStartBillingDate(date = null) {
+    browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
+    browser.executeScript('arguments[0].click()', this.startingFromDate.getWebElement());
+    browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
+    const selectedTD = this.getElementStartDate(date);
+    browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
+    browser.executeScript('arguments[0].click()', selectedTD.getWebElement());
+  }
+
+  setFirstBillingToday() {
+    this.billFirstTransactionToday.click();
+  }
+
+  setOngoing() {
+    this.repeatOngoingRadio.click();
+  }
+
   fillStateAutoComplete(state) {
     this.billingInfo.state.sendKeys(state);
     this.clickOnAutoCompleteItem();
@@ -163,6 +208,7 @@ class ProcessTransactionCard extends Base {
     if (fields.generalInfo) this[fillCardGeneralFields](fields.generalInfo);
     if (fields.billingInfo) this[fillCardBillingInfoFields](fields.billingInfo);
     if (fields.shippingInfo) this[fillCardShippingInfoFields](fields.shippingInfo);
+    if (fields.recurringInfo) this[fillCardRecurringInfoFields](fields.recurringInfo);
   }
 
   [fillCardGeneralFields](generalInfo) {
@@ -234,10 +280,27 @@ class ProcessTransactionCard extends Base {
     });
   }
 
+  [fillCardRecurringInfoFields](recurringInfo) {
+    browser.executeScript('arguments[0].scrollIntoView()', this.checkRecurringBlock.getWebElement());
+    browser.executeScript('arguments[0].click()', this.checkRecurringBlock.getWebElement());
+
+    browser.executeScript('arguments[0].scrollIntoView()', this.paymentTitle.getWebElement());
+    this.paymentTitle.sendKeys(recurringInfo.paymentTitle);
+    this.setStartBillingDate(recurringInfo.startingFromDate);
+    browser.executeScript('arguments[0].click()', this.everyPeriodInput.getWebElement());
+    this.everyPeriodSelect(recurringInfo.everyPeriodValue).click();
+
+    if (recurringInfo.repeatTimes) this.setRepeatTimes(recurringInfo.repeatTimes);
+    if (recurringInfo.ongoing) this.setOngoing();
+
+    if (recurringInfo.billFirstTransaction) this.setFirstBillingToday();
+  }
+
   [selectCustomer](customerName) {
     this.generalInfo.customerSelectInput.sendKeys(customerName);
     this.waitUntilElementDisplayed(this.generalInfo.customerAutocompleteItem);
-    this.generalInfo.customerAutocompleteItem.click();
+    browser.executeScript('arguments[0].scrollIntoView()', this.generalInfo.customerAutocompleteItem);
+    browser.executeScript('arguments[0].click()', this.generalInfo.customerAutocompleteItem.getWebElement());
   }
 
   [selectAction](action) {

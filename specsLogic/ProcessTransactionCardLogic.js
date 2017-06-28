@@ -139,7 +139,7 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
   }
 
-  async approveWithRefundWithCustomerByMasterCard() {
+  approveWithRefundWithCustomerByMasterCard() {
     const customersDataMock =
       processTransactionCardDataMock.approveWithRefundWithCustomerByMasterCard.customersPage;
     const cardDataMock =
@@ -148,13 +148,83 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
 
     this[createNewCustomerWithCard](customersDataMock);
 
-    this.page.get();
-    this.page.fillFields(cardDataMock);
-    this.page.clickProcessBrowserExecute();
+    browser.waitForAngular()
+      .then(() => {
+        this.page.get();
+        this.page.fillFields(cardDataMock);
+        this.page.clickProcessBrowserExecute();
 
-    await this.page.waitUntilElementDisplayed(this.page.approvePopup);
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
 
-    expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  sendRecurringChargeWithExistingCustomerByDiscover() {
+    const customersDataMock =
+      processTransactionCardDataMock.successChargeRecurringWithExistingCustomerByDiscover
+        .customersPage;
+    const cardDataMock =
+      processTransactionCardDataMock.successChargeRecurringWithExistingCustomerByDiscover
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.get();
+        this.page.fillFields(cardDataMock);
+        this.page.clickProcessBrowserExecute();
+
+        this.page.waitUntilElementDisplayed(this.page.approvePopup);
+
+        expect(this.page.isElementDisplayed(this.page.approvePopup)).toBe(true);
+      });
+  }
+
+  declinedRecurringChargeWithExistingCustomerByVisa() {
+    const customersDataMock =
+      processTransactionCardDataMock.declinedChargeRecurringWithExistingCustomerByVisa
+        .customersPage;
+    const cardDataMock =
+      processTransactionCardDataMock.declinedChargeRecurringWithExistingCustomerByVisa
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.get();
+        this.page.fillFields(cardDataMock);
+        this.page.clickProcessBrowserExecute();
+        this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+
+        expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
+      });
+  }
+
+  declineRepeatedlyRecurringWithChargeWithCustomerByDiscover() {
+    const customersDataMock =
+      processTransactionCardDataMock.declinedRepeatedlyRecurringWithExistingCustomerByDiscover
+        .customersPage;
+    const cardDataMock =
+      processTransactionCardDataMock.declinedRepeatedlyRecurringWithExistingCustomerByDiscover
+        .processTransactionCardPage;
+
+    this[createNewCustomerWithCard](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.get();
+        this.page.fillFields(cardDataMock);
+        this.page.clickProcessBrowserExecute();
+
+        this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+        this.page.clickTryAgainButton();
+        this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+
+        expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
+      });
   }
 
   [createNewCustomerWithCard](customersDataMock) {
@@ -162,20 +232,28 @@ class ProcessTransactionCardLogic extends SpecBaseLogic {
     this[createNewCard](customersDataMock);
   }
 
-  [createNewCustomer](customersDataMock) {
+  async [createNewCustomer](customersDataMock) {
     this.customersPage.get();
     this.customersPage.clickCreateCustomer();
     this.customersPage.fillFields({ createCustomer: customersDataMock.createCustomer });
     this.customersPage.clickCompleteCreateCustomer();
+    // browser.ignoreSynchronization = true;
+    // await this.customersPage.waitUntilElementDisplayed(this.customersPage.toastPopup);
+    // expect(this.customersPage.toastPopup.getText()).toEqual('Customer created');
+    // browser.ignoreSynchronization = false;
   }
 
-  [createNewCard](customersDataMock) {
+  async [createNewCard](customersDataMock) {
     this.customersPage.selectCreatedCustomer(customersDataMock.createCustomer.companyNameInput);
     this.customersPage.selectWalletTab();
     this.customersPage.clickAddPaymentMethod();
     this.customersPage.selectCardTab();
     this.customersPage.fillFields({ addPaymentMethodCard: customersDataMock.addPaymentMethodCard });
     this.customersPage.clickAddCard();
+    // browser.ignoreSynchronization = true;
+    // await this.customersPage.waitUntilElementDisplayed(this.customersPage.toastPopup);
+    // expect(this.customersPage.toastPopup.getText()).toEqual('Card was added');
+    // browser.ignoreSynchronization = false;
   }
 }
 
