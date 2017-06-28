@@ -186,6 +186,99 @@ const processTransactionCardDataMock = {
       },
     },
   },
+  successChargeRecurringWithExistingCustomerByDiscover: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      },
+      addPaymentMethodCard: {
+        cardNumberInput: discover.number,
+        cardExpireMonth: discover.expire.month,
+        cardExpireYear: discover.expire.year,
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Recurring',
+        actionSelect: 'charge',
+        cardNumberInput: 'autocomplete',
+        cardCvvInput: '123',
+        amountInput: '1012.92',
+      },
+      recurringInfo: {
+        paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        startingFromDate: null,
+        everyPeriodValue: '6 months',
+        repeatTimes: '10',
+        billFirstTransaction: true,
+      },
+    },
+  },
+  declinedChargeRecurringWithExistingCustomerByVisa: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      },
+      addPaymentMethodCard: {
+        cardNumberInput: visaDeclined.number,
+        cardExpireMonth: visaDeclined.expire.month,
+        cardExpireYear: visaDeclined.expire.year,
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Recurring 33136162',
+        actionSelect: 'charge',
+        cardNumberInput: 'autocomplete',
+        cardCvvInput: '123',
+        amountInput: '130',
+        taxInput: '7.50',
+      },
+      recurringInfo: {
+        paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        startingFromDate: null,
+        everyPeriodValue: 'quarter',
+        ongoing: '10',
+        billFirstTransaction: true,
+      },
+    },
+  },
+  declinedRepeatedlyRecurringWithExistingCustomerByDiscover: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+      },
+      addPaymentMethodCard: {
+        cardNumberInput: discoverDeclined.number,
+        cardExpireMonth: discoverDeclined.expire.month,
+        cardExpireYear: discoverDeclined.expire.year,
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'Recurring 45239702',
+        actionSelect: 'charge',
+        cardNameInput: discoverDeclined.name,
+        cardNumberInput: 'autocomplete',
+        cardCvvInput: '123',
+        amountInput: '1100',
+        taxInput: '68',
+        surchargeInput: '0.07',
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+        editCustomerCheckbox: true,
+      },
+      recurringInfo: {
+        paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        startingFromDate: null,
+        everyPeriodValue: 'year',
+        ongoing: '10',
+        billFirstTransaction: true,
+      },
+    },
+  },
 };
 
 export {

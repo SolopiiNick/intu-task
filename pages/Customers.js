@@ -25,6 +25,10 @@ class Customers extends Base {
     return element(by
       .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
   }
+
+  get toastPopup() {
+    return element(by.css('md-toast .md-toast-wrapper .md-toast-body .md-toast-text.w-350.ml-15'));
+  }
   get selectBillingBlock() { return element(by.model('billingInfoShow')); }
   get selectShippingBlock() { return element(by.model('shippingInfoShow')); }
 

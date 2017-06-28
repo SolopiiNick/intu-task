@@ -34,4 +34,14 @@ describe('Process Transaction - Card Tab', () => {
 
   it('should approve transaction with "refund" action, with existing Customer and by using Master Card',
     cardLogic.approveWithRefundWithCustomerByMasterCard.bind(cardLogic));
+
+  it('should send recurring charge with existing customer by Discover',
+    cardLogic.sendRecurringChargeWithExistingCustomerByDiscover.bind(cardLogic));
+
+  it('should declined recurring charge with existing customer by Visa',
+    cardLogic.declinedRecurringChargeWithExistingCustomerByVisa.bind(cardLogic));
+
+  it('should declined repeated recurring charge with existing customer by Discover',
+    cardLogic.declineRepeatedlyRecurringWithChargeWithCustomerByDiscover.bind(cardLogic));
 });
+
