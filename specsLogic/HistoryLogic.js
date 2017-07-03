@@ -177,7 +177,6 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
-    this.cardType();
   }
 
   checkCreateCustomerByDiscoverRefundInAllTransactionTAb() {
@@ -205,6 +204,36 @@ class HistoryLogic extends SpecBaseLogic {
     browser.executeScript('arguments[0].scrollIntoView()', this.page.allTransactionsTab.getWebElement());
     this.page.allTransactionsTab.click();
     this.cardType();
+  }
+
+  transactionWithQueuedStatusIsVoided() {
+    const customersDataMock =
+      historyDataMock.queuedWithAuthCreateCustomerByVisa
+        .customersPage;
+    const cardDataMock =
+      historyDataMock.queuedWithAuthCreateCustomerByVisa
+        .processTransactionCardPage;
+
+    this[createNewCustomer](customersDataMock);
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCard.get();
+        processTransactionCard.fillFields(cardDataMock);
+        processTransactionCard.clickProcess();
+        processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+        processTransactionCard.clickComplete();
+      });
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.waitUntilElementDisplayed(this.page.queuedTab);
+    browser.executeScript('arguments[0].scrollIntoView()', this.page.queuedTab.getWebElement());
+    this.page.queuedTab.click();
+    this.page.clickVoidButton();
+    expect(this.page.voidConfirmText.getText())
+      .toEqual('Are you sure you want to void transaction?');
+    this.page.okButton.click();
   }
 
   [createNewCustomerWithCard](customersDataMock) {
