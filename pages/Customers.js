@@ -23,7 +23,8 @@ class Customers extends Base {
 
   get autoCompleteItem() {
     return element(by
-      .css('md-virtual-repeat-container:not(.ng-hide) [md-extra-name="$mdAutocompleteCtrl.itemName"]'));
+      .css('md-virtual-repeat-container:not(.ng-hide) ' +
+        '[md-extra-name="$mdAutocompleteCtrl.itemName"]'));
   }
 
   get toastPopup() {
@@ -62,7 +63,8 @@ class Customers extends Base {
       zipCode: element(by.name('zip_code')),
       country: {
         dropdown: element(by.name('country2')),
-        select: country => element(by.cssContainingText('md-content._md.md-default-theme', country)),
+        select: country => element(by.cssContainingText('md-content._md.md-default-theme',
+          country)),
       },
       state: element(by.name('billingStatesSearch')),
       phone: element(by.name('billing_phone1')),
@@ -124,7 +126,8 @@ class Customers extends Base {
 
   get customersList() {
     return {
-      createdCustomerItem: companyName => element(by.cssContainingText('.customer-item', companyName)),
+      createdCustomerItem: companyName => element(by.cssContainingText('.customer-item',
+        companyName)),
       walletTab: {
         tab: element(by.cssContainingText('md-tab-item span', WALLET_TAB_TEXT)),
         addButton: $('button[aria-label="Add"]'),

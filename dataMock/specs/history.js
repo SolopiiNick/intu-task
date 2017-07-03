@@ -224,6 +224,47 @@ const historyDataMock = {
       },
     },
   },
+  queuedWithAuthCreateCustomerByVisa: {
+    customersPage: {
+      createCustomer: {
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        emailInput: 'test@codemotion.eu',
+      },
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        customerSelectInput: 'New Company',
+        actionSelect: 'authorize',
+        cardNameInput: visa.name,
+        cardNumberInput: visa.number,
+        cardExpireMonth: visa.expire.month,
+        cardExpireYear: visa.expire.year,
+        amountInput: '76',
+        taxInput: '0.31',
+        surchargeInput: '1',
+        descriptionInput: 'test description',
+        poNumberInput: '888',
+        invoiceNumber: '999',
+        editCustomerCheckbox: true,
+      },
+      billingInfo: {
+        checkBillingBlock: 'true',
+        firstName: 'Olga',
+        lastName: 'Riy',
+        street: '591 Brickell Dr.',
+        street2: '595 Brickell Dr.',
+        city: 'Jamaica Plain',
+        zipCode: '02130',
+        state: 'Maryland',
+        phone: '(125)212121345',
+      },
+      shippingInfo: {
+        checkShippingBlock: 'true',
+        firstName: '',
+        sameBillingInput: 'true',
+      },
+    },
+  },
 };
 
 export {
