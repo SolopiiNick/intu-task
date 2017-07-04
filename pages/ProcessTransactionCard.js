@@ -28,7 +28,6 @@ class ProcessTransactionCard extends Base {
   }
 
   get checkBillingBlock() { return element(by.model('cardBillingInfoShow')); }
-  get checkSameAsBilling() { return element(by.model('cardShippingInfoShow')); }
   get checkRecurringBlock() { return element(by.css('form[name=creditCardForm] [ng-model=cardRecurringInfoShow]')); }
 
   get paymentTitle() { return element(by.model('cardForm.recurringInfo.name')); }
@@ -134,12 +133,6 @@ class ProcessTransactionCard extends Base {
     };
   }
 
-
-  sameAsBillingBlock() {
-    this.checkShippingBlock.click();
-    this.checkSameAsBilling.click();
-  }
-
   clickProcess() {
     this.processButton.click();
   }
@@ -152,6 +145,7 @@ class ProcessTransactionCard extends Base {
     // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
     browser.executeScript('arguments[0].scrollIntoView()', this.processButton.getWebElement());
     browser.executeScript('arguments[0].click()', this.processButton.getWebElement());
+    console.log(this.processButton);
   }
 
   clickComplete() {
@@ -171,6 +165,10 @@ class ProcessTransactionCard extends Base {
     this.selectShippingBlock.click();
   }
 
+  clickSameAsBilling() {
+    this.shippingInfo.sameBillingTrue.click();
+  }
+
   setRepeatTimes(time) {
     this.repeatTimesRadio.click();
     this.repeatTimesInput.sendKeys(time);
@@ -183,6 +181,7 @@ class ProcessTransactionCard extends Base {
     const selectedTD = this.getElementStartDate(date);
     browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
     browser.executeScript('arguments[0].click()', selectedTD.getWebElement());
+    console.log(this.startingFromDate);
   }
 
   setFirstBillingToday() {
@@ -268,8 +267,12 @@ class ProcessTransactionCard extends Base {
 
   [fillCardShippingInfoFields](shippingInfo) {
     Object.keys(shippingInfo).forEach((key) => {
-      if (key === 'firstName') {
+      if (key === 'checkShippingBlock') {
         this.clickSwitchShippingInfo(shippingInfo.selectShippingBlock);
+        return;
+      }
+      if (key === 'sameBillingInput') {
+        this.clickSameAsBilling(shippingInfo.sameBillingInput);
         return;
       }
       if (key === 'state') {

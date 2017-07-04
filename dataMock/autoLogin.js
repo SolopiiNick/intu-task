@@ -13,7 +13,7 @@ const autoLogin = {
     forgotPasswordTime: '1492640528',
     id: 420,
     idIso: 61,
-    idMerchant: 355,
+    idMerchant: 360,
     idRole: null,
     idTimezone: null,
     isNewUser: null,
@@ -26,9 +26,12 @@ const autoLogin = {
     status: 1,
     tableName: 'users',
     theme: null,
-    token: 'tokenForE2ETests',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2V' +
+    'ybmFtZSI6InRlc3QiLCJleHBpcmUiOjMxMTA0MDAwLCJpZCI6MywidGFibGV' +
+    'OYW1lIjoidXNlcnMiLCJpYXQiOjE0OTg2NzU2MzUsImV4cCI6MTUyOTc3OTY' +
+    'zNX0.cl5OklWMOY7GThTUc_HvlypEqjyGamKw0W53HZI6OPw',
     updatedAt: '2017-06-12T11:06:44.000Z',
-    username: 'Autotest',
+    username: 'Autotest1',
   },
   userSettings: {
     availablePages: {

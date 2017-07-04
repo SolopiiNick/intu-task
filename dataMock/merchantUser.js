@@ -1,5 +1,5 @@
 const merchantUser = {
-  username: 'Autotest',
+  username: 'Autotest1',
   password: 'Y3qr7JAD',
 };
 
