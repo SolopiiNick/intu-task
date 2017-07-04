@@ -29,10 +29,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.waitUntilDisplayed();
     this.page.currentBatch.click();
-    this.transactionDate();
-    this.companyName();
-    this.cardNumber();
-    this.amount();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkVoidTransaction() {
@@ -52,10 +52,10 @@ class HistoryLogic extends SpecBaseLogic {
     browser.executeScript('arguments[0].scrollIntoView()', this.page.allTransactionsTab.getWebElement());
     this.page.allTransactionsTab.click();
     this.page.voidFilter.click();
-    this.transactionDate();
-    this.companyName();
-    this.cardNumber();
-    this.amount();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkRemovedTransaction() {
@@ -76,10 +76,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.waitUntilElementDisplayed(this.page.queuedTab);
     browser.executeScript('arguments[0].scrollIntoView()', this.page.queuedTab.getWebElement());
     this.page.queuedTab.click();
-    this.transactionDate();
-    this.companyName();
-    this.cardNumber();
-    this.amount();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkRefundTransaction() {
@@ -93,7 +93,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.currentBatch.click();
     this.page.clickRefundButton();
     this.page.refundSubmitButton.click();
-    this.cardType();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkRechargeTransaction() {
@@ -130,7 +133,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
-    this.cardType();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkAuthorizeCreateCustomerByVisaInQueuedTAb() {
@@ -152,7 +158,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
-    this.cardType();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkPostAuthorizeCreateCustomerByAmexInQueuedTAb() {
@@ -177,6 +186,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   checkCreateCustomerByDiscoverRefundInAllTransactionTAb() {
@@ -203,7 +216,10 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.waitUntilElementDisplayed(this.page.allTransactionsTab);
     browser.executeScript('arguments[0].scrollIntoView()', this.page.allTransactionsTab.getWebElement());
     this.page.allTransactionsTab.click();
-    this.cardType();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
   }
 
   transactionWithQueuedStatusIsVoided() {
@@ -236,6 +252,60 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.okButton.click();
   }
 
+  madeCaptureMasterCardWithAuthAction() {
+    const { madeCaptureMasterCardWithAuthAction } = historyDataMock;
+    processTransactionCard.fillFields(madeCaptureMasterCardWithAuthAction);
+    processTransactionCard.clickProcess();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    this.page.clickCaptureActionButton();
+    expect(this.page.captureConfirmText.getText()).toEqual('Are you sure you want to capture the ' +
+      'transaction - transaction will be moved to current batch?');
+    this.page.okButton.click();
+    this.page.capturedFilter.click();
+    this.checkTransactionAmount('$1,012.92');
+  }
+
+  madeCaptureAmexCardWithPostAuthAction() {
+    const { madeCaptureAmexCardWithPostAuthAction } = historyDataMock;
+    processTransactionCard.fillFields(madeCaptureAmexCardWithPostAuthAction);
+    processTransactionCard.clickProcess();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    this.page.clickCaptureActionButton();
+    expect(this.page.captureConfirmText.getText()).toEqual('Are you sure you want to capture the ' +
+      'transaction - transaction will be moved to current batch?');
+    this.page.okButton.click();
+    this.page.batchesTab.click();
+    this.page.currentBatch.click();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
+  }
+
+  madeErrorWithChargeByAmex() {
+    const { madeErrorWithChargeByAmex } = historyDataMock;
+    processTransactionCard.fillFields(madeErrorWithChargeByAmex);
+    processTransactionCard.clickProcess();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.errorPopup);
+    expect(processTransactionCard.isElementDisplayed(processTransactionCard.errorPopup)).toBe(true);
+    processTransactionCard.clickOkButton();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
+  }
+
   [createNewCustomerWithCard](customersDataMock) {
     this[createNewCustomer](customersDataMock);
     this[createNewCard](customersDataMock);
@@ -260,49 +330,46 @@ class HistoryLogic extends SpecBaseLogic {
   }
 
 
-  async transactionDate() {
-    const rows = await element.all(by.repeater('row in rowData'));
-
-    const itemTitleElement = rows[0].element(by.class('md-cell ng-binding ng-scope'));
-
-    const itemTitle = await itemTitleElement.getText();
-    expect(itemTitle).toEqual('5/12/17 9:06 PM');
+  checkIfRowExist({ repeatSelector, colIdx, toEqualValue }) {
+    this.page.repeaterData(repeatSelector)
+      .then(rows => rows[0].all(by.repeater('column in columns')))
+      .then(cols => cols[colIdx])
+      .then(col => col.getAttribute('innerText'))
+      .then((text) => {
+        expect(text).toEqual(toEqualValue);
+      });
   }
 
-  async companyName() {
-    const rows = await element.all(by.repeater('row in rowData'));
-
-    const itemTitleElement = rows[1].element(by.class('md-cell ng-binding ng-scope'));
-
-    const itemTitle = await itemTitleElement.getText();
-    expect(itemTitle).toEqual('');
+  checkCompanyName(expectValue) {
+    this.checkIfRowExist({
+      repeatSelector: 'row in rowData',
+      colIdx: 1,
+      toEqualValue: expectValue,
+    });
   }
 
-  async cardType() {
-    const rows = await element.all(by.repeater('row in rowData'));
-
-    const itemTitleElement = rows[2].element(by.class('md-cell ng-binding ng-scope'));
-
-    const itemTitle = await itemTitleElement.getText();
-    expect(itemTitle).toEqual('Refund');
+  checkCardType(expectValue) {
+    this.checkIfRowExist({
+      repeatSelector: 'row in rowData',
+      colIdx: 2,
+      toEqualValue: expectValue,
+    });
   }
 
-  async cardNumber() {
-    const rows = await element.all(by.repeater('row in rowData'));
-
-    const itemTitleElement = rows[3].element(by.class('md-cell ng-binding ng-scope'));
-
-    const itemTitle = await itemTitleElement.getText();
-    expect(itemTitle).toEqual('2149');
+  checkCardNumber(expectValue) {
+    this.checkIfRowExist({
+      repeatSelector: 'row in rowData',
+      colIdx: 3,
+      toEqualValue: expectValue,
+    });
   }
 
-  async amount() {
-    const rows = await element.all(by.repeater('row in rowData'));
-
-    const itemTitleElement = rows[3].element(by.class('md-cell ng-binding ng-scope'));
-
-    const itemTitle = await itemTitleElement.getText();
-    expect(itemTitle).toEqual('526');
+  checkTransactionAmount(expectValue) {
+    this.checkIfRowExist({
+      repeatSelector: 'row in rowData',
+      colIdx: 4,
+      toEqualValue: expectValue,
+    });
   }
 }
 

@@ -1,7 +1,7 @@
 import { cards } from '../cards';
 import { getRandomInt } from '../../utils/Helpers';
 
-const { discover, visa, masterCard, amex } = cards;
+const { discover, visa, masterCard, amex, amexError } = cards;
 
 const MIN_NUM = 0;
 const MAX_NUM = 100000000;
@@ -263,6 +263,62 @@ const historyDataMock = {
         firstName: '',
         sameBillingInput: 'true',
       },
+    },
+  },
+  madeCaptureMasterCardWithAuthAction: {
+    generalInfo: {
+      actionSelect: 'authorize',
+      cardNameInput: masterCard.name,
+      cardNumberInput: masterCard.number,
+      cardCvvInput: masterCard.cvv,
+      cardExpireMonth: masterCard.expire.month,
+      cardExpireYear: masterCard.expire.year,
+      amountInput: '78',
+      taxInput: '2',
+      surchargeInput: '2.22',
+      descriptionInput: 'test description',
+      invoiceNumber: '999',
+      avsStreetInput: '1307 Broad Hollow Road',
+      avsZipInput: '11747',
+      poNumberInput: '888',
+    },
+  },
+  madeCaptureAmexCardWithPostAuthAction: {
+    generalInfo: {
+      actionSelect: 'postauthorize',
+      cardNameInput: amex.name,
+      cardNumberInput: amex.number,
+      cardCvvInput: amex.cvv,
+      cardExpireMonth: amex.expire.month,
+      cardExpireYear: amex.expire.year,
+      authNumberInput: '212121',
+      amountInput: '77.19',
+      taxInput: '2',
+      surchargeInput: '2.22',
+      companyNameInput: 'Test Company n',
+    },
+  },
+  madeErrorWithChargeByAmex: {
+    generalInfo: {
+      actionSelect: 'charge',
+      cardNameInput: amexError.name,
+      cardNumberInput: amexError.number,
+      cardCvvInput: amexError.cvv,
+      cardExpireMonth: amexError.expire.month,
+      cardExpireYear: amexError.expire.year,
+      amountInput: '349.01',
+      companyNameInput: 'Test Company n',
+    },
+    billingInfo: {
+      checkBillingBlock: 'true',
+      firstName: 'Olga',
+      lastName: 'Riy',
+      street: '591 Brickell Dr.',
+      street2: '595 Brickell Dr.',
+      city: 'Jamaica Plain',
+      zipCode: '02130',
+      state: 'Maryland',
+      phone: '(125)212121345',
     },
   },
 };

@@ -35,5 +35,14 @@ describe('Process Transaction - Batch', () => {
 
   it('transaction with queued status (Auth action) is voided',
     historyLogic.transactionWithQueuedStatusIsVoided.bind(historyLogic));
+
+  it('Сapture transaction (Auth action)',
+    historyLogic.madeCaptureMasterCardWithAuthAction.bind(historyLogic));
+
+  it('Сapture transaction (Postauth action)',
+    historyLogic.madeCaptureAmexCardWithPostAuthAction.bind(historyLogic));
+
+  it('check out transaction with Error status',
+    historyLogic.madeErrorWithChargeByAmex.bind(historyLogic));
 });
 
