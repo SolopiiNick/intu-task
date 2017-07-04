@@ -2,11 +2,15 @@ import Base from '../utils/Base';
 
 const HISTORY_TAB = 'History';
 const QUEUED_TAB = 'Queued';
+const BATCHES_TAB = 'Batches';
 const ALL_TRANSACTION_TAB = 'All transactions';
 const VOID_FILTER_TEXT = 'voided';
+const CAPTURED_FILTER = 'captured';
 const VOID_CONFIRM_TEXT = 'Are you sure you want to void transaction?';
 const REFUND_CONFIRM_TEXT = 'Please enter the amount for refund.';
 const REMOVED_CONFIRM_TEXT = 'Are you sure you want to move transaction to «Queued» page?';
+const CAPTURE_CONFIRM_TEXT = 'Are you sure you want to capture the transaction - transaction will' +
+  ' be moved to current batch?';
 const OK_BUTTON_TEXT = 'Ok';
 
 class History extends Base {
@@ -22,6 +26,10 @@ class History extends Base {
     return element(by.linkText(HISTORY_TAB));
   }
 
+  get batchesTab() {
+    return element(by.cssContainingText('md-tab-item span', BATCHES_TAB));
+  }
+
   get queuedTab() {
     return element(by.cssContainingText('md-tab-item span', QUEUED_TAB));
   }
@@ -32,6 +40,10 @@ class History extends Base {
 
   get voidFilter() {
     return element(by.cssContainingText('.quick-filters-list', VOID_FILTER_TEXT));
+  }
+
+  get capturedFilter() {
+    return element(by.cssContainingText('.quick-filters-list', CAPTURED_FILTER));
   }
 
   get currentBatch() {
@@ -50,12 +62,20 @@ class History extends Base {
     return element(by.cssContainingText('.confirm-dialog-content', VOID_CONFIRM_TEXT));
   }
 
+  get captureConfirmText() {
+    return element(by.cssContainingText('.confirm-dialog-content', CAPTURE_CONFIRM_TEXT));
+  }
+
   get refundButton() {
     return element(by.css('img[alt="refund"]'));
   }
 
   get rechargeButton() {
     return element(by.css('img[alt="recharge"]'));
+  }
+
+  get captureActionButton() {
+    return element(by.css('button[aria-label="capture"]'));
   }
 
   get refundAmountInput() {
@@ -86,12 +106,8 @@ class History extends Base {
     return element(by.cssContainingText('button span', OK_BUTTON_TEXT));
   }
 
-  get repeaterData() {
-    return element.all(by.repeater('row in rowData'));
-  }
-
-  itemTitleElement(cell) {
-    cell.element(by.class('md-cell ng-binding ng-scope'));
+  repeaterData(repeater) {
+    return element.all(by.repeater(repeater));
   }
 
   clickVoidButton() {
@@ -108,6 +124,10 @@ class History extends Base {
 
   clickRechargeButton() {
     browser.executeScript('arguments[0].click();', this.rechargeButton);
+  }
+
+  clickCaptureActionButton() {
+    browser.executeScript('arguments[0].click();', this.captureActionButton);
   }
 
 }

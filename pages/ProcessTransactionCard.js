@@ -60,6 +60,7 @@ class ProcessTransactionCard extends Base {
 
   get completeButton() { return element(by.buttonText('Complete')); }
   get tryAgainButton() { return element(by.buttonText('Try Again')); }
+  get okButton() { return element(by.buttonText('Ok')); }
 
   get checkShippingBlock() { return element(by.model('cardShippingInfoShow')); }
 
@@ -145,7 +146,6 @@ class ProcessTransactionCard extends Base {
     // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
     browser.executeScript('arguments[0].scrollIntoView()', this.processButton.getWebElement());
     browser.executeScript('arguments[0].click()', this.processButton.getWebElement());
-    console.log(this.processButton);
   }
 
   clickComplete() {
@@ -155,6 +155,11 @@ class ProcessTransactionCard extends Base {
   clickTryAgainButton() {
     this.tryAgainButton.click();
   }
+
+  clickOkButton() {
+    this.okButton.click();
+  }
+
 
   clickOnAutoCompleteItem() {
     this.waitUntilElementDisplayed(this.autoCompleteItem);
@@ -181,7 +186,6 @@ class ProcessTransactionCard extends Base {
     const selectedTD = this.getElementStartDate(date);
     browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
     browser.executeScript('arguments[0].click()', selectedTD.getWebElement());
-    console.log(this.startingFromDate);
   }
 
   setFirstBillingToday() {
