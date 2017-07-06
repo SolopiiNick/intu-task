@@ -110,6 +110,30 @@ class History extends Base {
     return element.all(by.repeater(repeater));
   }
 
+  get viewButton() {
+    return element.all(by.css('tr[ng-repeat-start="series in rowData"]')).get(1);
+  }
+
+  get expandedContent() {
+    return element(by.css('.ab-expanded-content')).all(by.css('tr'));
+  }
+
+  get tableData() {
+    return element(by.css('#dynamic_row')).element(by.css('table'));
+  }
+
+  get rows() {
+    return this.tableData.all(by.tagName('tr'));
+  }
+
+  get cells() {
+    return this.rows[0].all(by.tagName('td'));
+  }
+
+  transactionResultData(result) {
+    return element(by.cssContainingText('.ab-expanded-content tr', result));
+  }
+
   clickVoidButton() {
     browser.executeScript('arguments[0].click();', this.voidButton);
   }
@@ -128,6 +152,10 @@ class History extends Base {
 
   clickCaptureActionButton() {
     browser.executeScript('arguments[0].click();', this.captureActionButton);
+  }
+
+  clickViewButton() {
+    this.viewButton.click();
   }
 
 }

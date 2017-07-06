@@ -1,5 +1,5 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
-import { History, ProcessTransactionCard, Customers } from '../pages';
+import { History, ProcessTransactionCard, Customers, DashboardCard } from '../pages';
 import { historyDataMock } from '../dataMock';
 
 const createNewCustomer = Symbol('create new customer');
@@ -8,11 +8,13 @@ const createNewCustomerWithCard = Symbol('create new customer with card');
 
 const processTransactionCard = new ProcessTransactionCard();
 
+
 class HistoryLogic extends SpecBaseLogic {
   constructor() {
     super();
     this.page = new History();
     this.customersPage = new Customers();
+    this.dashboardCard = new DashboardCard();
   }
 
   beforeEach() {
@@ -304,6 +306,78 @@ class HistoryLogic extends SpecBaseLogic {
     // this.checkCompanyName('Test Company n');
     // this.checkCardType('Charge');
     // this.checkCardNumber('**** 1165');
+  }
+
+  madeDeclineWithChargeByVisa() {
+    browser.waitForAngular()
+      .then(() => {
+        this.dashboardCard.get();
+        const { madeDeclineWithChargeByVisa } = historyDataMock;
+        this.dashboardCard.fillFields(madeDeclineWithChargeByVisa);
+        this.dashboardCard.clickProcess();
+        this.dashboardCard.waitUntilElementDisplayed(this.dashboardCard.declinedPopup);
+        expect(this.dashboardCard.isElementDisplayed(this.dashboardCard.declinedPopup)).toBe(true);
+        this.dashboardCard.clickCancelButton();
+      });
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
+  }
+
+  refundTransactionWithCaptureStatusBiggerAmount() {
+    const { refundTransactionWithCaptureStatus } = historyDataMock;
+    processTransactionCard.fillFields(refundTransactionWithCaptureStatus);
+    processTransactionCard.clickProcessBrowserExecute();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    expect(processTransactionCard.isElementDisplayed(processTransactionCard.approvePopup))
+      .toBe(true);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    this.page.clickRefundButton();
+    this.page.refundAmountInput.clear().sendKeys('1014');
+    this.page.refundSubmitButton.click();
+    this.page.clickViewButton();
+    // this.page.transactionResultData(refundTransactionWithCaptureStatus.generalInfo.amountInput);
+    // this.page.expandedContent.each((row) => {
+    //   console.log(this.page.expandedContent[0]);
+    //   const rowElement = row.$$('td');
+    //   expect(rowElement.count()).toBe(2);
+    //   rowElement.each((r) => {
+    //     r.getText(t => console.log('t:', t));
+    //   });
+    //   expect(rowElement.get(1).getText()).toMatch('bla bla');
+    // })
+    // browser.executeScript('arguments[0].scrollIntoView()', this.page.tableData);
+    // browser.sleep(500);
+    // expect(this.page.cells[1].getText()).toEqual('something');
+
+    // this.checkTransactionAmount('$21.00');
+    // this.checkCompanyName('Test Company n');
+    // this.checkCardType('Charge');
+    // this.checkCardNumber('**** 1165');
+  }
+
+  refundTransactionWithQueuedStatusLessAmount() {
+    const { refundTransactionWithQueuedStatus } = historyDataMock;
+    processTransactionCard.fillFields(refundTransactionWithQueuedStatus);
+    processTransactionCard.clickProcessBrowserExecute();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    expect(processTransactionCard.isElementDisplayed(processTransactionCard.approvePopup))
+      .toBe(true);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    this.page.clickRefundButton();
+    this.page.refundAmountInput.clear().sendKeys('75');
+    this.page.refundSubmitButton.click();
+    this.page.clickViewButton();
   }
 
   [createNewCustomerWithCard](customersDataMock) {

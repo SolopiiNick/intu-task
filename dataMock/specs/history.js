@@ -1,7 +1,7 @@
 import { cards } from '../cards';
 import { getRandomInt } from '../../utils/Helpers';
 
-const { discover, visa, masterCard, amex, amexError } = cards;
+const { discover, visa, masterCard, amex, amexError, visaDeclined } = cards;
 
 const MIN_NUM = 0;
 const MAX_NUM = 100000000;
@@ -319,6 +319,38 @@ const historyDataMock = {
       zipCode: '02130',
       state: 'Maryland',
       phone: '(125)212121345',
+    },
+  },
+  madeDeclineWithChargeByVisa: {
+    generalInfo: {
+      cardNumberInput: visaDeclined.number,
+      cardNameInput: visaDeclined.name,
+      cardCvvInput: visaDeclined.cvv,
+      cardExpireMonth: visaDeclined.expire.month,
+      cardExpireYear: visaDeclined.expire.year,
+      amountInput: '137.50',
+    },
+  },
+  refundTransactionWithCaptureStatus: {
+    generalInfo: {
+      cardNameInput: discover.name,
+      cardNumberInput: discover.number,
+      cardCvvInput: discover.cvv,
+      cardExpireMonth: discover.expire.month,
+      cardExpireYear: discover.expire.year,
+      amountInput: '1012.92',
+    },
+  },
+  refundTransactionWithQueuedStatus: {
+    generalInfo: {
+      cardNameInput: visa.name,
+      cardNumberInput: visa.number,
+      cardCvvInput: visa.cvv,
+      cardExpireMonth: visa.expire.month,
+      cardExpireYear: visa.expire.year,
+      amountInput: '77',
+      avsStreetInput: '1307 Broad Hollow Road',
+      avsZipInput: '11747',
     },
   },
 };

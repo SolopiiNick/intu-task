@@ -3,6 +3,7 @@ import Login from './Login';
 import ProcessTransactionCard from './ProcessTransactionCard';
 import ProcessTransactionsCheck from './ProcessTransactionCheck';
 import History from './History';
+import DashboardCard from './Dashboard';
 
 export {
   Customers,
@@ -10,4 +11,5 @@ export {
   ProcessTransactionCard,
   ProcessTransactionsCheck,
   History,
+  DashboardCard,
 };

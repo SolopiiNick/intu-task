@@ -31,7 +31,7 @@ const autoLogin = {
     'OYW1lIjoidXNlcnMiLCJpYXQiOjE0OTg2NzU2MzUsImV4cCI6MTUyOTc3OTY' +
     'zNX0.cl5OklWMOY7GThTUc_HvlypEqjyGamKw0W53HZI6OPw',
     updatedAt: '2017-06-12T11:06:44.000Z',
-    username: 'Autotest1',
+    username: 'jacj',
   },
   userSettings: {
     availablePages: {
