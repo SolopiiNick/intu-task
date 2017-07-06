@@ -44,5 +44,14 @@ describe('Process Transaction - Batch', () => {
 
   it('check out transaction with Error status',
     historyLogic.madeErrorWithChargeByAmex.bind(historyLogic));
+
+  it('check out transaction with Decline status on Dashboard',
+    historyLogic.madeDeclineWithChargeByVisa.bind(historyLogic));
+
+  it('Refund transaction with Capture status',
+    historyLogic.refundTransactionWithCaptureStatusBiggerAmount.bind(historyLogic));
+
+  it('Refund transaction with Queued status with less amount than previously transaction',
+    historyLogic.refundTransactionWithQueuedStatusLessAmount.bind(historyLogic));
 });
 

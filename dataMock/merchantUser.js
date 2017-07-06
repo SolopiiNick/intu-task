@@ -1,6 +1,6 @@
 const merchantUser = {
-  username: 'Autotest1',
-  password: 'Y3qr7JAD',
+  username: 'jacj',
+  password: 'Test1717',
 };
 
 export {
