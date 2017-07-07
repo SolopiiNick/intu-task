@@ -53,5 +53,11 @@ describe('Process Transaction - Batch', () => {
 
   it('Refund transaction with Queued status with less amount than previously transaction',
     historyLogic.refundTransactionWithQueuedStatusLessAmount.bind(historyLogic));
+
+  it('Refund transaction with Queued status with less amount than previously transaction',
+    historyLogic.rechargeTransactionWithQueuedStatus.bind(historyLogic));
+
+  it('Charge check transaction is processed successfully and check in History Tab',
+    historyLogic.sendChargeCheckingTransaction.bind(historyLogic));
 });
 

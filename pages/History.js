@@ -4,6 +4,7 @@ const HISTORY_TAB = 'History';
 const QUEUED_TAB = 'Queued';
 const BATCHES_TAB = 'Batches';
 const ALL_TRANSACTION_TAB = 'All transactions';
+const CHECKS_TAB = 'Checks';
 const VOID_FILTER_TEXT = 'voided';
 const CAPTURED_FILTER = 'captured';
 const VOID_CONFIRM_TEXT = 'Are you sure you want to void transaction?';
@@ -36,6 +37,10 @@ class History extends Base {
 
   get allTransactionsTab() {
     return element(by.cssContainingText('md-tab-item span', ALL_TRANSACTION_TAB));
+  }
+
+  get checksTab() {
+    return element(by.cssContainingText('md-tab-item span', CHECKS_TAB));
   }
 
   get voidFilter() {
