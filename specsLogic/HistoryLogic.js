@@ -1,5 +1,6 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
-import { History, ProcessTransactionCard, Customers, DashboardCard } from '../pages';
+import { History, ProcessTransactionCard, Customers, DashboardCard,
+  ProcessTransactionsCheck } from '../pages';
 import { historyDataMock } from '../dataMock';
 
 const createNewCustomer = Symbol('create new customer');
@@ -7,6 +8,7 @@ const createNewCard = Symbol('create new card');
 const createNewCustomerWithCard = Symbol('create new customer with card');
 
 const processTransactionCard = new ProcessTransactionCard();
+const processTransactionCheck = new ProcessTransactionsCheck();
 
 
 class HistoryLogic extends SpecBaseLogic {
@@ -378,6 +380,65 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.refundAmountInput.clear().sendKeys('75');
     this.page.refundSubmitButton.click();
     this.page.clickViewButton();
+  }
+
+  rechargeTransactionWithQueuedStatus() {
+    const { rechargeTransactionWithQueuedStatus } = historyDataMock;
+    processTransactionCard.fillFields(rechargeTransactionWithQueuedStatus);
+    processTransactionCard.clickProcessBrowserExecute();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    expect(processTransactionCard.isElementDisplayed(processTransactionCard.approvePopup))
+      .toBe(true);
+    processTransactionCard.clickComplete();
+
+    this.page.historyTab.click();
+    this.page.allTransactionsTab.click();
+    this.page.clickRechargeButton();
+    // const checkInputsValue = this.createInputsChecker(rechargeTransactionWithQueuedStatus);
+    // browser.executeScript('arguments[0].scrollIntoView(true);'
+    // , processTransactionCard.generalInfo.cardNameInput);
+    // checkInputsValue('generalInfo', [
+    //   'cardNameInput',
+    //   'amountInput',
+    //   'cardCvvInput',
+    //   'taxInput',
+    //   'avsStreetInput',
+    //   'avsZipInput',
+    // ]);
+    // browser.executeScript('arguments[0].scrollIntoView(true);'
+    // , processTransactionCard.checkBillingBlock);
+    // checkInputsValue('billingInfo', [
+    //   'firstName',
+    //   'lastName',
+    // ]);
+  }
+
+  sendChargeCheckingTransaction() {
+    const { successCheckingWithChargeAction } = historyDataMock;
+    processTransactionCheck.get();
+    processTransactionCheck.fillFields(successCheckingWithChargeAction);
+    processTransactionCheck.setNewCustomer();
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
+    browser.waitForAngular()
+      .then(() => {
+        this.page.historyTab.click();
+        this.page.waitUntilElementDisplayed(this.page.checksTab);
+        browser.executeScript('arguments[0].scrollIntoView()', this.page.checksTab.getWebElement());
+        this.page.checksTab.click();
+      });
+  }
+
+  createInputsChecker(dataMock) {
+    return (blockName, inputs) => {
+      inputs.forEach((input) => {
+        expect(processTransactionCard[blockName][input].getAttribute('value'))
+          .toEqual(dataMock[blockName][input]);
+      });
+    };
   }
 
   [createNewCustomerWithCard](customersDataMock) {

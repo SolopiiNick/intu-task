@@ -4,8 +4,10 @@ const APPROVED_POPUP_TEXT = 'Approved';
 const ERROR_POPUP_TEXT = 'Error';
 const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try again';
 
-const fillCheckGenerailFields = Symbol('fill check tab general fields');
+const fillCheckGeneralFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
+const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
+const fillShippingStateField = Symbol('fill state in shipping info fields');
 const fillCheckRecurringInfoFields = Symbol('fill check tab recurring info fields');
 const fillTransactionTypeInput = Symbol('fill transaction type select');
 const fillAccountTypeInput = Symbol('fill account type select');
@@ -28,6 +30,7 @@ class ProcessTransactionsCheck extends Base {
       amountInput: element(by.model('checkForm.amount')),
       taxInput: element(by.model('checkForm.taxCurrency')),
       surchargeInput: element(by.model('checkForm.surchargeCurrency')),
+      invoiceNumber: element(by.model('checkForm.generalInfo.invoice')),
       avsStreetInput: element(by.model('checkForm.generalInfo.billingAddress')),
       avsZipInput: element(by.model('checkForm.generalInfo.billingZip')),
       poNumberInput: element(by.model('checkForm.generalInfo.po')),
@@ -50,6 +53,20 @@ class ProcessTransactionsCheck extends Base {
       phone: element(by.css('form[name=checkingForm] input[name=billing_phone]')),
     };
   }
+
+  get shippingInfo() {
+    return {
+      firstName: element(by.css('form[name=checkingForm] input[name=first_name2]')),
+      lastName: element(by.css('form[name=checkingForm] input[name=last_name2]')),
+      street: element(by.css('form[name=checkingForm] input[name=street3]')),
+      street2: element(by.css('form[name=checkingForm] input[name=street4]')),
+      city: element(by.css('form[name=checkingForm] input[name=city2]')),
+      zipCode: element(by.css('form[name=checkingForm] input[name=zip_code2]')),
+      state: element(by.css('form[name=checkingForm] input[name=shippingStatesSearchCheck]')),
+      phone: element(by.css('form[name=checkingForm] input[name=check_shipping_phone]')),
+    };
+  }
+
   get newCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=createNewCustomer]')); }
   get editCustomerInput() { return element(by.css('form[name=checkingForm] md-checkbox[ng-model=updateCurrentCustomer]')); }
   get customerInput() { return element(by.css('form[name=checkingForm] input[name=customersSearchCheck]')); }
@@ -107,12 +124,13 @@ class ProcessTransactionsCheck extends Base {
   }
 
   fillFields(field) {
-    if (field.generalInfo) this[fillCheckGenerailFields](field.generalInfo);
+    if (field.generalInfo) this[fillCheckGeneralFields](field.generalInfo);
     if (field.billingInfo) this[fillCheckBillingInfoFields](field.billingInfo);
+    if (field.shippingInfo) this[fillCardShippingInfoFields](field.shippingInfo);
     if (field.recurringInfo) this[fillCheckRecurringInfoFields](field.recurringInfo);
   }
 
-  [fillCheckGenerailFields](generalInfo) {
+  [fillCheckGeneralFields](generalInfo) {
     Object.keys(generalInfo).forEach((key) => {
       if (key === 'accountTypeInput') return this[fillAccountTypeInput](generalInfo[key]);
       if (key === 'transactionTypeInput') return this[fillTransactionTypeInput](generalInfo[key]);
@@ -123,6 +141,11 @@ class ProcessTransactionsCheck extends Base {
   [fillCheckBillingInfoFields](billingInfo) {
     this.checkBillingBlock.click();
     Object.keys(billingInfo).forEach(this.inputField.apply(this, [billingInfo, 'billingInfo']));
+  }
+
+  [fillCardShippingInfoFields](shippingInfo) {
+    this.checkShippingBlock.click();
+    Object.keys(shippingInfo).forEach(this.inputField.apply(this, [shippingInfo, 'shippingInfo']));
   }
 
   [fillCheckRecurringInfoFields](recurringInfo) {
@@ -153,6 +176,10 @@ class ProcessTransactionsCheck extends Base {
     browser.executeScript('arguments[0].scrollIntoView()', accountTypeInputWebElement);
     browser.executeScript('arguments[0].click()', accountTypeInputWebElement);
     this.accountTypeSelect(type).click();
+  }
+
+  [fillShippingStateField](state) {
+    this.fillSippingStateAutoComplete(state);
   }
 
   setChargeAction() {
@@ -217,6 +244,11 @@ class ProcessTransactionsCheck extends Base {
     const submitButtonWebElement = this.submitButton.getWebElement();
     browser.executeScript('arguments[0].scrollIntoView()', submitButtonWebElement);
     browser.executeScript('arguments[0].click()', submitButtonWebElement);
+  }
+
+  fillSippingStateAutoComplete(state) {
+    this.shippingInfo.state.sendKeys(state);
+    this.clickOnAutoCompleteItem();
   }
 }
 
