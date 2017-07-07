@@ -148,13 +148,6 @@ class ProcessTransactionsCheck extends Base {
     Object.keys(shippingInfo).forEach(this.inputField.apply(this, [shippingInfo, 'shippingInfo']));
   }
 
-  // [fillCardShippingInfoFields](shippingInfo) {
-  //   Object.keys(shippingInfo).forEach((key) => {
-  //     if (key === 'state') return this[fillShippingStateField](shippingInfo[key]);
-  //     this.inputField.apply(this, [shippingInfo, 'shippingInfo'])(key);
-  //   });
-  // }
-
   [fillCheckRecurringInfoFields](recurringInfo) {
     browser.executeScript('arguments[0].scrollIntoView()', this.checkRecurringBlock.getWebElement());
     browser.executeScript('arguments[0].click()', this.checkRecurringBlock.getWebElement());
