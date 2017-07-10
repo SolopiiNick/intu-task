@@ -394,7 +394,7 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickRechargeButton();
-    // const checkInputsValue = this.createInputsChecker(rechargeTransactionWithQueuedStatus);
+    // const checkInputsValue = this.createInputsCheckerCard(rechargeTransactionWithQueuedStatus);
     // browser.executeScript('arguments[0].scrollIntoView(true);'
     // , processTransactionCard.generalInfo.cardNameInput);
     // checkInputsValue('generalInfo', [
@@ -423,6 +423,7 @@ class HistoryLogic extends SpecBaseLogic {
     expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
       .toBe(true);
     processTransactionCheck.closePopup();
+
     browser.waitForAngular()
       .then(() => {
         this.page.historyTab.click();
@@ -432,10 +433,191 @@ class HistoryLogic extends SpecBaseLogic {
       });
   }
 
-  createInputsChecker(dataMock) {
+  sendAndCheckRefundWithExistingCustomer() {
+    const customersDataMock =
+      historyDataMock.successRefundWithExistingCustomer
+        .customersPage;
+    const cardDataMock =
+      historyDataMock.successRefundWithExistingCustomer
+        .processTransactionCheck;
+
+    this[createNewCustomer](customersDataMock);
+
+    processTransactionCheck.get();
+    processTransactionCheck.setRefundAction();
+    processTransactionCheck.fillCustomerAutoComplete(customersDataMock.createCustomer
+      .companyNameInput);
+    processTransactionCheck.fillFields(cardDataMock);
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
+
+    this.page.historyTab.click();
+    this.page.waitUntilElementDisplayed(this.page.checksTab);
+    browser.executeScript('arguments[0].scrollIntoView()', this.page.checksTab.getWebElement());
+    this.page.checksTab.click();
+  }
+
+  errorWithChargeCheckTransaction() {
+    const { errorCheckingWithChargeAction } = historyDataMock;
+    // processTransactionCheck.get();
+    // processTransactionCheck.setChargeAction();
+    // processTransactionCheck.fillFields(errorCheckingWithChargeAction);
+    // processTransactionCheck.setSameAsBillingInput();
+    // processTransactionCheck.clickProcessTransaction();
+    // processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    // expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+    //   .toBe(true);
+    // processTransactionCheck.closePopup();
+
+    processTransactionCheck.get();
+    processTransactionCheck.setChargeAction();
+    processTransactionCheck.fillFields(errorCheckingWithChargeAction);
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.errorPopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.errorPopup))
+      .toBe(true);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.errorPopupAmount))
+      .toBe(true);
+    processTransactionCheck.clickOkButton();
+
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.historyTab.click();
+        this.page.waitUntilElementDisplayed(this.page.checksTab);
+        this.page.checksTab.click();
+      });
+  }
+
+  successVoidCheckWithRefundAction() {
+    const { successVoidCheckWithRefund } = historyDataMock;
+    processTransactionCheck.get();
+    processTransactionCheck.setRefundAction();
+    processTransactionCheck.fillFields(successVoidCheckWithRefund);
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.historyTab.click();
+        this.page.waitUntilElementDisplayed(this.page.checksTab);
+        this.page.checksTab.click();
+        this.page.clickVoidButton();
+        this.page.voidConfirmText.isPresent();
+        this.page.okButton.click();
+      });
+  }
+
+  successVoidCheckWithChargeAction() {
+    const { successVoidCheckWithCharge } = historyDataMock;
+    processTransactionCheck.get();
+    processTransactionCheck.setChargeAction();
+    processTransactionCheck.fillFields(successVoidCheckWithCharge);
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.historyTab.click();
+        this.page.waitUntilElementDisplayed(this.page.checksTab);
+        this.page.checksTab.click();
+        this.page.clickVoidButton();
+        this.page.voidConfirmText.isPresent();
+        this.page.okButton.click();
+      });
+  }
+
+  successRechargeCheckWithChargeAction() {
+    const { checkingWithRechargeAction } = historyDataMock;
+    processTransactionCheck.get();
+    processTransactionCheck.setChargeAction();
+    processTransactionCheck.fillFields(checkingWithRechargeAction);
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
+
+    browser.waitForAngular()
+      .then(() => {
+        this.page.historyTab.click();
+        this.page.waitUntilElementDisplayed(this.page.checksTab);
+        this.page.checksTab.click();
+        this.page.clickRechargeButton();
+        // const checkInputsValue = this.createInputsCheckerCheck(checkingWithRechargeAction);
+        // browser.executeScript('arguments[0].scrollIntoView(true);'
+        // , processTransactionCard.generalInfo.cardNameInput);
+        // checkInputsValue('generalInfo', [
+        //   'cardNameInput',
+        //   'amountInput',
+        //   'cardCvvInput',
+        //   'taxInput',
+        //   'avsStreetInput',
+        //   'avsZipInput',
+        // ]);
+        // browser.executeScript('arguments[0].scrollIntoView(true);'
+        // , processTransactionCard.checkBillingBlock);
+        // checkInputsValue('billingInfo', [
+        //   'firstName',
+        //   'lastName',
+        // ]);
+      });
+  }
+
+  approveWithChargeByVisaAndCloseBatch() {
+    browser.waitForAngular()
+      .then(() => {
+        this.dashboardCard.get();
+        const { dashboardAndCloseBatch } = historyDataMock;
+        this.dashboardCard.fillFields(dashboardAndCloseBatch);
+        this.dashboardCard.clickProcess();
+        this.dashboardCard.waitUntilElementDisplayed(this.dashboardCard.approvePopup);
+        expect(this.dashboardCard.isElementDisplayed(this.dashboardCard.approvePopup)).toBe(true);
+        this.dashboardCard.completeButton.click();
+      });
+
+    this.page.historyTab.click();
+    this.page.currentBatch.click();
+    this.page.clickRefundButton();
+    this.page.refundAmountInput.clear().sendKeys('70');
+    this.page.refundSubmitButton.click();
+    this.page.clickCloseBatch();
+    this.page.closeBatchConfirmText.isPresent();
+    this.page.yesButton.click();
+    this.page.waitUntilElementDisplayed(this.page.toastNotification);
+    browser.waitForAngular();
+    browser.ignoreSynchronization = true;
+    browser.sleep(1000);
+    expect(this.page.toastNotification.getText())
+      .toEqual('Batch was Successfully closed');
+    browser.waitForAngular();
+    browser.ignoreSynchronization = false;
+  }
+
+  // helper methods using in this logic
+
+  createInputsCheckerCard(dataMock) {
     return (blockName, inputs) => {
       inputs.forEach((input) => {
         expect(processTransactionCard[blockName][input].getAttribute('value'))
+          .toEqual(dataMock[blockName][input]);
+      });
+    };
+  }
+
+  createInputsCheckerCheck(dataMock) {
+    return (blockName, inputs) => {
+      inputs.forEach((input) => {
+        expect(processTransactionCheck[blockName][input].getAttribute('value'))
           .toEqual(dataMock[blockName][input]);
       });
     };
@@ -453,6 +635,7 @@ class HistoryLogic extends SpecBaseLogic {
       addBillingInfo: customersDataMock.addBillingInfo,
       addShippingInfo: customersDataMock.addShippingInfo });
     this.customersPage.clickCompleteCreateCustomer();
+    browser.sleep(500);
   }
 
   [createNewCard](customersDataMock) {
