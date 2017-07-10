@@ -462,15 +462,15 @@ class HistoryLogic extends SpecBaseLogic {
 
   errorWithChargeCheckTransaction() {
     const { errorCheckingWithChargeAction } = historyDataMock;
-    // processTransactionCheck.get();
-    // processTransactionCheck.setChargeAction();
-    // processTransactionCheck.fillFields(errorCheckingWithChargeAction);
-    // processTransactionCheck.setSameAsBillingInput();
-    // processTransactionCheck.clickProcessTransaction();
-    // processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
-    // expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
-    //   .toBe(true);
-    // processTransactionCheck.closePopup();
+    processTransactionCheck.get();
+    processTransactionCheck.setChargeAction();
+    processTransactionCheck.fillFields(errorCheckingWithChargeAction);
+    processTransactionCheck.setSameAsBillingInput();
+    processTransactionCheck.clickProcessTransaction();
+    processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+      .toBe(true);
+    processTransactionCheck.closePopup();
 
     processTransactionCheck.get();
     processTransactionCheck.setChargeAction();

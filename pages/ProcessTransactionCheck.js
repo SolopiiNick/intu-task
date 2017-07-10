@@ -126,7 +126,6 @@ class ProcessTransactionsCheck extends Base {
 
   get okButton() { return element(by.buttonText('Ok')); }
 
-
   closePopup() {
     this.completePopupButton.click();
   }
