@@ -1,6 +1,7 @@
 import Base from '../utils/Base';
 
 const DECLINED_POPUP_TEXT = 'Declined!';
+const APPROVED_POPUP_TEXT = 'Approved';
 
 const fillCardGeneralFields = Symbol('fill check tab general fields');
 const fillCardExpireMonthField = Symbol('fill card expire month field');
@@ -18,6 +19,12 @@ class DashboardCard extends Base {
   get processButton() { return $('button[ng-click="vm.cardSubmit()"]'); }
 
   get declinedPopup() { return element(by.cssContainingText('.transactions-dialog-header h1', DECLINED_POPUP_TEXT)); }
+
+  get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
+
+  get okButton() { return element(by.buttonText('Ok')); }
+
+  get completeButton() { return element(by.buttonText('Complete')); }
 
   get cancelButton() { return element(by.buttonText('Cancel')); }
 
@@ -38,7 +45,6 @@ class DashboardCard extends Base {
       amountInput: element(by.name('amount')),
     };
   }
-
 
   clickProcess() {
     this.processButton.click();

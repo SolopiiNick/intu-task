@@ -12,6 +12,7 @@ const REFUND_CONFIRM_TEXT = 'Please enter the amount for refund.';
 const REMOVED_CONFIRM_TEXT = 'Are you sure you want to move transaction to «Queued» page?';
 const CAPTURE_CONFIRM_TEXT = 'Are you sure you want to capture the transaction - transaction will' +
   ' be moved to current batch?';
+const CLOSE_BATCH_CONFIRM_TEXT = 'Are you sure you want to close batch?';
 const OK_BUTTON_TEXT = 'Ok';
 
 class History extends Base {
@@ -55,6 +56,10 @@ class History extends Base {
     return element(by.css('button[aria-label="Current Batch"]'));
   }
 
+  get closeBatch() {
+    return element(by.css('button[aria-label="Close Batch"]'));
+  }
+
   get rowData() {
     return element(by.css('tr[ng-repeat="row in rowData"]'));
   }
@@ -69,6 +74,10 @@ class History extends Base {
 
   get captureConfirmText() {
     return element(by.cssContainingText('.confirm-dialog-content', CAPTURE_CONFIRM_TEXT));
+  }
+
+  get closeBatchConfirmText() {
+    return element(by.cssContainingText('.confirm-dialog-content', CLOSE_BATCH_CONFIRM_TEXT));
   }
 
   get refundButton() {
@@ -107,8 +116,16 @@ class History extends Base {
     return element(by.css('div[layout-align="space-between center"] '));
   }
 
+  get toastNotification() {
+    return element(by.css('.md-toast-body.p-15.layout-align-start-center.layout-row'));
+  }
+
   get okButton() {
     return element(by.cssContainingText('button span', OK_BUTTON_TEXT));
+  }
+
+  get yesButton() {
+    return element(by.cssContainingText('button span', 'Yes'));
   }
 
   repeaterData(repeater) {
@@ -161,6 +178,12 @@ class History extends Base {
 
   clickViewButton() {
     this.viewButton.click();
+  }
+
+  clickCloseBatch() {
+    // Need to scroll to 'processButton', but than Protractor's '.click()' do not work here
+    browser.executeScript('arguments[0].scrollIntoView()', this.closeBatch.getWebElement());
+    browser.executeScript('arguments[0].click()', this.closeBatch.getWebElement());
   }
 
 }

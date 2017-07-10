@@ -59,5 +59,23 @@ describe('Process Transaction - Batch', () => {
 
   it('Charge check transaction is processed successfully and check in History Tab',
     historyLogic.sendChargeCheckingTransaction.bind(historyLogic));
+
+  it('Refund check transaction is processed successfully and check in History Tab',
+    historyLogic.sendAndCheckRefundWithExistingCustomer.bind(historyLogic));
+
+  it('Check out check transaction that has error in History tab',
+    historyLogic.errorWithChargeCheckTransaction.bind(historyLogic));
+
+  it('Refund check transaction is voided and check out on History Tab',
+    historyLogic.successVoidCheckWithRefundAction.bind(historyLogic));
+
+  it('Charge check transaction is voided and check out on History Tab',
+    historyLogic.successVoidCheckWithChargeAction.bind(historyLogic));
+
+  it('Recharge check transaction with Charge type and checkout in History Tab',
+    historyLogic.successRechargeCheckWithChargeAction.bind(historyLogic));
+
+  it('Close batch in History Tab',
+    historyLogic.approveWithChargeByVisaAndCloseBatch.bind(historyLogic));
 });
 

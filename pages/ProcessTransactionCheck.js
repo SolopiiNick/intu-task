@@ -3,6 +3,7 @@ import Base from '../utils/Base';
 const APPROVED_POPUP_TEXT = 'Approved';
 const ERROR_POPUP_TEXT = 'Error';
 const DUPLICATE_POPUP_TEXT = 'Duplicate transaction in progress, please try again';
+const AMOUNT_REQUIRE_POPUP_TEXT = 'Duplicate transaction in progress, please try again';
 
 const fillCheckGeneralFields = Symbol('fill check tab general fields');
 const fillCheckBillingInfoFields = Symbol('fill check tab billing info fields');
@@ -106,11 +107,15 @@ class ProcessTransactionsCheck extends Base {
   }
 
   get sameAsBillingInput() {
-    return element(by.css('.same-as-billing md-checkbox[ng-show=cardBillingFieldsLength].ng-valid-parse'));
+    return element(by.cssContainingText('form[name=checkingForm] [type=checkbox] span', 'Same as Billing'));
   }
   get submitButton() { return element(by.cssContainingText('form[name=checkingForm] [type=submit] span', 'Process')); }
   get approvePopup() { return element(by.cssContainingText('.transactions-dialog-header h1', APPROVED_POPUP_TEXT)); }
   get errorPopup() { return element(by.cssContainingText('.transaction-error-header h1', ERROR_POPUP_TEXT)); }
+  get errorPopupAmount() {
+    return element(by.cssContainingText('.transaction-error-content-danger.flex-100',
+    AMOUNT_REQUIRE_POPUP_TEXT));
+  }
   get duplicatePopup() {
     return element(by.cssContainingText('.transaction-error-content-danger', DUPLICATE_POPUP_TEXT));
   }
@@ -118,6 +123,8 @@ class ProcessTransactionsCheck extends Base {
   get closePopupButton() { return element(by.css('.transaction-error button')); }
 
   get completePopupButton() { return element(by.css('button[ng-click="completeAction()"]')); }
+
+  get okButton() { return element(by.buttonText('Ok')); }
 
   closePopup() {
     this.completePopupButton.click();
@@ -208,6 +215,10 @@ class ProcessTransactionsCheck extends Base {
   clickOnAutoCompleteItem() {
     this.waitUntilElementDisplayed(this.autoCompleteItem);
     this.autoCompleteItem.click();
+  }
+
+  clickOkButton() {
+    this.okButton.click();
   }
 
   fillCustomerAutoComplete(companyName) {
