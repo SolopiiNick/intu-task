@@ -117,7 +117,7 @@ class History extends Base {
   }
 
   get toastNotification() {
-    return element(by.css('md-toast .md-toast-wrapper .md-toast-body .md-toast-text.w-350.ml-15'));
+    return element(by.css('md-toast .md-toast-wrapper .md-toast-body .md-toast-text'));
   }
 
   get okButton() {

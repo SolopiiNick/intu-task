@@ -194,7 +194,6 @@ class ProcessTransactionCard extends Base {
     browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
     browser.executeScript('arguments[0].click()', this.startingFromDate.getWebElement());
     browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
-    // this.startingFromDate.click();
     const selectedTD = this.getElementStartDate(nextDay);
     browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
     browser.executeScript('arguments[0].click()', selectedTD.getWebElement());
@@ -203,12 +202,10 @@ class ProcessTransactionCard extends Base {
   setFirstBillingToday() {
     browser.executeScript('arguments[0].scrollIntoView()', this.billFirstTransactionToday.getWebElement());
     browser.executeScript('arguments[0].click()', this.billFirstTransactionToday.getWebElement());
-    // this.billFirstTransactionToday.click();
   }
 
   setOngoing() {
     browser.executeScript('arguments[0].scrollIntoView()', this.repeatOngoingRadio.getWebElement());
-    // browser.executeScript('arguments[0].click()', this.repeatOngoingRadio.getWebElement());
     this.repeatOngoingRadio.click();
   }
 
