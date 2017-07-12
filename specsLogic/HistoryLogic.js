@@ -347,17 +347,16 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.clickViewButton();
     // this.page.transactionResultData(refundTransactionWithCaptureStatus.generalInfo.amountInput);
     // this.page.expandedContent.each((row) => {
-    //   console.log(this.page.expandedContent[0]);
     //   const rowElement = row.$$('td');
     //   expect(rowElement.count()).toBe(2);
     //   rowElement.each((r) => {
-    //     r.getText(t => console.log('t:', t));
+    //     r.getAttribute('innerText').then((t => console.log('t:', t));
     //   });
-    //   expect(rowElement.get(1).getText()).toMatch('bla bla');
+    //   expect(rowElement.get(1).getAttribute('innerText')).toMatch('bla bla');
     // })
     // browser.executeScript('arguments[0].scrollIntoView()', this.page.tableData);
     // browser.sleep(500);
-    // expect(this.page.cells[1].getText()).toEqual('something');
+    // expect(this.page.cells[1].getAttribute('innerText')).toEqual('something');
 
     // this.checkTransactionAmount('$21.00');
     // this.checkCompanyName('Test Company n');

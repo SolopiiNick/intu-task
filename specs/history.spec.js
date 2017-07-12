@@ -1,7 +1,7 @@
 import { HistoryLogic } from '../specsLogic';
 const historyLogic = new HistoryLogic();
 
-describe('Process Transaction - Batch', () => {
+describe('History - Batch', () => {
   beforeAll(historyLogic.beforeAll.bind(historyLogic));
   beforeEach(historyLogic.beforeEach.bind(historyLogic));
 
