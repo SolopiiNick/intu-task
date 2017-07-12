@@ -15,7 +15,7 @@ class LoginLogic extends SpecBaseLogic {
   loginInvalidUser() {
     this.page.userInput.sendKeys('invalid_user');
     this.page.passInput.sendKeys('invalid_password');
-    this.page.clickLoginButton();
+    this.page.loginButton.click();
     expect(this.page.errorMessage.isDisplayed()).toBe(true);
   }
 
@@ -28,7 +28,7 @@ class LoginLogic extends SpecBaseLogic {
   loginValidUser() {
     this.page.userInput.sendKeys(username);
     this.page.passInput.sendKeys(password);
-    this.page.clickLoginButton();
+    this.page.loginButton.click();
     this.page.waitUntilElementDisplayed(this.page.logoutButton);
     expect(this.page.isElementDisplayed(this.page.logoutButton)).toBe(true);
   }

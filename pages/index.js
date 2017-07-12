@@ -4,6 +4,8 @@ import ProcessTransactionCard from './ProcessTransactionCard';
 import ProcessTransactionsCheck from './ProcessTransactionCheck';
 import History from './History';
 import DashboardCard from './Dashboard';
+import Recurring from './Recurring';
+import ControlPanel from './ControlPanel';
 
 export {
   Customers,
@@ -12,4 +14,6 @@ export {
   ProcessTransactionsCheck,
   History,
   DashboardCard,
+  Recurring,
+  ControlPanel,
 };

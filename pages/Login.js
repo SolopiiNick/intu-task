@@ -12,10 +12,6 @@ class Login extends Base {
   get selectDashboard() { return element(by.css('i.icon.icon-ic-menu-dashboard-normal')); }
   get errorMessage() { return element(by.css('div[ng-show="vm.wrongLoginData"]')); }
   get emptyMassage() { return element(by.css('.md-input-message-animation')); }
-
-  get clickLoginButton() {
-    browser.executeScript('arguments[0].click()', this.loginButton.getWebElement());
-  }
 }
 
 export default Login;

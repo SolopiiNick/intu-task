@@ -4,6 +4,10 @@ const APPROVED_POPUP_TEXT = 'Approved';
 const DECLINED_POPUP_TEXT = 'Declined!';
 const ERROR_POPUP_TEXT = 'Error';
 
+const dateObj = new Date();
+const day = dateObj.getUTCDate();
+const nextDay = day + 1;
+
 const fillCardGeneralFields = Symbol('fill check tab general fields');
 const fillCardBillingInfoFields = Symbol('fill check tab billing info fields');
 const fillCardShippingInfoFields = Symbol('fill check tab shipping info fields');
@@ -15,6 +19,7 @@ const selectCard = Symbol('select card');
 const fillCardExpireMonthField = Symbol('fill card expire month field');
 const fillCardExpireYearField = Symbol('fill card expire year field');
 const checkCreateCustomer = Symbol('check create customer');
+const checkCreateCustomerReceipt = Symbol('check create customer receipt');
 const checkEditCustomer = Symbol('check edit customer');
 const fillCardRecurringInfoFields = Symbol('fill check tab recurring info fields');
 
@@ -34,9 +39,8 @@ class ProcessTransactionCard extends Base {
 
   get startingFromDate() { return element(by.css('form[name=creditCardForm] input[name=start_date]')); }
   getElementStartDate(date) {
-    const selector = date
-      || 'form[name=creditCardForm] .moment-picker-specific-views tr:last-child td:last-child';
-    return element(by.css(selector));
+    const selector = 'form[name=creditCardForm] .moment-picker-specific-views tr td';
+    return element(by.cssContainingText(selector, date));
   }
 
   get everyPeriodInput() { return element(by.css('md-select[ng-model="cardForm.recurringInfo.schedule"]')); }
@@ -61,8 +65,11 @@ class ProcessTransactionCard extends Base {
   get completeButton() { return element(by.buttonText('Complete')); }
   get tryAgainButton() { return element(by.buttonText('Try Again')); }
   get okButton() { return element(by.buttonText('Ok')); }
+  get cancelButton() { return element(by.buttonText('Cancel')); }
 
   get checkShippingBlock() { return element(by.model('cardShippingInfoShow')); }
+
+  get customerInput() { return element(by.css('form[name=creditCardForm] input[name=customersSearch]')); }
 
   get generalInfo() {
     return {
@@ -99,6 +106,7 @@ class ProcessTransactionCard extends Base {
       emailInput: element(by.name('email')),
       // appeares after 'companyNameInput' has some text
       createCustomerCheckbox: element(by.css('md-checkbox[aria-label="Create a new customer"]')),
+      createCustomerReceiptCheckbox: element(by.css('md-checkbox[aria-label="Customer receipt"]')),
       // appeares after 'cardNumberInput' and 'avsStreetInput' has some text
       editCustomerCheckbox: element(by.css('md-checkbox[aria-label="Edit current customer"]')),
     };
@@ -160,6 +168,9 @@ class ProcessTransactionCard extends Base {
     this.okButton.click();
   }
 
+  clickCancelButton() {
+    this.cancelButton.click();
+  }
 
   clickOnAutoCompleteItem() {
     this.waitUntilElementDisplayed(this.autoCompleteItem);
@@ -179,20 +190,22 @@ class ProcessTransactionCard extends Base {
     this.repeatTimesInput.sendKeys(time);
   }
 
-  setStartBillingDate(date = null) {
+  setStartBillingDate() {
     browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
     browser.executeScript('arguments[0].click()', this.startingFromDate.getWebElement());
     browser.executeScript('arguments[0].scrollIntoView()', this.startingFromDate.getWebElement());
-    const selectedTD = this.getElementStartDate(date);
+    const selectedTD = this.getElementStartDate(nextDay);
     browser.executeScript('arguments[0].scrollIntoView()', selectedTD.getWebElement());
     browser.executeScript('arguments[0].click()', selectedTD.getWebElement());
   }
 
   setFirstBillingToday() {
-    this.billFirstTransactionToday.click();
+    browser.executeScript('arguments[0].scrollIntoView()', this.billFirstTransactionToday.getWebElement());
+    browser.executeScript('arguments[0].click()', this.billFirstTransactionToday.getWebElement());
   }
 
   setOngoing() {
+    browser.executeScript('arguments[0].scrollIntoView()', this.repeatOngoingRadio.getWebElement());
     this.repeatOngoingRadio.click();
   }
 
@@ -203,6 +216,11 @@ class ProcessTransactionCard extends Base {
 
   fillSippingStateAutoComplete(state) {
     this.shippingInfo.state.sendKeys(state);
+    this.clickOnAutoCompleteItem();
+  }
+
+  fillCustomerAutoComplete(companyName) {
+    this.customerInput.sendKeys(companyName);
     this.clickOnAutoCompleteItem();
   }
 
@@ -238,6 +256,11 @@ class ProcessTransactionCard extends Base {
 
       if (key === 'cardExpireYear') {
         this[fillCardExpireYearField](generalInfo.cardExpireYear);
+        return;
+      }
+
+      if (key === 'createCustomerReceiptCheckbox') {
+        this[checkCreateCustomerReceipt]();
         return;
       }
 
@@ -343,6 +366,10 @@ class ProcessTransactionCard extends Base {
   [fillCardExpireYearField](year) {
     this.generalInfo.cardExpireYear.dropdown.click();
     this.generalInfo.cardExpireYear.select(year).click();
+  }
+
+  [checkCreateCustomerReceipt]() {
+    this.generalInfo.createCustomerReceiptCheckbox.click();
   }
 
   [checkCreateCustomer]() {
