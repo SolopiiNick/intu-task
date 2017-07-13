@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "AB e2e test",
   "scripts": {
-    "prepublish": "node_modules/.bin/webdriver-manager update",
     "update:driver": "node_modules/.bin/webdriver-manager update",
     "test": "node_modules/.bin/protractor configs/protractor-config.js",
     "lint": "eslint .",
