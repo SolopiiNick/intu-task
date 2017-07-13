@@ -1,7 +1,7 @@
 import Base from '../utils/Base';
 
-const HISTORY_TAB = 'History';
-// const QUEUED_TAB = 'Queued';
+// const HISTORY_TAB = 'History';
+const QUEUED_TAB = 'Queued';
 const BATCHES_TAB = 'Batches';
 const ALL_TRANSACTION_TAB = 'All transactions';
 const CHECKS_TAB = 'Checks';
@@ -25,7 +25,7 @@ class History extends Base {
   }
 
   get historyTab() {
-    return element(by.linkText(HISTORY_TAB));
+    return element(by.css('.icon.icon-ic-menu-history-active'));
   }
 
   get batchesTab() {
@@ -33,7 +33,7 @@ class History extends Base {
   }
 
   get queuedTab() {
-    return element(by.css('.icon.icon-ic-menu-history-active'));
+    return element(by.cssContainingText('md-tab-item span', QUEUED_TAB));
   }
 
   get allTransactionsTab() {
