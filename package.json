@@ -4,7 +4,7 @@
   "description": "AB e2e test",
   "scripts": {
     "prepublish": "node_modules/.bin/webdriver-manager update",
-    "update": "node_modules/.bin/webdriver-manager update",
+    "update:driver": "node_modules/.bin/webdriver-manager update",
     "test": "node_modules/.bin/protractor configs/protractor-config.js",
     "lint": "eslint .",
     "lint:pre-commit": "node_modules/.bin/eslint . --rule 'no-console: 2' --rule 'no-debugger: 2' --rule 'protractor/no-browser-pause: 2'"
