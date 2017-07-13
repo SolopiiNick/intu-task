@@ -4,7 +4,7 @@ import { getRandomInt } from '../../utils/Helpers';
 const { discover, visa, masterCard, amex, amexError, visaDeclined } = cards;
 
 const MIN_NUM = 0;
-const MAX_NUM = 100000000;
+const MAX_NUM = 10000;
 
 const historyDataMock = {
   madeDiscoverCard: {
@@ -87,7 +87,6 @@ const historyDataMock = {
       street2: '695 Woodsman Ave',
       city: 'Skokie',
       zipCode: '60076',
-      // country: 'United States of America',
       state: 'Illinois',
       phone: '(125)23423412',
     },
@@ -106,7 +105,6 @@ const historyDataMock = {
         street2: '123 8th St.',
         city: 'Melbourne',
         zipCode: '32904',
-        // country: 'US',
         state: 'Florida',
         phone: '(152)234234234',
       },
@@ -118,7 +116,6 @@ const historyDataMock = {
         street2: '124 8th St.',
         city: 'Chevy Chase',
         zipCode: '20815',
-        // country: 'Ukraine',
         phone: '(380)990089998',
       },
       addPaymentMethodCard: {
@@ -132,10 +129,9 @@ const historyDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'New Company 1',
         actionSelect: 'authorize',
         cardNameInput: visa.name,
-        cardNumberInput: visa.number,
+        cardNumberInput: 'autocomplete',
         cardCvvInput: visa.cvv,
         cardExpireMonth: visa.expire.month,
         cardExpireYear: visa.expire.year,
@@ -157,7 +153,6 @@ const historyDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'New Company 2',
         actionSelect: 'postauthorize',
         cardNameInput: amex.name,
         cardNumberInput: amex.number,
@@ -195,7 +190,6 @@ const historyDataMock = {
         street2: '695 Woodsman Ave.',
         city: 'Skokie',
         zipCode: '60076',
-        // country: 'US',
         state: 'Illinois',
         phone: '(125)23423412',
       },
@@ -210,9 +204,8 @@ const historyDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'New Company 3',
         actionSelect: 'refund',
-        cardNumberInput: discover.number,
+        cardNumberInput: 'autocomplete',
         cardExpireMonth: discover.expire.month,
         cardExpireYear: discover.expire.year,
         amountInput: '80',
@@ -233,7 +226,6 @@ const historyDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'New Company',
         actionSelect: 'authorize',
         cardNameInput: visa.name,
         cardNumberInput: visa.number,

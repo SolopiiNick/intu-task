@@ -154,6 +154,8 @@ class HistoryLogic extends SpecBaseLogic {
     this[createNewCustomerWithCard](customersDataMock);
 
     processTransactionCard.get();
+    processTransactionCard.fillCustomerAutoComplete(customersDataMock.createCustomer
+      .companyNameInput);
     processTransactionCard.fillFields(cardDataMock);
     processTransactionCard.clickProcess();
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
@@ -181,6 +183,8 @@ class HistoryLogic extends SpecBaseLogic {
     browser.waitForAngular()
       .then(() => {
         processTransactionCard.get();
+        processTransactionCard.fillCustomerAutoComplete(customersDataMock.createCustomer
+          .companyNameInput);
         processTransactionCard.fillFields(cardDataMock);
         processTransactionCard.clickProcess();
         processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
@@ -209,6 +213,8 @@ class HistoryLogic extends SpecBaseLogic {
     browser.waitForAngular()
       .then(() => {
         processTransactionCard.get();
+        processTransactionCard.fillCustomerAutoComplete(customersDataMock.createCustomer
+          .companyNameInput);
         processTransactionCard.fillFields(cardDataMock);
         processTransactionCard.clickProcess();
         processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
@@ -239,6 +245,8 @@ class HistoryLogic extends SpecBaseLogic {
     browser.waitForAngular()
       .then(() => {
         processTransactionCard.get();
+        processTransactionCard.fillCustomerAutoComplete(customersDataMock.createCustomer
+          .companyNameInput);
         processTransactionCard.fillFields(cardDataMock);
         processTransactionCard.clickProcess();
         processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
