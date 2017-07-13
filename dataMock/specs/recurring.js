@@ -73,7 +73,7 @@ const recurringDataMock = {
       transactionTypeInput: 'PPD',
       routingNumberInput: '061092387',
       accountNumberInput: '10102233',
-      amountInput: '100',
+      amountInput: '100.2',
       taxInput: '10',
       surchargeInput: '20',
       companyName: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
@@ -101,7 +101,7 @@ const recurringDataMock = {
     },
     processTransactionCheck: {
       generalInfo: {
-        amountInput: '100',
+        amountInput: '100.9',
         avsStreetInput: '1307 Broad Hollow Road',
         avsZipInput: '11747',
       },

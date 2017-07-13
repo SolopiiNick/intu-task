@@ -1,4 +1,5 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
+// import autoLogin from '../dataMock/autoLogin'
 
 import { Login } from '../pages';
 

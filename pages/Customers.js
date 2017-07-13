@@ -19,7 +19,9 @@ const fillCheckAccountTypeInput = Symbol('fill account type select');
 class Customers extends Base {
   get url() { return `${this.baseUrl}/customer/list`; }
 
-  get selector() { return $('.customers-list'); }
+  // get selector() { return $('.customers-list'); }
+
+  get selector() { return element(by.id('contentWrapper')); }
 
   get autoCompleteItem() {
     return element(by

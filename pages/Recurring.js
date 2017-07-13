@@ -1,6 +1,6 @@
 import Base from '../utils/Base';
 
-const RECURRING_TAB = 'Recurring';
+// const RECURRING_TAB = 'Recurring';
 
 class Recurring extends Base {
   get url() {
@@ -12,7 +12,7 @@ class Recurring extends Base {
   }
 
   get recurringTab() {
-    return element(by.linkText(RECURRING_TAB));
+    return element(by.css('.icon.icon-ic-refund-circle-actions'));
   }
 
   get viewButton() {
