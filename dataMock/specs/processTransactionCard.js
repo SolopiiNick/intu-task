@@ -56,7 +56,7 @@ const processTransactionCardDataMock = {
   approveWithChargeWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {
-        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: masterCard.name,
@@ -69,7 +69,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 2',
+        customerSelectInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNumberInput: 'autocomplete',
         cardCvvInput: masterCard.cvv,
@@ -82,7 +82,7 @@ const processTransactionCardDataMock = {
   approveWithPostauthorizeEditingCustomerByAmex: {
     customersPage: {
       createCustomer: {
-        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: amex.name,
@@ -93,7 +93,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 3',
+        customerSelectInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'postauthorize',
         cardNumberInput: 'autocomplete',
         cardCvvInput: amex.cvv,
@@ -121,7 +121,7 @@ const processTransactionCardDataMock = {
   declineRepeatedlyWithChargeWithCustomerByDiscover: {
     customersPage: {
       createCustomer: {
-        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: discoverDeclined.name,
@@ -132,7 +132,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 4',
+        customerSelectInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNumberInput: 'autocomplete',
         amountInput: '1100.07',
@@ -143,12 +143,12 @@ const processTransactionCardDataMock = {
   errorWithChargeWithCustomerByAmex: {
     customersPage: {
       createCustomer: {
-        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 3',
+        customerSelectInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNameInput: amexError.name,
         cardNumberInput: amexError.number,
@@ -165,7 +165,7 @@ const processTransactionCardDataMock = {
   approveWithRefundWithCustomerByMasterCard: {
     customersPage: {
       createCustomer: {
-        companyNameInput: `Test Process Transaction Card ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        companyNameInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
       },
       addPaymentMethodCard: {
         cardNameInput: masterCard.name,
@@ -178,7 +178,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Test Process Transaction Card 3',
+        customerSelectInput: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'refund',
         cardNumberInput: 'autocomplete',
         amountInput: '99.99',
@@ -201,7 +201,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Recurring',
+        customerSelectInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNumberInput: 'autocomplete',
         cardCvvInput: '123',
@@ -229,7 +229,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Recurring 33136162',
+        customerSelectInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNumberInput: 'autocomplete',
         cardCvvInput: '123',
@@ -258,7 +258,7 @@ const processTransactionCardDataMock = {
     },
     processTransactionCardPage: {
       generalInfo: {
-        customerSelectInput: 'Recurring 45239702',
+        customerSelectInput: `Recurring ${getRandomInt(MIN_NUM, MAX_NUM)}`,
         actionSelect: 'charge',
         cardNameInput: discoverDeclined.name,
         cardNumberInput: 'autocomplete',
