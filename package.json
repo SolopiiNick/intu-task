@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "AB e2e test",
   "scripts": {
-    "update:driver": "node_modules/.bin/webdriver-manager update",
-    "test": "node_modules/.bin/protractor configs/protractor-config.js",
+    "pretest": "webdriver-manager update",
+    "test": "protractor configs/protractor-config.js",
     "lint": "eslint .",
-    "lint:pre-commit": "node_modules/.bin/eslint . --rule 'no-console: 2' --rule 'no-debugger: 2' --rule 'protractor/no-browser-pause: 2'"
+    "lint:pre-commit": "eslint . --rule 'no-console: 2' --rule 'no-debugger: 2' --rule 'protractor/no-browser-pause: 2'"
   },
   "pre-commit": [
     "lint:pre-commit"
@@ -17,7 +17,7 @@
     "babel-register": "^6.24.1",
     "elementor": "^2.1.0",
     "jasmine-spec-reporter": "^2.7.0",
-    "protractor": "5.1.1"
+    "protractor": "^5.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
