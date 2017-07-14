@@ -47,6 +47,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.waitUntilDisplayed();
     this.page.currentBatch.click();
@@ -70,6 +71,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRemoveButton();
@@ -94,6 +96,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRefundButton();
@@ -111,6 +114,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRechargeButton();
@@ -135,6 +139,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
@@ -162,6 +167,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
@@ -192,6 +198,7 @@ class HistoryLogic extends SpecBaseLogic {
         processTransactionCard.clickComplete();
       });
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.queuedTab.click();
@@ -222,6 +229,7 @@ class HistoryLogic extends SpecBaseLogic {
         processTransactionCard.clickComplete();
       });
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.waitUntilElementDisplayed(this.page.allTransactionsTab);
@@ -254,6 +262,7 @@ class HistoryLogic extends SpecBaseLogic {
         processTransactionCard.clickComplete();
       });
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.waitUntilElementDisplayed(this.page.queuedTab);
@@ -272,6 +281,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickCaptureActionButton();
@@ -289,6 +299,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickCaptureActionButton();
@@ -311,6 +322,7 @@ class HistoryLogic extends SpecBaseLogic {
     expect(processTransactionCard.isElementDisplayed(processTransactionCard.errorPopup)).toBe(true);
     processTransactionCard.clickOkButton();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     // this.checkTransactionAmount('$21.00');
@@ -331,6 +343,7 @@ class HistoryLogic extends SpecBaseLogic {
         this.dashboardCard.clickCancelButton();
       });
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     // this.checkTransactionAmount('$21.00');
@@ -348,6 +361,7 @@ class HistoryLogic extends SpecBaseLogic {
       .toBe(true);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickRefundButton();
@@ -382,6 +396,7 @@ class HistoryLogic extends SpecBaseLogic {
       .toBe(true);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickRefundButton();
@@ -399,6 +414,7 @@ class HistoryLogic extends SpecBaseLogic {
       .toBe(true);
     processTransactionCard.clickComplete();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.allTransactionsTab.click();
     this.page.clickRechargeButton();
@@ -434,6 +450,7 @@ class HistoryLogic extends SpecBaseLogic {
 
     browser.waitForAngular()
       .then(() => {
+        this.page.navigationTooggle.click();
         this.page.historyTab.click();
         this.page.waitUntilElementDisplayed(this.page.checksTab);
         browser.executeScript('arguments[0].scrollIntoView()', this.page.checksTab.getWebElement());
@@ -462,6 +479,7 @@ class HistoryLogic extends SpecBaseLogic {
       .toBe(true);
     processTransactionCheck.closePopup();
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.waitUntilElementDisplayed(this.page.checksTab);
     browser.executeScript('arguments[0].scrollIntoView()', this.page.checksTab.getWebElement());
@@ -494,6 +512,7 @@ class HistoryLogic extends SpecBaseLogic {
 
     browser.waitForAngular()
       .then(() => {
+        this.page.navigationTooggle.click();
         this.page.historyTab.click();
         this.page.waitUntilElementDisplayed(this.page.checksTab);
         this.page.checksTab.click();
@@ -513,6 +532,7 @@ class HistoryLogic extends SpecBaseLogic {
 
     browser.waitForAngular()
       .then(() => {
+        this.page.navigationTooggle.click();
         this.page.historyTab.click();
         this.page.waitUntilElementDisplayed(this.page.checksTab);
         this.page.checksTab.click();
@@ -535,6 +555,7 @@ class HistoryLogic extends SpecBaseLogic {
 
     browser.waitForAngular()
       .then(() => {
+        this.page.navigationTooggle.click();
         this.page.historyTab.click();
         this.page.waitUntilElementDisplayed(this.page.checksTab);
         this.page.checksTab.click();
@@ -557,6 +578,7 @@ class HistoryLogic extends SpecBaseLogic {
 
     browser.waitForAngular()
       .then(() => {
+        this.page.navigationTooggle.click();
         this.page.historyTab.click();
         this.page.waitUntilElementDisplayed(this.page.checksTab);
         this.page.checksTab.click();
@@ -593,6 +615,7 @@ class HistoryLogic extends SpecBaseLogic {
         this.dashboardCard.completeButton.click();
       });
 
+    this.page.navigationTooggle.click();
     this.page.historyTab.click();
     this.page.currentBatch.click();
     this.page.clickRefundButton();
