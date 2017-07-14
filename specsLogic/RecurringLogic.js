@@ -31,6 +31,7 @@ class RecurringLogic extends SpecBaseLogic {
         processTransactionCard.clickProcess();
       });
 
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
     this.page.clickViewRecurringButton();
     const checkInputsValue = this.createInputsCheckerCard(madeRecurringWithDiscoverCard);
@@ -64,8 +65,8 @@ class RecurringLogic extends SpecBaseLogic {
         processTransactionCard.clickComplete();
       });
 
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
-
     this.page.clickViewRecurringButton();
     this.page.clickCardViewButton();
     // continue test
@@ -109,6 +110,8 @@ class RecurringLogic extends SpecBaseLogic {
     // browser.waitForAngular();
     browser.ignoreSynchronization = false;
     browser.sleep(500);
+
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
     this.page.clickViewRecurringButton();
     this.page.clickCardViewButton();
@@ -145,6 +148,7 @@ class RecurringLogic extends SpecBaseLogic {
       .toBe(true);
     processTransactionCheck.closePopup();
 
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
     this.page.clickViewRecurringButton();
     this.page.clickCardViewButton();
@@ -180,6 +184,7 @@ class RecurringLogic extends SpecBaseLogic {
         processTransactionCard.clickCancelButton();
       });
 
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
     this.page.clickViewRecurringButton();
     this.page.clickCardViewButton();
@@ -208,6 +213,7 @@ class RecurringLogic extends SpecBaseLogic {
         processTransactionCard.clickCancelButton();
       });
 
+    this.page.navigationTooggle.click();
     this.page.recurringTab.click();
     this.page.clickViewRecurringButton();
     this.page.clickCardViewButton();

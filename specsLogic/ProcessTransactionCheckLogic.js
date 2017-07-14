@@ -1,5 +1,5 @@
 import SpecBaseLogic from '../utils/SpecLogicBase';
-import { ProcessTransactionChecks, Customers } from '../pages';
+import { ProcessTransactionsCheck, Customers } from '../pages';
 import { processTransactionCheckDataMock } from '../dataMock';
 
 const createNewCustomer = Symbol('create new customer');
@@ -9,7 +9,7 @@ const createNewCustomerWithCheck = Symbol('create new customer with check');
 class ProcessTransactionCheckLogic extends SpecBaseLogic {
   constructor() {
     super();
-    this.page = new ProcessTransactionChecks();
+    this.page = new ProcessTransactionsCheck();
     this.customersPage = new Customers();
   }
 

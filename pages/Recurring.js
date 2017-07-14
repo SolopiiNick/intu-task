@@ -11,6 +11,10 @@ class Recurring extends Base {
     return element(by.id('batchesTableContainer'));
   }
 
+  get navigationTooggle() {
+    return element(by.id('navigation-toggle'));
+  }
+
   get recurringTab() {
     return element(by.css('.icon.icon-ic-refund-circle-actions'));
   }
