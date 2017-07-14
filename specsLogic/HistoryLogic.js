@@ -26,16 +26,19 @@ class HistoryLogic extends SpecBaseLogic {
   checkMadeTransaction() {
     const madeDiscoverCard = historyDataMock.madeDiscoverCard;
     processTransactionCard.fillFields(madeDiscoverCard);
-    browser.sleep(1000);
     processTransactionCard.clickProcess();
-    browser.sleep(1000);
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    processTransactionCard.clickComplete();
+    processTransactionCard.clickProcessBrowserExecute();
 
-    browser.sleep(1000);
-    this.page.historyTab.click();
-    this.page.waitUntilDisplayed();
-    this.page.currentBatch.click();
+    browser.waitForAngular()
+      .then(() => {
+        browser.executeScript('arguments[0].scrollIntoView()', this.page.historyTab
+          .getWebElement());
+        this.page.waitUntilElementDisplayed(this.page.historyTab);
+        this.page.historyTab.click();
+        this.page.currentBatch.click();
+      });
+
     // this.checkTransactionAmount('$21.00');
     // this.checkCompanyName('Test Company n');
     // this.checkCardType('Charge');
