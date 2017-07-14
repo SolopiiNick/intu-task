@@ -26,9 +26,9 @@ class HistoryLogic extends SpecBaseLogic {
   checkMadeTransaction() {
     const madeDiscoverCard = historyDataMock.madeDiscoverCard;
     processTransactionCard.fillFields(madeDiscoverCard);
-    processTransactionCard.clickProcess();
-    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickProcessBrowserExecute();
+    processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+    processTransactionCard.clickComplete();
 
     browser.waitForAngular()
       .then(() => {
