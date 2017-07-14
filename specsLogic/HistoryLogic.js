@@ -30,6 +30,7 @@ class HistoryLogic extends SpecBaseLogic {
     processTransactionCard.waitUntilElementDisplayed(processTransactionCard.approvePopup);
     processTransactionCard.clickComplete();
 
+    this.page.waitUntilElementDisplayed(this.page.historyTab);
     this.page.historyTab.click();
     this.page.waitUntilDisplayed();
     this.page.currentBatch.click();

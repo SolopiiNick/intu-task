@@ -148,6 +148,38 @@ const recurringDataMock = {
       'No AVS response (Typically no AVS data sent or swiped transaction)',
       'No CVV2/CVC data available for transaction.'],
   },
+  failedRecurringSetChargeAction: {
+    generalSettingInfo: {
+      everyPeriodValue: '2',
+    },
+    processTransactionCardPage: {
+      generalInfo: {
+        actionSelect: 'charge',
+        cardNameInput: amex.name,
+        cardNumberInput: '371030089111114',
+        cardCvvInput: amex.cvv,
+        cardExpireMonth: amex.expire.month,
+        cardExpireYear: amex.expire.year,
+        amountInput: '300',
+        taxInput: '40.11',
+        avsStreetInput: '1307 Broad Hollow Road',
+        avsZipInput: '11747',
+        companyNameInput: `Test Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        emailInput: 'test@codemotion.eu',
+        createCustomerReceiptCheckbox: true,
+        createCustomerCheckbox: true,
+      },
+      recurringInfo: {
+        paymentTitle: `Test ${getRandomInt(MIN_NUM, MAX_NUM)}`,
+        everyPeriodValue: 'year',
+        ongoing: '10',
+        billFirstTransaction: true,
+      },
+    },
+    transactionResult: ['370', 'Charge', 'Settled', '', 'OK8434',
+      'No AVS response (Typically no AVS data sent or swiped transaction)',
+      'No CVV2/CVC data available for transaction.'],
+  },
 };
 
 export {

@@ -185,6 +185,34 @@ class RecurringLogic extends SpecBaseLogic {
     this.page.clickCardViewButton();
   }
 
+  failedRecurringWithGeneralSettingByCard() {
+    const generalSettingDataMock =
+      recurringDataMock.failedRecurringSetChargeAction
+        .generalSettingInfo;
+    const cardDataMock =
+      recurringDataMock.failedRecurringSetChargeAction
+        .processTransactionCardPage;
+
+    controlPanel.get();
+    controlPanel.generalSetting.click();
+    controlPanel.timesToRetry.click();
+    controlPanel.everyPeriodSelect(generalSettingDataMock.everyPeriodValue).click();
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCard.get();
+        processTransactionCard.fillFields(cardDataMock);
+        processTransactionCard.clickProcess();
+        this.page.waitUntilElementDisplayed(this.page.declinedPopup);
+        expect(this.page.isElementDisplayed(this.page.declinedPopup)).toBe(true);
+        processTransactionCard.clickCancelButton();
+      });
+
+    this.page.recurringTab.click();
+    this.page.clickViewRecurringButton();
+    this.page.clickCardViewButton();
+  }
+
   // helper methods using in this logic
 
   createInputsCheckerCard(dataMock) {
