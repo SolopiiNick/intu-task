@@ -24,6 +24,10 @@ class History extends Base {
     return $('button[aria-label="Current Batch"]');
   }
 
+  get navigationTooggle() {
+    return element(by.id('navigation-toggle'));
+  }
+
   get historyTab() {
     return element(by.css('.icon.icon-ic-menu-history-active'));
   }
