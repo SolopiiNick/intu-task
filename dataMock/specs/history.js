@@ -4,7 +4,7 @@ import { getRandomInt } from '../../utils/Helpers';
 const { discover, visa, masterCard, amex, amexError, visaDeclined } = cards;
 
 const MIN_NUM = 0;
-const MAX_NUM = 10000;
+const MAX_NUM = 1000;
 
 const historyDataMock = {
   madeDiscoverCard: {
@@ -393,7 +393,7 @@ const historyDataMock = {
       transactionTypeInput: 'PPD',
       routingNumberInput: '061000227',
       accountNumberInput: '10102233',
-      amountInput: '105.1',
+      amountInput: `105.1${getRandomInt(MIN_NUM, MAX_NUM)}`,
       taxInput: '10',
       surchargeInput: '15',
       companyName: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
@@ -438,7 +438,7 @@ const historyDataMock = {
         transactionTypeInput: 'TEL',
         routingNumberInput: '061000227',
         accountNumberInput: '10103344',
-        amountInput: '120.17',
+        amountInput: `120.17${getRandomInt(MIN_NUM, MAX_NUM)}`,
         invoiceNumber: '90',
         poNumberInput: '99',
         descriptionInput: 'test',
