@@ -165,6 +165,7 @@ const historyDataMock = {
         editCustomerCheckbox: true,
       },
       shippingInfo: {
+        checkShippingBlock: true,
         firstName: 'Olga',
         lastName: 'Riy',
         street: '591 Brickell Dr.',

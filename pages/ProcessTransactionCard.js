@@ -130,15 +130,14 @@ class ProcessTransactionCard extends Base {
     return {
       sameBillingInput: element(by.model('cardShippingInfoShow')),
       sameBillingTrue: element(by.model('sameAsBilling')),
-      firstName: element(by.name('first_name2')),
-      lastName: element(by.name('last_name2')),
-      street: element(by.name('street3')),
-      street2: element(by.name('street4')),
-      city: element(by.name('city2')),
-      zipCode: element(by.name('zip_code2')),
-      state: element(by.name('shippingStatesSearch')),
-      country: element(by.name('country')),
-      phone: element(by.name('card_shipping_phone')),
+      firstName: element(by.css('form[name=creditCardForm] input[name=first_name2]')),
+      lastName: element(by.css('form[name=creditCardForm] input[name=last_name2]')),
+      street: element(by.css('form[name=creditCardForm] input[name=street3]')),
+      street2: element(by.css('form[name=creditCardForm] input[name=street4]')),
+      city: element(by.css('form[name=creditCardForm] input[name=city2]')),
+      zipCode: element(by.css('form[name=creditCardForm] input[name=zip_code2]')),
+      state: element(by.css('form[name=creditCardForm] input[name=shippingStatesSearch]')),
+      phone: element(by.css('form[name=creditCardForm] input[name=card_shipping_phone]')),
     };
   }
 
