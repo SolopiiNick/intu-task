@@ -61,7 +61,7 @@ describe('History - Batch', () => {
 
   it('Charge check transaction is processed successfully and check in History Tab',
     historyLogic.sendChargeCheckingTransaction.bind(historyLogic));
-  //
+
   it('Refund check transaction is processed successfully and check in History Tab',
     historyLogic.sendAndCheckRefundWithExistingCustomer.bind(historyLogic));
 
