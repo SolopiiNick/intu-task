@@ -128,7 +128,7 @@ class HistoryLogic extends SpecBaseLogic {
     expect(processTransactionCard.generalInfo.avsStreetInput.getAttribute('value'))
       .toEqual('1307 Broad Hollow Road');
     expect(processTransactionCard.generalInfo.avsZipInput.getAttribute('value'))
-      .toEqual('11746');
+      .toEqual('11747');
     expect(processTransactionCard.generalInfo.cardNameInput.isDisplayed());
   }
 
@@ -629,13 +629,13 @@ class HistoryLogic extends SpecBaseLogic {
     this.page.closeBatchConfirmText.isPresent();
     this.page.yesButton.click();
     this.page.waitUntilElementDisplayed(this.page.toastNotification);
-    browser.waitForAngular();
-    browser.ignoreSynchronization = true;
-    browser.sleep(1000);
-    expect(this.page.toastNotification.getText())
-      .toEqual('Batch was Successfully closed');
-    browser.waitForAngular();
-    browser.ignoreSynchronization = false;
+    // browser.waitForAngular();
+    // browser.ignoreSynchronization = true;
+    // browser.sleep(1000);
+    // expect(this.page.toastNotification.getText())
+    //   .toEqual('Batch was Successfully closed');
+    // browser.waitForAngular();
+    // browser.ignoreSynchronization = false;
   }
 
   // helper methods using in this logic
