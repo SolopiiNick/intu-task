@@ -123,7 +123,7 @@ class HistoryLogic extends SpecBaseLogic {
     //   .toEqual('Test Visa');
     // expect(processTransactionCard.generalInfo.amountInput.getAttribute('value'))
     //   .toEqual('74.31');
-    expect(processTransactionCard.generalInfo.cardCvvInput.getAttribute('value')).toEqual('123');
+    expect(processTransactionCard.generalInfo.cardCvvInput.getAttribute('value')).toEqual('');
     expect(processTransactionCard.generalInfo.taxInput.getAttribute('value')).toEqual('1');
     expect(processTransactionCard.generalInfo.avsStreetInput.getAttribute('value'))
       .toEqual('1307 Broad Hollow Road');
@@ -468,16 +468,20 @@ class HistoryLogic extends SpecBaseLogic {
 
     this[createNewCustomer](customersDataMock);
 
-    processTransactionCheck.get();
-    processTransactionCheck.setRefundAction();
-    processTransactionCheck.fillCustomerAutoComplete(customersDataMock.createCustomer
-      .companyNameInput);
-    processTransactionCheck.fillFields(cardDataMock);
-    processTransactionCheck.clickProcessTransaction();
-    processTransactionCheck.waitUntilElementDisplayed(processTransactionCard.approvePopup);
-    expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
-      .toBe(true);
-    processTransactionCheck.closePopup();
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCheck.get();
+        processTransactionCheck.setRefundAction();
+        processTransactionCheck.fillCustomerAutoComplete(customersDataMock.createCustomer
+          .companyNameInput);
+        processTransactionCheck.fillFields(cardDataMock);
+        processTransactionCheck.clickProcessTransaction();
+        processTransactionCheck.waitUntilElementDisplayed(processTransactionCard.approvePopup);
+        expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+          .toBe(true);
+        processTransactionCheck.closePopup();
+      });
+
 
     this.page.navigationTooggle.click();
     this.page.historyTab.click();
@@ -666,7 +670,7 @@ class HistoryLogic extends SpecBaseLogic {
       addBillingInfo: customersDataMock.addBillingInfo,
       addShippingInfo: customersDataMock.addShippingInfo });
     this.customersPage.clickCompleteCreateCustomer();
-    browser.sleep(500);
+    browser.sleep(1000);
   }
 
   [createNewCard](customersDataMock) {
