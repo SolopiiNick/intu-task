@@ -11,7 +11,7 @@ const processTransactionCheckDataMock = {
       transactionTypeInput: 'TEL',
       routingNumberInput: '061000227',
       accountNumberInput: '10102233',
-      amountInput: '100',
+      amountInput: '101',
       taxInput: '10.04',
       surchargeInput: '15.11',
       avsStreetInput: '1307 Broad Hollow Road',
@@ -25,7 +25,7 @@ const processTransactionCheckDataMock = {
       transactionTypeInput: 'PPD',
       routingNumberInput: '061000052',
       accountNumberInput: '10103344',
-      amountInput: '80',
+      amountInput: '840',
       companyName: `New Company ${getRandomInt(MIN_NUM, MAX_NUM)}`,
     },
   },
@@ -36,7 +36,7 @@ const processTransactionCheckDataMock = {
       transactionTypeInput: 'CCD',
       routingNumberInput: '061000052',
       accountNumberInput: '10101122',
-      amountInput: '100',
+      amountInput: '102',
     },
   },
   successCheckingWithPPDAndBilling: {
@@ -46,7 +46,7 @@ const processTransactionCheckDataMock = {
       transactionTypeInput: 'PPD',
       routingNumberInput: '061000227',
       accountNumberInput: '10102233',
-      amountInput: '100',
+      amountInput: '1303',
       taxInput: '10.04',
       surchargeInput: '15.11',
       avsStreetInput: '1307 Broad Hollow Road',
@@ -72,7 +72,7 @@ const processTransactionCheckDataMock = {
       transactionTypeInput: 'CCD',
       routingNumberInput: '061000227',
       accountNumberInput: '10102233',
-      amountInput: '100',
+      amountInput: '1304',
       taxInput: '20',
       surchargeInput: '1',
       avsStreetInput: '1307 Broad Hollow Road',
@@ -97,7 +97,7 @@ const processTransactionCheckDataMock = {
     },
     processTransactionCheck: {
       generalInfo: {
-        amountInput: '100.99',
+        amountInput: '1205.99',
         taxInput: '0.01',
       },
     },
@@ -118,7 +118,7 @@ const processTransactionCheckDataMock = {
     processTransactionCheck: {
       generalInfo: {
         accountTypeInput: 'Checking',
-        amountInput: '100.99',
+        amountInput: '1061.99',
         taxInput: '0.01',
       },
     },
@@ -138,7 +138,7 @@ const processTransactionCheckDataMock = {
     },
     processTransactionCheck: {
       generalInfo: {
-        amountInput: '100.50',
+        amountInput: '1027.50',
         taxInput: '2.48',
         surchargeInput: '0.02',
       },
@@ -164,7 +164,7 @@ const processTransactionCheckDataMock = {
         transactionTypeInput: 'PPD',
         routingNumberInput: '061092387',
         accountNumberInput: '10107788',
-        amountInput: '100.50',
+        amountInput: '1083.50',
         taxInput: '10.22',
         surchargeInput: '10.23',
       },

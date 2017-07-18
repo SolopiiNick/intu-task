@@ -31,8 +31,7 @@ describe('History - Batch', () => {
     historyLogic.checkPostAuthorizeCreateCustomerByAmexInQueuedTAb.bind(historyLogic));
 
   it('all data of created transaction with existing Customer is correct on All Transaction ' +
-    'Tab tab' +
-    'with Discover Card',
+    'Tab tab with Discover Card',
     historyLogic.checkCreateCustomerByDiscoverRefundInAllTransactionTAb.bind(historyLogic));
 
   it('transaction with queued status (Auth action) is voided',
