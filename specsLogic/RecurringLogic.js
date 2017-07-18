@@ -219,6 +219,52 @@ class RecurringLogic extends SpecBaseLogic {
     this.page.clickCardViewButton();
   }
 
+  inactiveRecurringSetByCard() {
+    const cardDataMock =
+      recurringDataMock.inactiveChargeRecurringByCard;
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCard.get();
+        processTransactionCard.fillFields(cardDataMock);
+        processTransactionCard.clickProcess();
+      });
+
+    this.page.navigationTooggle.click();
+    this.page.recurringTab.click();
+    this.page.clickTurnOffButton();
+    expect(this.page.inactiveTextPopup.getText())
+      .toEqual('Are you sure you want to deactivate recurring set?');
+    this.page.clickOkButton();
+    this.checkRecurringStatus('INACTIVE');
+  }
+
+  inactiveRecurringSetByCheck() {
+    const checkDataMock =
+      recurringDataMock.inactiveChargeRecurringByCheck;
+
+    browser.waitForAngular()
+      .then(() => {
+        processTransactionCheck.get();
+        processTransactionCheck.setChargeAction();
+        processTransactionCheck.fillFields(checkDataMock);
+        processTransactionCheck.setNewCustomer();
+        processTransactionCheck.clickProcessTransaction();
+        processTransactionCheck.waitUntilElementDisplayed(processTransactionCheck.approvePopup);
+        expect(processTransactionCheck.isElementDisplayed(processTransactionCheck.approvePopup))
+          .toBe(true);
+        processTransactionCheck.closePopup();
+      });
+
+    this.page.navigationTooggle.click();
+    this.page.recurringTab.click();
+    this.page.clickTurnOffButton();
+    expect(this.page.inactiveTextPopup.getText())
+      .toEqual('Are you sure you want to deactivate recurring set?');
+    this.page.clickOkButton();
+    this.checkRecurringStatus('INACTIVE');
+  }
+
   // helper methods using in this logic
 
   createInputsCheckerCard(dataMock) {
@@ -230,6 +276,24 @@ class RecurringLogic extends SpecBaseLogic {
           .toEqual(dataMock[blockName][input]);
       });
     };
+  }
+
+  checkIfRowExist({ repeatSelector, colIdx, toEqualValue }) {
+    this.page.repeaterData(repeatSelector)
+      .then(rows => rows[0].all(by.repeater('column in vm.columns')))
+      .then(cols => cols[colIdx])
+      .then(col => col.getAttribute('innerText'))
+      .then((text) => {
+        expect(text).toEqual(toEqualValue);
+      });
+  }
+
+  checkRecurringStatus(expectValue) {
+    this.checkIfRowExist({
+      repeatSelector: 'row in vm.rowData',
+      colIdx: 5,
+      toEqualValue: expectValue,
+    });
   }
 
   [createNewCustomerWithCard](customersDataMock) {

@@ -30,8 +30,8 @@ class LoginLogic extends SpecBaseLogic {
     this.page.userInput.sendKeys(username);
     this.page.passInput.sendKeys(password);
     this.page.loginButton.click();
-    // this.page.waitUntilElementDisplayed(this.page.logoutButton);
-    // expect(this.page.isElementDisplayed(this.page.logoutButton)).toBe(true);
+    this.page.waitUntilElementDisplayed(this.page.logoutButton);
+    expect(this.page.isElementDisplayed(this.page.logoutButton)).toBe(true);
   }
 }
 

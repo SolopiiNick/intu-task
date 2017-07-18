@@ -1,6 +1,6 @@
 import Base from '../utils/Base';
 
-// const RECURRING_TAB = 'Recurring';
+const DEACTIVE_CONFIRM_TEXT = 'Are you sure you want to deactivate recurring set?';
 
 class Recurring extends Base {
   get url() {
@@ -41,13 +41,35 @@ class Recurring extends Base {
     return element(by.css('md-toast .md-toast-wrapper .md-toast-body .md-toast-text'));
   }
 
+  get turnOffButton() {
+    return element.all(by.linkText('Turn Off'));
+  }
+
   clickViewRecurringButton() {
     this.viewButton.get(0).click();
+  }
+
+  get okButton() { return element(by.buttonText('Ok')); }
+
+  get inactiveTextPopup() {
+    return element(by.cssContainingText('.confirm-dialog-content', DEACTIVE_CONFIRM_TEXT));
+  }
+
+  repeaterData(repeater) {
+    return element.all(by.repeater(repeater));
   }
 
   clickCardViewButton() {
     browser.executeScript('arguments[0].scrollIntoView()', this.cardViewButton.get(1).getWebElement());
     browser.executeScript('arguments[0].click()', this.cardViewButton.get(1).getWebElement());
+  }
+
+  clickTurnOffButton() {
+    this.turnOffButton.get(0).click();
+  }
+
+  clickOkButton() {
+    this.okButton.click();
   }
 
   get expandedContent() {
