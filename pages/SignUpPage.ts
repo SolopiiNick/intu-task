@@ -1,5 +1,4 @@
-import { browser, by, element } from 'protractor';
-
+import { by, element } from 'protractor';
 
 export class SignUpPO {
     get firstNameInput() { return element(by.css('[placeholder="First name"]')); }
@@ -25,4 +24,4 @@ export class SignUpPO {
         this.yearInput().sendKeys(signUpInfo.year);
         this.postCodeInput().sendKeys(signUpInfo.postCode);
     };
-}
+};

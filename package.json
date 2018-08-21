@@ -5,8 +5,6 @@
   "scripts": {
     "pretest": "webdriver-manager update",
     "test": "protractor configs/protractor-config.js",
-    "lint": "eslint .",
-    "lint:pre-commit": "eslint . --rule 'no-console: 2' --rule 'no-debugger: 2' --rule 'protractor/no-browser-pause: 2'"
   },
   "pre-commit": [
     "lint:pre-commit"
@@ -19,16 +17,5 @@
     "jasmine-spec-reporter": "^2.7.0",
     "protractor": "^5.3.0",
     "typescript": "^3.0.1"
-  },
-  "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "chance": "^0.7.5",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-async-await": "^0.0.0",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-protractor": "^1.34.2",
-    "pre-commit": "^1.2.2",
-    "tslint": "~5.7.0"
   }
 }
