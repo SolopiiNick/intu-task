@@ -1,4 +1,4 @@
-# Accept.Blue Tests
+# Intu Tests
 
 ## Setup:
 * Install [Node](http://nodejs.org) (v6.x.x or later)

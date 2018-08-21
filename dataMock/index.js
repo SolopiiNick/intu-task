@@ -1,15 +1,5 @@
-import { merchantUser } from './merchantUser';
-import { processTransactionCheckDataMock } from './specs/processTransactionCheck';
-import { autoLogin } from './autoLogin';
-import { processTransactionCardDataMock } from './specs/processTransactionCard';
-import { historyDataMock } from './specs/history';
-import { recurringDataMock } from './specs/recurring';
+import { signUpPageDataMock } from './specs/signUpDataMock';
 
 export {
-  autoLogin,
-  merchantUser,
-  processTransactionCheckDataMock,
-  processTransactionCardDataMock,
-  historyDataMock,
-  recurringDataMock,
+    signUpPageDataMock
 };
