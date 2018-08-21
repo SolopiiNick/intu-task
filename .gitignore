@@ -1,4 +1,6 @@
-/.idea
+.idea
 /node_modules
 .DS_Store
-specs/test*
+configs/app.js
+configs/protractor-config.js
+debug.log
